@@ -15,9 +15,12 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* globals getErrorMessage */
+
 "use strict";
 
 let targetPageId = null;
+const {stripTagsUnsafe} = ext.i18n;
 
 function onKeyDown(event)
 {
@@ -41,7 +44,10 @@ function addFilters()
   }).then((errors) =>
   {
     if (errors.length > 0)
-      alert(errors.join("\n"));
+    {
+      errors = errors.map(getErrorMessage);
+      alert(stripTagsUnsafe(errors.join("\n")));
+    }
     else
       closeDialog(true);
   });

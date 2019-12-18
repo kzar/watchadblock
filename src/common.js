@@ -17,16 +17,52 @@
 
 "use strict";
 
-function E(id)
+function convertDoclinks()
 {
-  return document.getElementById(id);
+  const links = document.querySelectorAll("a[data-doclink]");
+  for (const link of links)
+  {
+    getDoclink(link.dataset.doclink).then((url) =>
+    {
+      link.target = link.target || "_blank";
+      link.href = url;
+    });
+  }
 }
+window.addEventListener("DOMContentLoaded", convertDoclinks, true);
 
-function getDocLink(link)
+function getDoclink(link)
 {
   return browser.runtime.sendMessage({
     type: "app.get",
     what: "doclink",
     link
   });
+}
+
+function getErrorMessage(error)
+{
+  let message = null;
+
+  if (error)
+  {
+    message = browser.i18n.getMessage(
+      error.reason || error.type,
+      (error.selector) ? [error.selector] : []
+    );
+  }
+
+  // Use a generic error message if we don't have one available yet
+  if (!message)
+  {
+    message = browser.i18n.getMessage("filter_action_failed");
+  }
+
+  if (!error || typeof error.lineno !== "number")
+    return message;
+
+  return browser.i18n.getMessage("line", [
+    error.lineno.toLocaleString(),
+    message
+  ]);
 }

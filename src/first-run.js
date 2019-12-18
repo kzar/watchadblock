@@ -35,6 +35,11 @@ const doclinks = {
 };
 module.exports.doclinks = doclinks;
 
+const prefs = {
+  get: (key) => send("prefs.get", {key})
+};
+module.exports.prefs = prefs;
+
 // For now we are merely reusing the port for long-lived communications to fix
 // https://gitlab.com/eyeo/adblockplus/abpui/adblockplusui/issues/415
 const port = browser.runtime.connect({name: "ui"});
@@ -62,19 +67,6 @@ module.exports.port = port;
 
 const api = require("./api");
 
-function convertDocLinks()
-{
-  const elements = document.querySelectorAll("[data-doclink]");
-  for (const element of elements)
-  {
-    const {doclink} = element.dataset;
-    api.doclinks.get(doclink).then((url) =>
-    {
-      element.href = url;
-    });
-  }
-}
-
 function openOptions()
 {
   api.app.open("options");
@@ -101,11 +93,9 @@ function initLinks()
   {
     const year = new Date().getFullYear().toString();
     const notice = document.getElementById("copyright-notice");
-    ext.i18n.setElementText(notice, "firstRun_footer_copyright", year);
+    ext.i18n.setElementText(notice, "common_copyright", year);
     ext.i18n.setElementLinks("copyright-notice", url);
   });
-
-  convertDocLinks();
 }
 
 function initWarnings()

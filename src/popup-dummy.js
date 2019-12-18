@@ -457,75 +457,7 @@ IOElement.intent("i18n", idOrArgs =>
 
 module.exports = IOElement;
 
-},{"document-register-element/pony":20,"hyperhtml-element/cjs":27}],4:[function(require,module,exports){
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-present eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-"use strict";
-
-const {$} = require("./dom");
-
-module.exports = setupBlock;
-
-function setupBlock(tab)
-{
-  $("#block-element").addEventListener("click", (event) =>
-  {
-    $("#page-info").classList.add("blocking");
-    activateClickHide(tab);
-  });
-
-  $("#block-element-cancel").addEventListener("click", (event) =>
-  {
-    $("#page-info").classList.remove("blocking");
-    cancelClickHide(tab);
-  });
-
-  browser.tabs.sendMessage(tab.id, {type: "composer.content.getState"})
-    .then(response =>
-    {
-      if (response && response.active)
-        $("#page-info").classList.add("blocking");
-    });
-}
-
-let timeout = 0;
-
-function activateClickHide(tab)
-{
-  browser.tabs.sendMessage(tab.id, {
-    type: "composer.content.startPickingElement"
-  });
-
-  // Close the popup after a few seconds, so user doesn't have to
-  timeout = window.setTimeout(window.close, 5000);
-}
-
-function cancelClickHide(tab)
-{
-  if (timeout != 0)
-  {
-    window.clearTimeout(timeout);
-    timeout = 0;
-  }
-  browser.tabs.sendMessage(tab.id, {type: "composer.content.finished"});
-}
-
-},{"./dom":1}],5:[function(require,module,exports){
+},{"document-register-element/pony":16,"hyperhtml-element/cjs":23}],4:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -546,486 +478,46 @@ function cancelClickHide(tab)
 "use strict";
 
 require("./io-circle-toggle.js");
-require("./popup.notifications.js");
 
-const setupToggle = require("./popup.toggle.js");
-const setupBlock = require("./popup.blockelement.js");
-const {activeTab} = require("./popup.utils.js");
-const {$, $$} = require("./dom");
-
-const {
-  getDoclinks,
-  getPref,
-  reportIssue,
-  whenPageReady
-} = require("./popup.utils.js");
-
-// platform and application dataset bootstrap
-Promise.all([
-  // one is used to hide the Issue Reporter due EdgeHTML bug
-  // the Issue Reporter should work once MSEdge ships with Chromium instead
-  browser.runtime.sendMessage({
-    type: "app.get",
-    what: "platform"
-  }),
-  // one is used to hide all Edge specific things (i.e. 3rd parts links)
-  browser.runtime.sendMessage({
-    type: "app.get",
-    what: "application"
-  })
-]).then(([platform, application]) =>
+function onResize()
 {
-  // this won't ever change during ABP lifecycle, which is why
-  // it's set ASAP as data-platform attribute, on the most top element,
-  // instead of being one of the body classes
-  const {dataset} = document.documentElement;
-  dataset.platform = platform;
-  dataset.application = application;
-});
-
-activeTab.then(tab =>
-{
-  const urlProtocol = tab.url && new URL(tab.url).protocol;
-  if (/^https?:$/.test(urlProtocol))
-  {
-    whenPageReady(tab).then(() =>
-    {
-      document.body.classList.remove("nohtml");
-    });
-  }
-  else
-  {
-    disablePopup();
-    document.body.classList.add("ignore");
-    document.body.classList.remove("nohtml");
-  }
-  return tab;
-})
-.then(tab =>
-{
-  const {url} = tab;
-  const hostname = url ? new URL(url).hostname.replace(/^www\./, "") : "";
-  $("#blocking-domain").textContent = hostname;
-  $("#issue-reporter").addEventListener(
-    "click", () => reportIssue(tab)
-  );
-  // drop the text content but keep it as aria-label
-  const options = $("#options");
-  options.setAttribute("aria-label", options.textContent);
-  options.textContent = "";
-  options.addEventListener("click", () =>
-  {
-    browser.runtime.sendMessage(
-      {type: "app.open", what: "options"}
-    ).then(
-      // force closing popup which is not happening in Firefox
-      // @link https://issues.adblockplus.org/ticket/7017
-      () => window.close()
-    );
-  });
-  setupToggle(tab);
-  updateStats(tab);
-  setupBlock(tab);
-  setupFooter();
-});
-
-function disablePopup()
-{
-  document.body.classList.add("disabled");
-  const buttons = $$("#page-info button, io-circle-toggle");
-  for (const button of buttons)
-    button.disabled = true;
+  window.top.postMessage({
+    type: "popup-dummy.resize",
+    height: document.body.scrollHeight
+  }, "*");
 }
 
-function setupFooter()
-{
-  // order matters and reflected later on
-  // by selecting apple first and android after
-  getDoclinks({links: [
-    "adblock_browser_ios_store",
-    "adblock_browser_android_store"
-  ]}).then(links =>
-  {
-    // using forEach instead of for/of due its handy index
-    // NodeList.prototype.forEach is available since Chrome 51
-    const forEach = Array.prototype.forEach;
-    forEach.call($$("footer .apple, footer .android"), (button, i) =>
-    {
-      button.dataset.link = links[i];
-      button.addEventListener("click", gotoMobile);
-    });
-  });
-}
-
-function gotoMobile(event)
-{
-  event.preventDefault();
-  event.stopPropagation();
-  browser.tabs
-    .create({url: event.currentTarget.dataset.link})
-    .then(
-      // force closing popup which is not happening in Firefox
-      // @link https://issues.adblockplus.org/ticket/7017
-      () => window.close()
-    );
-}
-
-function updateStats(tab)
-{
-  const statsPage = $("#stats-page");
-  browser.runtime.sendMessage({
-    type: "stats.getBlockedPerPage",
-    tab
-  }).then(blockedPage =>
-  {
-    ext.i18n.setElementText(statsPage, "stats_label_page",
-                            [blockedPage.toLocaleString()]);
-  });
-
-  const statsTotal = $("#stats-total");
-  getPref("blocked_total").then(blockedTotal =>
-  {
-    ext.i18n.setElementText(statsTotal, "stats_label_total",
-                            [blockedTotal.toLocaleString()]);
-  });
-}
-
-},{"./dom":1,"./io-circle-toggle.js":2,"./popup.blockelement.js":4,"./popup.notifications.js":6,"./popup.toggle.js":7,"./popup.utils.js":8}],6:[function(require,module,exports){
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-present eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-"use strict";
-
-const {activeTab, setPref} = require("./popup.utils.js");
-const {wire} = require("./io-element");
-const {$} = require("./dom");
-
-activeTab
-  .then((tab) =>
-  {
-    return browser.runtime.sendMessage({
-      type: "notifications.get",
-      displayMethod: "popup",
-      url: tab.url
-    });
-  })
-  .then((notification) =>
-  {
-    if (notification)
-      window.dispatchEvent(
-        new CustomEvent("extension:notification", {detail: notification})
-      );
-  });
-
-// Using an event to make testing as easy as possible.
-/* @example
-dispatchEvent(new CustomEvent("extension:notification", {
-  detail: {
-    type: "information", // or "critical"
-    texts: {
-      title: "Title for a notification",
-      message: "There is something to read here"
-    }
-  }
-}));
-*/
-window.addEventListener(
-  "extension:notification",
-  (event) =>
-  {
-    const notification = event.detail;
-    const notifier = wire()`
-    <div class="${"content " + notification.type}">
-      <div>
-        <h3 hidden="${!notification.texts.title}">
-          ${notification.texts.title}
-        </h3>
-        <p id="notification-message"></p>
-        <hr>
-        <button onclick="${dismiss}">
-          ${{i18n: "overlay_notification_closing_button_hide"}}
-        </button>
-        <button
-          data-pref="notifications_ignoredcategories"
-          hidden="${/^(?:critical|relentless)$/.test(notification.type)}"
-          onclick="${dismiss}">
-          ${{i18n: "overlay_notification_closing_button_optout"}}
-        </button>
-      </div>
-    </div>`;
-
-    const container = $("#notification");
-    container.innerHTML = "";
-    container.appendChild(notifier);
-    container.setAttribute("aria-hidden", false);
-
-    const messageElement = $("#notification-message", notifier);
-    insertMessage(
-      messageElement,
-      notification.texts.message,
-      notification.links.map((link) => `#${link}`)
-    );
-
-    messageElement.addEventListener("click", evt =>
-    {
-      const link = evt.target.closest("a");
-      // The contains(other) method, when invoked,
-      // must return true if other is an inclusive descendant
-      // of context object, and false otherwise
-      // (including when other is null).
-      if (!messageElement.contains(link))
-        return;
-
-      evt.preventDefault();
-      evt.stopPropagation();
-
-      const linkTarget = link.hash.slice(1);
-      if (!linkTarget)
-        throw new Error("Link has no target");
-
-      browser.runtime.sendMessage({
-        type: "notifications.clicked",
-        id: notification.id,
-        link: linkTarget
-      });
-    });
-
-    function dismiss(evt)
-    {
-      const el = evt.currentTarget;
-      if (el.dataset.pref)
-        setPref(el.dataset.pref, true);
-      container.setAttribute("aria-hidden", true);
-      notifier.parentNode.removeChild(notifier);
-      browser.runtime.sendMessage({
-        type: "notifications.clicked",
-        id: notification.id
-      });
-    }
-
-    function insertMessage(element, text, links)
-    {
-      const match = /^(.*?)<(a|strong)>(.*?)<\/\2>(.*)$/.exec(text);
-      if (!match)
-      {
-        element.appendChild(document.createTextNode(text));
-        return;
-      }
-
-      const before = match[1];
-      const tagName = match[2];
-      const value = match[3];
-      const after = match[4];
-
-      insertMessage(element, before, links);
-
-      const newElement = document.createElement(tagName);
-      if (tagName == "a" && links && links.length)
-        newElement.href = links.shift();
-      insertMessage(newElement, value, links);
-      element.appendChild(newElement);
-
-      insertMessage(element, after, links);
-    }
-  },
-  {once: true}
+ext.i18n.setElementText(
+  document.getElementById("stats-total"),
+  "stats_label_total",
+  [(21412).toLocaleString()]
+);
+ext.i18n.setElementText(
+  document.getElementById("stats-page"),
+  "stats_label_page",
+  [(18).toLocaleString()]
 );
 
-},{"./dom":1,"./io-element":3,"./popup.utils.js":8}],7:[function(require,module,exports){
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-present eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-"use strict";
-
-const {isPageWhitelisted} = require("./popup.utils.js");
-const {$} = require("./dom");
-
-// remember initial state to better toggle content
-let toggleChecked;
-
-module.exports = setupToggle;
-
-function setupToggle(tab)
+if ("IntersectionObserver" in window)
 {
-  const toggle = $("io-circle-toggle");
-  $("#page-refresh button").addEventListener("click", () =>
-  {
-    browser.tabs.reload(tab.id).then(window.close);
+  const observer = new IntersectionObserver(onResize, {
+    root: null,
+    // The observer only notifies us when a threshold is passed in either way
+    // so we need to specify small enough thresholds to get notified
+    // of any size changes
+    threshold: Array.from({length: 101}, (value, idx) => idx / 100)
   });
-
-  isPageWhitelisted(tab).then(whitelisted =>
-  {
-    if (whitelisted)
-    {
-      document.body.classList.add("disabled");
-      $("#block-element").disabled = true;
-
-      // avoid triggering an event on this change
-      toggle.setState({checked: false}, false);
-      toggle.checked = false;
-    }
-    toggleChecked = toggle.checked;
-  });
-
-  toggle.addEventListener("change", () =>
-  {
-    const {body} = document;
-    const refresh = toggleChecked !== toggle.checked;
-    body.classList.toggle("refresh", refresh);
-    if (toggle.checked)
-    {
-      browser.runtime.sendMessage({
-        type: "filters.unwhitelist",
-        tab
-      });
-    }
-    else
-    {
-      browser.runtime.sendMessage({
-        type: "filters.whitelist",
-        tab
-      });
-    }
-  });
+  observer.observe(document.body);
 }
-
-},{"./dom":1,"./popup.utils.js":8}],8:[function(require,module,exports){
-"use strict";
-
-// create the tab object once at the right time
-const activeTab = new Promise(
-  resolve =>
-  {
-    document.addEventListener("DOMContentLoaded", () =>
-    {
-      browser.tabs.query({active: true, lastFocusedWindow: true})
-        .then((tabs) =>
-        {
-          resolve({id: tabs[0].id, url: tabs[0].url});
-        });
-    }, {once: true});
-  }
-);
-
-function getDoclinks(notification)
+else
 {
-  if (!notification.links)
-    return Promise.resolve([]);
-
-  return Promise.all(
-    notification.links.map(link =>
-    {
-      return browser.runtime.sendMessage({
-        type: "app.get",
-        what: "doclink",
-        link
-      });
-    })
-  );
+  // For older browsers, we expect all changes to have been made to the page
+  // at this point so we're telling the embedding page that it's now safe
+  // to resize the frame
+  window.addEventListener("load", onResize);
 }
 
-function getPref(key)
-{
-  return browser.runtime.sendMessage({type: "prefs.get", key});
-}
-
-function isPageWhitelisted(tab)
-{
-  return browser.runtime.sendMessage({type: "filters.isWhitelisted", tab});
-}
-
-function reportIssue(tab)
-{
-  browser.tabs.create({
-    active: false,
-    url: browser.runtime.getURL("/issue-reporter.html?" + tab.id)
-  }).then(
-    // force closing popup which is not happening in Firefox
-    // @link https://issues.adblockplus.org/ticket/7017
-    () => window.close()
-  );
-}
-
-function setPref(key, value)
-{
-  return browser.runtime.sendMessage({type: "prefs.set", key, value});
-}
-
-function togglePref(key)
-{
-  return browser.runtime.sendMessage({type: "prefs.toggle", key});
-}
-
-function whenPageReady(tab)
-{
-  return new Promise(resolve =>
-  {
-    function onMessage(message, sender)
-    {
-      if (message.type == "composer.ready" && sender.page &&
-          sender.page.id == tab.id)
-      {
-        browser.runtime.onMessage.removeListener(onMessage);
-        resolve();
-      }
-    }
-
-    browser.runtime.onMessage.addListener(onMessage);
-
-    browser.runtime.sendMessage({
-      type: "composer.isPageReady",
-      pageId: tab.id
-    }).then(ready =>
-    {
-      if (ready)
-      {
-        browser.runtime.onMessage.removeListener(onMessage);
-        resolve();
-      }
-    });
-  });
-}
-
-module.exports = {
-  activeTab,
-  getDoclinks,
-  getPref,
-  isPageWhitelisted,
-  reportIssue,
-  setPref,
-  togglePref,
-  whenPageReady
-};
-
-},{}],9:[function(require,module,exports){
+},{"./io-circle-toggle.js":2}],5:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var createContent = (function (document) {'use strict';
   var FRAGMENT = 'fragment';
@@ -1084,7 +576,7 @@ var createContent = (function (document) {'use strict';
 }(document));
 module.exports = createContent;
 
-},{}],10:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 self.CustomEvent = typeof CustomEvent === 'function' ?
@@ -1101,7 +593,7 @@ self.CustomEvent = typeof CustomEvent === 'function' ?
   }('prototype'));
 module.exports = self.CustomEvent;
 
-},{}],11:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 try { self.Map = Map; }
@@ -1138,7 +630,7 @@ catch (Map) {
 }
 module.exports = self.Map;
 
-},{}],12:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 try { self.WeakSet = WeakSet; }
@@ -1164,7 +656,7 @@ catch (WeakSet) {
 }
 module.exports = self.WeakSet;
 
-},{}],13:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var importNode = (function (
   document,
@@ -1209,7 +701,7 @@ var importNode = (function (
 ));
 module.exports = importNode;
 
-},{}],14:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 var isArray = Array.isArray || (function (toString) {
   var $ = toString.call([]);
   return function isArray(object) {
@@ -1218,7 +710,7 @@ var isArray = Array.isArray || (function (toString) {
 }({}.toString));
 module.exports = isArray;
 
-},{}],15:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var templateLiteral = (function () {'use strict';
   var RAW = 'raw';
@@ -1257,7 +749,7 @@ var templateLiteral = (function () {'use strict';
 }());
 module.exports = templateLiteral;
 
-},{}],16:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 const unique = (require('@ungap/template-literal'));
 
@@ -1270,13 +762,13 @@ Object.defineProperty(exports, '__esModule', {value: true}).default = function (
   return args;
 };
 
-},{"@ungap/template-literal":15}],17:[function(require,module,exports){
+},{"@ungap/template-literal":11}],13:[function(require,module,exports){
 var trim = ''.trim || function () {
   return String(this).replace(/^\s+|\s+/g, '');
 };
 module.exports = trim;
 
-},{}],18:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 try { self.WeakMap = WeakMap; }
@@ -1313,7 +805,7 @@ catch (WeakMap) {
 }
 module.exports = self.WeakMap;
 
-},{}],19:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /*! (c) Andrea Giammarchi */
 function disconnected(poly) {'use strict';
   var CONNECTED = 'connected';
@@ -1425,7 +917,7 @@ function disconnected(poly) {'use strict';
 }
 module.exports = disconnected;
 
-},{}],20:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /*!
 ISC License
 
@@ -2936,7 +2428,7 @@ function installCustomElements(window, polyfill) {'use strict';
 
 module.exports = installCustomElements;
 
-},{}],21:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 /*! (c) 2018 Andrea Giammarchi (ISC) */
 
@@ -3160,7 +2652,7 @@ const domdiff = (
 
 Object.defineProperty(exports, '__esModule', {value: true}).default = domdiff;
 
-},{"./utils.js":22}],22:[function(require,module,exports){
+},{"./utils.js":18}],18:[function(require,module,exports){
 'use strict';
 const Map = (require('@ungap/essential-map'));
 
@@ -3543,7 +3035,7 @@ const smartDiff = (
 };
 exports.smartDiff = smartDiff;
 
-},{"@ungap/essential-map":11}],23:[function(require,module,exports){
+},{"@ungap/essential-map":7}],19:[function(require,module,exports){
 'use strict';
 // Custom
 var UID = '-' + Math.random().toFixed(6) + '%';
@@ -3576,7 +3068,7 @@ exports.TEXT_NODE = TEXT_NODE;
 exports.SHOULD_USE_TEXT_CONTENT = SHOULD_USE_TEXT_CONTENT;
 exports.VOID_ELEMENTS = VOID_ELEMENTS;
 
-},{}],24:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 // globals
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
@@ -3683,7 +3175,7 @@ function cleanContent(fragment) {
   }
 }
 
-},{"./sanitizer.js":25,"./walker.js":26,"@ungap/create-content":9,"@ungap/import-node":13,"@ungap/trim":17,"@ungap/weakmap":18}],25:[function(require,module,exports){
+},{"./sanitizer.js":21,"./walker.js":22,"@ungap/create-content":5,"@ungap/import-node":9,"@ungap/trim":13,"@ungap/weakmap":14}],21:[function(require,module,exports){
 'use strict';
 const {UID, UIDC, VOID_ELEMENTS} = require('./constants.js');
 
@@ -3715,7 +3207,7 @@ function fullClosing($0, $1, $2) {
   return VOID_ELEMENTS.test($1) ? $0 : ('<' + $1 + $2 + '></' + $1 + '>');
 }
 
-},{"./constants.js":23}],26:[function(require,module,exports){
+},{"./constants.js":19}],22:[function(require,module,exports){
 'use strict';
 const Map = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/essential-map'));
 const trim = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/trim'));
@@ -3845,7 +3337,7 @@ function parseAttributes(node, holes, parts, path) {
   }
 }
 
-},{"./constants.js":23,"@ungap/essential-map":11,"@ungap/trim":17}],27:[function(require,module,exports){
+},{"./constants.js":19,"@ungap/essential-map":7,"@ungap/trim":13}],23:[function(require,module,exports){
 'use strict';
 /*! (C) 2017-2018 Andrea Giammarchi - ISC Style License */
 
@@ -4226,7 +3718,7 @@ function isReady(created) {
   return false;
 }
 
-},{"hyperhtml":33}],28:[function(require,module,exports){
+},{"hyperhtml":29}],24:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var hyperStyle = (function (){'use strict';
   // from https://github.com/developit/preact/blob/33fc697ac11762a1cb6e71e9847670d047af7ce5/src/varants.js
@@ -4313,7 +3805,7 @@ var hyperStyle = (function (){'use strict';
 }());
 module.exports = hyperStyle;
 
-},{}],29:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var Wire = (function (slice, proto) {
 
@@ -4363,7 +3855,7 @@ var Wire = (function (slice, proto) {
 }([].slice));
 module.exports = Wire;
 
-},{}],30:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 'use strict';
 const CustomEvent = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/custom-event'));
 const Map = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/essential-map'));
@@ -4531,7 +4023,7 @@ Object.defineProperties(
   }
 );
 
-},{"@ungap/custom-event":10,"@ungap/essential-map":11,"@ungap/weakmap":18}],31:[function(require,module,exports){
+},{"@ungap/custom-event":6,"@ungap/essential-map":7,"@ungap/weakmap":14}],27:[function(require,module,exports){
 'use strict';
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
 const tta = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/template-tag-arguments'));
@@ -4572,7 +4064,7 @@ function upgrade(template) {
 
 Object.defineProperty(exports, '__esModule', {value: true}).default = render;
 
-},{"../objects/Updates.js":35,"../shared/constants.js":36,"@ungap/template-tag-arguments":16,"@ungap/weakmap":18}],32:[function(require,module,exports){
+},{"../objects/Updates.js":31,"../shared/constants.js":32,"@ungap/template-tag-arguments":12,"@ungap/weakmap":14}],28:[function(require,module,exports){
 'use strict';
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
 const tta = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/template-tag-arguments'));
@@ -4658,7 +4150,7 @@ exports.content = content;
 exports.weakly = weakly;
 Object.defineProperty(exports, '__esModule', {value: true}).default = wire;
 
-},{"../objects/Updates.js":35,"@ungap/template-tag-arguments":16,"@ungap/weakmap":18,"hyperhtml-wire":29}],33:[function(require,module,exports){
+},{"../objects/Updates.js":31,"@ungap/template-tag-arguments":12,"@ungap/weakmap":14,"hyperhtml-wire":25}],29:[function(require,module,exports){
 'use strict';
 /*! (c) Andrea Giammarchi (ISC) */
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
@@ -4737,7 +4229,7 @@ function hyper(HTML) {
 }
 Object.defineProperty(exports, '__esModule', {value: true}).default = hyper
 
-},{"./classes/Component.js":30,"./hyper/render.js":31,"./hyper/wire.js":32,"./objects/Intent.js":34,"./objects/Updates.js":35,"@ungap/essential-weakset":12,"@ungap/weakmap":18,"domdiff":21}],34:[function(require,module,exports){
+},{"./classes/Component.js":26,"./hyper/render.js":27,"./hyper/wire.js":28,"./objects/Intent.js":30,"./objects/Updates.js":31,"@ungap/essential-weakset":8,"@ungap/weakmap":14,"domdiff":17}],30:[function(require,module,exports){
 'use strict';
 const attributes = {};
 const intents = {};
@@ -4779,7 +4271,7 @@ Object.defineProperty(exports, '__esModule', {value: true}).default = {
   }
 };
 
-},{}],35:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 'use strict';
 const CustomEvent = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/custom-event'));
 const WeakSet = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/essential-weakset'));
@@ -5127,7 +4619,7 @@ Tagger.prototype = {
   }
 };
 
-},{"../classes/Component.js":30,"../shared/constants.js":36,"./Intent.js":34,"@ungap/create-content":9,"@ungap/custom-event":10,"@ungap/essential-weakset":12,"@ungap/is-array":14,"disconnected":19,"domdiff":21,"domtagger":24,"hyperhtml-style":28,"hyperhtml-wire":29}],36:[function(require,module,exports){
+},{"../classes/Component.js":26,"../shared/constants.js":32,"./Intent.js":30,"@ungap/create-content":5,"@ungap/custom-event":6,"@ungap/essential-weakset":8,"@ungap/is-array":10,"disconnected":15,"domdiff":17,"domtagger":20,"hyperhtml-style":24,"hyperhtml-wire":25}],32:[function(require,module,exports){
 'use strict';
 // Node.CONSTANTS
 // 'cause some engine has no global Node defined
@@ -5147,4 +4639,4 @@ exports.CONNECTED = CONNECTED;
 const DISCONNECTED = 'dis' + CONNECTED;
 exports.DISCONNECTED = DISCONNECTED;
 
-},{}]},{},[5]);
+},{}]},{},[4]);

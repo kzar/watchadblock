@@ -18,29 +18,123 @@
 
 "use strict";
 
-function send(type, args)
+const {$, $$, events} = require("./dom");
+
+let ignoreFocus = false;
+
+module.exports = {
+  closeAddFiltersByURL()
+  {
+    // if not closed, gives back the focus to the opener being sure it'll close
+    if (!isClosed())
+    {
+      ignoreFocus = false;
+      $('[data-action="open-filterlist-by-url"]').focus();
+    }
+  },
+  setupAddFiltersByURL()
+  {
+    const wrapper = $("#filterlist-by-url-wrap");
+    wrapper.addEventListener("blur", filtersBlur, true);
+    wrapper.addEventListener("keydown", filtersKeydown);
+
+    const opener = $('[data-action="open-filterlist-by-url"]', wrapper);
+    opener.addEventListener("mousedown", filtersToggle);
+    opener.addEventListener("focus", filtersToggle);
+    opener.addEventListener("keydown", openerKeys);
+
+    const input = $('input[type="url"]', wrapper);
+    input.addEventListener("keyup", checkIfValid);
+  }
+};
+
+function checkIfValid(event)
 {
-  args = Object.assign({}, {type}, args);
-  return browser.runtime.sendMessage(args);
+  const {currentTarget} = event;
+  currentTarget.setAttribute("aria-invalid", !currentTarget.checkValidity());
 }
 
-const app = {
-  get: (what) => send("app.get", {what}),
-  open: (what) => send("app.open", {what})
-};
-module.exports.app = app;
+function filtersBlur()
+{
+  // needed to ensure there is an eventually focused element to check
+  // it sets aria-hidden when focus moves elsewhere
+  setTimeout(
+    (wrapper) =>
+    {
+      const {activeElement} = document;
+      if (!activeElement || !wrapper.contains(activeElement))
+      {
+        filtersClose();
+      }
+    },
+    0,
+    $("#filterlist-by-url-wrap")
+  );
+}
 
-const doclinks = {
-  get: (link) => send("app.get", {what: "doclink", link})
-};
-module.exports.doclinks = doclinks;
+function filtersClose()
+{
+  $("#filterlist-by-url").setAttribute("aria-hidden", "true");
+}
 
-// For now we are merely reusing the port for long-lived communications to fix
-// https://gitlab.com/eyeo/adblockplus/abpui/adblockplusui/issues/415
-const port = browser.runtime.connect({name: "ui"});
-module.exports.port = port;
+function filtersKeydown(event)
+{
+  if (events.key(event) === "Escape" && !isClosed())
+  {
+    $('[data-action="open-filterlist-by-url"]').focus();
+    filtersClose();
+  }
+}
 
-},{}],2:[function(require,module,exports){
+function filtersOpen()
+{
+  const element = $("#filterlist-by-url");
+  element.removeAttribute("aria-hidden");
+  $('input[type="url"]', element).focus();
+}
+
+function filtersToggle(event)
+{
+  // prevent mousedown + focus to backfire
+  if (ignoreFocus)
+  {
+    ignoreFocus = false;
+    return;
+  }
+
+  const {currentTarget} = event;
+  const {activeElement} = document;
+  ignoreFocus = event.type === "mousedown" && currentTarget !== activeElement;
+
+  if (isClosed())
+  {
+    event.preventDefault();
+    filtersOpen();
+  }
+  else
+  {
+    filtersClose();
+  }
+}
+
+function isClosed()
+{
+  return $("#filterlist-by-url").getAttribute("aria-hidden") === "true";
+}
+
+function openerKeys(event)
+{
+  switch (events.key(event))
+  {
+    case " ":
+    case "Enter":
+      ignoreFocus = false;
+      filtersToggle(event);
+      break;
+  }
+}
+
+},{"./dom":4}],2:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -58,20 +152,72 @@ module.exports.port = port;
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* globals checkShareResource, getDocLink, i18nFormatDateTime, openSharePopup,
-  E */
+"use strict";
+
+function send(type, args)
+{
+  args = Object.assign({}, {type}, args);
+  return browser.runtime.sendMessage(args);
+}
+
+const app = {
+  get: (what) => send("app.get", {what}),
+  open: (what) => send("app.open", {what})
+};
+module.exports.app = app;
+
+const doclinks = {
+  get: (link) => send("app.get", {what: "doclink", link})
+};
+module.exports.doclinks = doclinks;
+
+const prefs = {
+  get: (key) => send("prefs.get", {key})
+};
+module.exports.prefs = prefs;
+
+// For now we are merely reusing the port for long-lived communications to fix
+// https://gitlab.com/eyeo/adblockplus/abpui/adblockplusui/issues/415
+const port = browser.runtime.connect({name: "ui"});
+module.exports.port = port;
+
+},{}],3:[function(require,module,exports){
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/* globals getDoclink getErrorMessage */
 
 "use strict";
 
 require("./io-filter-table");
 require("./io-list-box");
 require("./io-popout");
+require("./io-rating");
 require("./io-toggle");
 
 const api = require("./api");
-const {$, events} = require("./dom");
+const {$, $$, events} = require("./dom");
+const {
+  closeAddFiltersByURL,
+  setupAddFiltersByURL
+} = require("./add-filters-by-url");
 
 const {port} = api;
+const {stripTagsUnsafe} = ext.i18n;
 
 let subscriptionsMap = Object.create(null);
 let filtersMap = Object.create(null);
@@ -107,8 +253,8 @@ const promisedLocaleInfo = browser.runtime.sendMessage({type: "app.get",
 const promisedDateFormat = promisedLocaleInfo.then((addonLocale) =>
 {
   return new Intl.DateTimeFormat(addonLocale.locale);
-});
-const promisedRecommendationsLoaded = loadRecommendations();
+}).catch(dispatchError);
+const promisedRecommendations = loadRecommendations();
 
 function Collection(details)
 {
@@ -120,7 +266,7 @@ Collection.prototype._setEmpty = function(table, detail, removeEmpty)
 {
   if (removeEmpty)
   {
-    const placeholders = table.querySelectorAll(".empty-placeholder");
+    const placeholders = $$(".empty-placeholder", table);
     for (const placeholder of placeholders)
       table.removeChild(placeholder);
 
@@ -146,7 +292,7 @@ Collection.prototype._createElementQuery = function(item)
   const access = (item.url || item.text).replace(/'/g, "\\'");
   return function(container)
   {
-    return container.querySelector("[data-access='" + access + "']");
+    return $(`[data-access="${access}"]`, container);
   };
 };
 
@@ -194,14 +340,14 @@ Collection.prototype.addItem = function(item)
   {
     const detail = this.details[j];
     const table = $(`#${detail.id}`);
-    const template = table.querySelector("template");
+    const template = $("template", table);
     const listItem = document.createElement("li");
     listItem.appendChild(document.importNode(template.content, true));
     listItem.setAttribute("aria-label", this._getItemTitle(item, j));
     listItem.setAttribute("data-access", item.url || item.text);
     listItem.setAttribute("role", "section");
 
-    const tooltip = listItem.querySelector("io-popout[type='tooltip']");
+    const tooltip = $("io-popout[type='tooltip']", listItem);
     if (tooltip)
     {
       let tooltipId = tooltip.getAttribute("i18n-body");
@@ -209,15 +355,6 @@ Collection.prototype.addItem = function(item)
       if (getMessage(tooltipId))
       {
         tooltip.setAttribute("i18n-body", tooltipId);
-      }
-    }
-
-    for (const control of listItem.querySelectorAll(".control"))
-    {
-      if (control.hasAttribute("title"))
-      {
-        const titleValue = getMessage(control.getAttribute("title"));
-        control.setAttribute("title", titleValue);
       }
     }
 
@@ -246,7 +383,7 @@ Collection.prototype.removeItem = function(item)
     const element = getListElement(table);
 
     // Element gets removed so make sure to handle focus appropriately
-    const control = element.querySelector(".control");
+    const control = $(".control", element);
     if (control && control == document.activeElement)
     {
       if (!focusNextElement(element.parentElement, control))
@@ -279,12 +416,12 @@ Collection.prototype.updateItem = function(item)
   for (let i = 0; i < this.details.length; i++)
   {
     const table = $(`#${this.details[i].id}`);
-    const element = table.querySelector("[data-access='" + access + "']");
+    const element = $(`[data-access="${access}"]`, table);
     if (!element)
       continue;
 
     const title = this._getItemTitle(item, i);
-    const displays = element.querySelectorAll("[data-display]");
+    const displays = $$("[data-display]", element);
     for (let j = 0; j < displays.length; j++)
     {
       if (item[displays[j].dataset.display])
@@ -296,26 +433,39 @@ Collection.prototype.updateItem = function(item)
     element.setAttribute("aria-label", title);
     if (this.details[i].searchable)
       element.setAttribute("data-search", title.toLowerCase());
-    const controls = element.querySelectorAll(".control[role='checkbox']");
+
+    const controls = $$(
+      `.control[role='checkbox'],
+      io-toggle.control`,
+      element
+    );
     for (const control of controls)
     {
-      control.setAttribute("aria-checked", item.disabled == false);
+      const checked = !item.disabled;
+      if (control.matches("io-toggle"))
+        control.checked = checked;
+      else
+        control.setAttribute("aria-checked", checked);
       if (isAcceptableAds(item.url) && this == collections.filterLists)
-        control.disabled = !item.disabled;
+      {
+        control.disabled = true;
+        control.setAttribute("aria-hidden", true);
+      }
     }
     if (additionalSubscriptions.includes(item.url))
     {
       element.classList.add("preconfigured");
       const disablePreconfigures =
-        element.querySelectorAll("[data-disable~='preconfigured']");
+        $$("[data-disable~='preconfigured']", element);
       for (const disablePreconfigure of disablePreconfigures)
         disablePreconfigure.disabled = true;
     }
 
-    const lastUpdateElement = element.querySelector(".last-update");
+    const lastUpdateElement = $(".last-update", element);
     if (lastUpdateElement)
     {
-      const message = element.querySelector(".message");
+      const message = $(".message", element);
+      message.classList.remove("error");
       if (item.downloading)
       {
         const text = getMessage("options_filterList_lastDownload_inProgress");
@@ -326,7 +476,10 @@ Collection.prototype.updateItem = function(item)
       {
         const error = filterErrors.get(item.downloadStatus);
         if (error)
+        {
+          message.classList.add("error");
           message.textContent = getMessage(error);
+        }
         else
           message.textContent = item.downloadStatus;
         element.classList.add("show-message");
@@ -362,7 +515,7 @@ Collection.prototype.updateItem = function(item)
       }
     }
 
-    const websiteElement = element.querySelector("io-popout .website");
+    const websiteElement = $("io-popout .website", element);
     if (websiteElement)
     {
       if (item.homepage)
@@ -370,7 +523,7 @@ Collection.prototype.updateItem = function(item)
       websiteElement.setAttribute("aria-hidden", !item.homepage);
     }
 
-    const sourceElement = element.querySelector("io-popout .source");
+    const sourceElement = $("io-popout .source", element);
     if (sourceElement)
       sourceElement.setAttribute("href", item.url);
 
@@ -400,7 +553,7 @@ Collection.prototype.clearAll = function()
 
 function focusNextElement(container, currentElement)
 {
-  let focusables = container.querySelectorAll("a, button, input, .control");
+  let focusables = $$("a, button, input, .control", container);
   focusables = Array.prototype.slice.call(focusables);
   let index = focusables.indexOf(currentElement);
   index += (index == focusables.length - 1) ? -1 : 1;
@@ -413,11 +566,6 @@ function focusNextElement(container, currentElement)
   return true;
 }
 
-collections.cv = new Collection([
-  {
-    id: "anti-cv-table"
-  }
-]);
 collections.protection = new Collection([
   {
     id: "recommend-protection-list-table"
@@ -434,7 +582,7 @@ collections.allLangs = new Collection([
   {
     id: "all-lang-table-add",
     emptyTexts: ["options_dialog_language_other_empty"],
-    getTitleFunction: getLanguageTitle
+    getTitleFunction: getItemTitle
   }
 ]);
 collections.more = new Collection([
@@ -462,31 +610,27 @@ function addSubscription(subscription)
 {
   const {disabled, recommended, url} = subscription;
   let collection = null;
-  if (recommended)
+  switch (recommended)
   {
-    if (recommended == "ads")
-    {
+    case "ads":
       if (disabled == false)
         collection = collections.langs;
-
       collections.allLangs.addItem(subscription);
-    }
-    else if (recommended == "circumvention")
-    {
-      collection = collections.cv;
-    }
-    else
-    {
+      break;
+    case "privacy":
+    case "social":
       collection = collections.protection;
-    }
-  }
-  else if (!isAcceptableAds(url) && disabled == false)
-  {
-    collection = collections.more;
+      break;
+    case undefined:
+      if (!isAcceptableAds(url) && disabled == false)
+        collection = collections.more;
+      break;
   }
 
   if (collection)
+  {
     collection.addItem(subscription);
+  }
 
   subscriptionsMap[url] = subscription;
 }
@@ -531,7 +675,7 @@ function updateFilter(filter)
     if (isCustomFiltersLoaded)
     {
       const text = getMessage("options_whitelist_notification", [filter.title]);
-      showNotification(text);
+      showNotification(text, "info");
     }
   }
   else
@@ -558,17 +702,33 @@ function removeCustomFilter(text)
     customFilters.splice(index, 1);
 }
 
+function getItemTitle(item)
+{
+  const {originalTitle, recommended} = item;
+  let description = "";
+  if (recommended === "ads")
+  {
+    description = getLanguageTitle(item);
+  }
+  else
+  {
+    description = getMessage(`common_feature_${recommended}_title`);
+  }
+  return description ? `${originalTitle} (${description})` : originalTitle;
+}
+
 function getLanguageTitle(item)
 {
-  const langs = item.languages.slice();
+  const langs = item.languages.slice(0);
   const firstLang = langs.shift();
-  let title = langs.reduce((acc, lang) =>
+  const description = langs.reduce((acc, lang) =>
   {
     return getMessage("options_language_join", [acc, languages[lang]]);
   }, languages[firstLang]);
-  if (item.originalTitle && item.originalTitle.indexOf("+EasyList") > -1)
-    title += " + " + getMessage("options_english");
-  return title;
+
+  return /\+EasyList$/.test(item.originalTitle) ?
+          `${description} + ${getMessage("options_english")}` :
+          description;
 }
 
 function loadRecommendations()
@@ -580,6 +740,7 @@ function loadRecommendations()
   {
     languages = languagesData;
 
+    const subscriptions = [];
     for (const recommendation of recommendations)
     {
       let {type} = recommendation;
@@ -600,9 +761,12 @@ function loadRecommendations()
         subscription.title = getMessage(`common_feature_${type}_title`);
       }
 
+      subscriptions.push(subscription);
       addSubscription(subscription);
     }
-  });
+    return subscriptions;
+  })
+  .catch(dispatchError);
 }
 
 function findParentData(element, dataName, returnElement)
@@ -620,7 +784,10 @@ function sendMessageHandleErrors(message, onSuccess)
   browser.runtime.sendMessage(message).then(errors =>
   {
     if (errors.length > 0)
-      alert(errors.join("\n"));
+    {
+      errors = errors.map(getErrorMessage);
+      alert(stripTagsUnsafe(errors.join("\n")));
+    }
     else if (onSuccess)
       onSuccess();
   });
@@ -634,67 +801,73 @@ function switchTab(id)
 function execAction(action, element)
 {
   if (element.getAttribute("aria-disabled") == "true")
-    return;
+    return false;
 
   switch (action)
   {
     case "add-domain-exception":
       addWhitelistedDomain();
-      break;
+      return true;
     case "add-language-subscription":
       addEnableSubscription(findParentData(element, "access", false));
-      break;
+      return true;
     case "add-predefined-subscription": {
       const dialog = $("#dialog-content-predefined");
-      const title = dialog.querySelector("h3").textContent;
-      const url = dialog.querySelector(".url").textContent;
+      const title = $("h3", dialog).textContent;
+      const url = $(".url", dialog).textContent;
       addEnableSubscription(url, title);
       closeDialog();
-      break;
+      return true;
     }
     case "change-language-subscription":
       changeLanguageSubscription(findParentData(element, "access", false));
-      break;
+      return true;
     case "close-dialog":
       closeDialog();
-      break;
+      return true;
     case "hide-more-filters-section":
       $("#more-filters").setAttribute("aria-hidden", true);
-      break;
+      return true;
+    case "hide-acceptable-ads-survey":
+      $("#acceptable-ads-why-not").setAttribute("aria-hidden", true);
+      return false;
     case "hide-notification":
       hideNotification();
-      break;
+      return true;
     case "import-subscription": {
       const url = $("#blockingList-textbox").value;
       addEnableSubscription(url);
       closeDialog();
-      break;
+      return true;
     }
     case "open-dialog": {
       const dialog = findParentData(element, "dialog", false);
       openDialog(dialog);
-      break;
+      return true;
     }
-    case "open-list-box":
-      const ioListBox = $("io-list-box");
-      ioListBox.change = true;
+    case "close-filterlist-by-url":
+      closeAddFiltersByURL();
+      return true;
+    case "open-languages-box":
+      const ioListBox = $("#languages-box");
+      ioListBox.swap = true;
       $("button", ioListBox).focus();
-      break;
+      return true;
     case "remove-filter":
       browser.runtime.sendMessage({
         type: "filters.remove",
         text: findParentData(element, "access", false)
       });
-      break;
+      return true;
     case "remove-subscription":
       browser.runtime.sendMessage({
         type: "subscriptions.remove",
         url: findParentData(element, "access", false)
       });
-      break;
+      return true;
     case "show-more-filters-section":
       $("#more-filters").setAttribute("aria-hidden", false);
-      break;
+      return true;
     case "switch-acceptable-ads":
       const value = element.value || element.dataset.value;
       // User check the checkbox
@@ -723,23 +896,23 @@ function execAction(action, element)
           "subscriptions.remove",
         url: acceptableAdsPrivacyUrl
       });
-      break;
+      return true;
     case "switch-tab":
       switchTab(element.getAttribute("href").substr(1));
-      break;
+      return true;
     case "toggle-disable-subscription":
       browser.runtime.sendMessage({
         type: "subscriptions.toggle",
         keepInstalled: true,
         url: findParentData(element, "access", false)
       });
-      break;
+      return true;
     case "toggle-pref":
       browser.runtime.sendMessage({
         type: "prefs.toggle",
         key: findParentData(element, "pref", false)
       });
-      break;
+      return true;
     case "toggle-remove-subscription":
       const subscriptionUrl = findParentData(element, "access", false);
       if (element.getAttribute("aria-checked") == "true")
@@ -751,18 +924,18 @@ function execAction(action, element)
       }
       else
         addEnableSubscription(subscriptionUrl);
-      break;
+      return true;
     case "update-all-subscriptions":
       browser.runtime.sendMessage({
         type: "subscriptions.update"
       });
-      break;
+      return true;
     case "update-subscription":
       browser.runtime.sendMessage({
         type: "subscriptions.update",
         url: findParentData(element, "access", false)
       });
-      break;
+      return true;
     case "validate-import-subscription":
       const form = findParentData(element, "validation", true);
       if (!form)
@@ -770,16 +943,31 @@ function execAction(action, element)
 
       if (form.checkValidity())
       {
-        addEnableSubscription($("#import-list-url").value);
+        addEnableSubscription($("#import-list-url", form).value);
         form.reset();
-        closeDialog();
+        closeAddFiltersByURL();
       }
       else
       {
-        form.querySelector(":invalid").focus();
+        $(":invalid", form).focus();
       }
-      break;
+      return true;
   }
+
+  return false;
+}
+
+function execActions(actions, element)
+{
+  actions = actions.split(",");
+  let foundAction = false;
+
+  for (const action of actions)
+  {
+    foundAction |= execAction(action, element);
+  }
+
+  return !!foundAction;
 }
 
 function changeLanguageSubscription(url)
@@ -805,14 +993,14 @@ function changeLanguageSubscription(url)
 
 function onClick(e)
 {
-  let actions = findParentData(e.target, "action", false);
+  const actions = findParentData(e.target, "action", false);
   if (!actions)
     return;
 
-  actions = actions.split(",");
-  for (const action of actions)
+  const foundAction = execActions(actions, e.target);
+  if (foundAction)
   {
-    execAction(action, e.target);
+    e.preventDefault();
   }
 }
 
@@ -841,10 +1029,11 @@ function onKeyUp(e)
     element = parent.firstElementChild;
   }
 
-  const actions = container.getAttribute("data-action").split(",");
-  for (const action of actions)
+  const actions = container.getAttribute("data-action");
+  const foundAction = execActions(actions, element);
+  if (foundAction)
   {
-    execAction(action, element);
+    e.preventDefault();
   }
 }
 
@@ -854,15 +1043,15 @@ function selectTabItem(tabId, container, focus)
   document.body.setAttribute("data-tab", tabId);
 
   // Select tab
-  const tabList = container.querySelector("[role='tablist']");
+  const tabList = $("[role='tablist']", container);
   if (!tabList)
     return null;
 
-  const previousTab = tabList.querySelector("[aria-selected]");
+  const previousTab = $("[aria-selected]", tabList);
   previousTab.removeAttribute("aria-selected");
   previousTab.setAttribute("tabindex", -1);
 
-  const tab = tabList.querySelector("a[href='#" + tabId + "']");
+  const tab = $(`a[href="#${tabId}"]`, tabList);
   tab.setAttribute("aria-selected", true);
   tab.setAttribute("tabindex", 0);
 
@@ -872,6 +1061,11 @@ function selectTabItem(tabId, container, focus)
   if (tab && focus)
     tab.focus();
 
+  if (tabId === "advanced")
+  {
+    setupFiltersBox();
+    setupAddFiltersByURL();
+  }
   return tabContent;
 }
 
@@ -893,20 +1087,72 @@ function onHashChange()
   }
 }
 
-function setupIoListBox()
+function setupFiltersBox()
 {
-  const ioListBox = $("io-list-box");
+  const ioListBox = $("#filters-box");
+
+  if (!ioListBox.items)
+  {
+    ioListBox.getItemTitle = getItemTitle;
+    ioListBox.addEventListener("change", (event) =>
+    {
+      const item = event.detail;
+      addEnableSubscription(item.url, item.originalTitle, item.homepage);
+    });
+  }
+
+  promisedRecommendations.then(subscriptions =>
+  {
+    ioListBox.items = getListBoxItems(subscriptions);
+  });
+}
+
+function getListBoxItems(subscriptions)
+{
+  const urls = new Set();
+  for (const subscription of collections.filterLists.items)
+    urls.add(subscription.url);
+
+  const groups = {
+    ads: [],
+    others: []
+  };
+
+  for (const subscription of subscriptions)
+  {
+    const {recommended, url} = subscription;
+    const key = recommended === "ads" ? recommended : "others";
+    const label = getItemTitle(subscription);
+    const selected = urls.has(url);
+    const overrides = {unselectable: selected, label, selected};
+    groups[key].push(Object.assign({}, subscription, overrides));
+  }
+
+  // items ordered with groups
+  return [
+    ...groups.others,
+    {
+      type: "ads",
+      group: true,
+      description: browser.i18n.getMessage("options_language_filter_list")
+    },
+    ...groups.ads
+  ];
+}
+
+function setupLanguagesBox()
+{
+  const ioListBox = $("#languages-box");
   ioListBox.getItemTitle = getLanguageTitle;
-  ioListBox.placeholder = getMessage("options_dialog_language_title");
   ioListBox.items = collections.allLangs.items;
   ioListBox.addEventListener("close", (event) =>
   {
-    ioListBox.change = false;
+    ioListBox.swap = false;
   });
   ioListBox.addEventListener("change", (event) =>
   {
     const item = event.detail;
-    if (ioListBox.change)
+    if (ioListBox.swap)
       changeLanguageSubscription(item.url);
     else
     {
@@ -918,7 +1164,7 @@ function setupIoListBox()
 
 function onDOMLoaded()
 {
-  populateLists().then(setupIoListBox);
+  populateLists().then(setupLanguagesBox).catch(dispatchError);
 
   // Initialize navigation sidebar
   browser.runtime.sendMessage({
@@ -933,24 +1179,17 @@ function onDOMLoaded()
   // Initialize interactive UI elements
   document.body.addEventListener("click", onClick, false);
   document.body.addEventListener("keyup", onKeyUp, false);
-  const exampleValue = getMessage("options_whitelist_placeholder_example",
-    ["www.example.com"]);
-  $("#whitelisting-textbox").setAttribute("placeholder", exampleValue);
   $("#whitelisting-textbox").addEventListener("keyup", (e) =>
   {
     $("#whitelisting-add-button").disabled = !e.target.value;
   }, false);
 
   // General tab
-  getDocLink("contribute").then(link =>
-  {
-    $("#contribute").href = link;
-  });
-  getDocLink("acceptable_ads_criteria").then(link =>
+  getDoclink("acceptable_ads_criteria").then(link =>
   {
     setElementLinks("enable-acceptable-ads-description", link);
   });
-  getDocLink("imprint").then((url) =>
+  getDoclink("imprint").then((url) =>
   {
     setElementText(
       $("#copyright"),
@@ -959,7 +1198,7 @@ function onDOMLoaded()
     );
     setElementLinks("copyright", url);
   });
-  getDocLink("privacy").then((url) =>
+  getDoclink("privacy").then((url) =>
   {
     $("#privacy-policy").href = url;
   });
@@ -969,23 +1208,17 @@ function onDOMLoaded()
   setElementText($("#tracking-warning-3"), "options_tracking_warning_3",
     [getMessage("options_acceptableAds_privacy_label")]);
 
-  getDocLink("privacy_friendly_ads").then(link =>
-  {
-    $("#enable-acceptable-ads-privacy-description").href = link;
-  });
-  getDocLink("adblock_plus_{browser}_dnt").then(url =>
+  getDoclink("adblock_plus_{browser}_dnt").then(url =>
   {
     setElementLinks("dnt", url);
   });
-
-  // Whitelisted tab
-  getDocLink("whitelist").then(link =>
+  getDoclink("acceptable_ads_survey").then(url =>
   {
-    $("#whitelist-learn-more").href = link;
+    $("#acceptable-ads-why-not a.primary").href = url;
   });
 
   // Advanced tab
-  let customize = document.querySelectorAll("#customize li[data-pref]");
+  let customize = $$("#customize li[data-pref]");
   customize = Array.prototype.map.call(customize, (checkbox) =>
   {
     return checkbox.getAttribute("data-pref");
@@ -1005,36 +1238,43 @@ function onDOMLoaded()
     hidePref("show_devtools_panel", !features.devToolsPanel);
   });
 
-  getDocLink("filterdoc").then(link =>
+  getDoclink("filterdoc").then(link =>
   {
     setElementLinks("custom-filters-description", link);
   });
 
-  getDocLink("subscriptions").then(link =>
-  {
-    $("#filter-lists-learn-more").setAttribute("href", link);
-  });
-
   // Help tab
-  getDocLink("adblock_plus_report_bug").then(link =>
+  getDoclink("help_center_abp_en").then(link =>
+  {
+    setElementLinks("help-center", link);
+  });
+  getDoclink("adblock_plus_report_bug").then(link =>
   {
     setElementLinks("report-bug", link);
   });
-  getDocLink("{browser}_support").then(url =>
+  getDoclink("{browser}_support").then(url =>
   {
     setElementLinks("visit-forum", url);
   });
-  getDocLink("social_twitter").then(link =>
+
+  api.app.get("application").then((application) =>
   {
-    $("#social .twitter").setAttribute("href", link);
-  });
-  getDocLink("social_facebook").then(link =>
-  {
-    $("#social .facebook").setAttribute("href", link);
-  });
-  getDocLink("social_weibo").then(link =>
-  {
-    $("#social .weibo").setAttribute("href", link);
+    // Chromium has its own application ID but also installs extensions from
+    // the Chrome Web Store so we're treating it the same way as Chrome
+    if (application === "chromium")
+    {
+      application = "chrome";
+    }
+
+    // We need to restrict this feature to certain browsers for which we
+    // have a link to where users can rate us
+    if (!["chrome", "opera", "firefox"].includes(application))
+    {
+      $("#rating").setAttribute("aria-hidden", true);
+      return;
+    }
+
+    $("#rating io-rating").application = application;
   });
 
   $("#dialog").addEventListener("keydown", function(e)
@@ -1050,13 +1290,13 @@ function onDOMLoaded()
           if (e.target.classList.contains("focus-first"))
           {
             e.preventDefault();
-            this.querySelector(".focus-last").focus();
+            $(".focus-last", this).focus();
           }
         }
         else if (e.target.classList.contains("focus-last"))
         {
           e.preventDefault();
-          this.querySelector(".focus-first").focus();
+          $(".focus-first", this).focus();
         }
         break;
     }
@@ -1073,11 +1313,9 @@ function openDialog(name)
   dialog.setAttribute("aria-labelledby", "dialog-title-" + name);
   document.body.setAttribute("data-dialog", name);
 
-  let defaultFocus = document.querySelector(
-    "#dialog-content-" + name + " .default-focus"
-  );
+  let defaultFocus = $(`#dialog-content-${name} .default-focus`);
   if (!defaultFocus)
-    defaultFocus = dialog.querySelector(".focus-first");
+    defaultFocus = $(".focus-first", dialog);
   focusedBeforeDialog = document.activeElement;
   defaultFocus.focus();
 }
@@ -1091,17 +1329,21 @@ function closeDialog()
   focusedBeforeDialog.focus();
 }
 
-function showNotification(text)
+function showNotification(text, kind)
 {
-  $("#notification").setAttribute("aria-hidden", false);
-  $("#notification-text").textContent = text;
-  setTimeout(hideNotification, 3000);
+  const notification = $("#notification");
+  notification.setAttribute("aria-hidden", false);
+  $("#notification-text", notification).textContent = text;
+  notification.classList.add(kind);
+  notification.addEventListener("animationend", hideNotification);
 }
 
 function hideNotification()
 {
-  $("#notification").setAttribute("aria-hidden", true);
-  $("#notification-text").textContent = "";
+  const notification = $("#notification");
+  notification.classList.remove("info", "error");
+  notification.setAttribute("aria-hidden", true);
+  $("#notification-text", notification).textContent = "";
 }
 
 function setAcceptableAds()
@@ -1109,6 +1351,7 @@ function setAcceptableAds()
   const acceptableAdsForm = $("#acceptable-ads");
   const acceptableAds = $("#acceptable-ads-allow");
   const acceptableAdsPrivacy = $("#acceptable-ads-privacy-allow");
+  const wasSelected = acceptableAds.getAttribute("aria-checked") === "true";
   acceptableAdsForm.classList.remove("show-dnt-notification");
   acceptableAds.setAttribute("aria-checked", false);
   acceptableAdsPrivacy.setAttribute("aria-checked", false);
@@ -1136,6 +1379,17 @@ function setAcceptableAds()
     // Using aria-disabled in order to keep the focus
     acceptableAdsPrivacy.setAttribute("aria-disabled", true);
     acceptableAdsPrivacy.setAttribute("tabindex", -1);
+  }
+
+  const isSelected = acceptableAds.getAttribute("aria-checked") === "true";
+  const aaSurvey = $("#acceptable-ads-why-not");
+  if (isSelected)
+  {
+    aaSurvey.setAttribute("aria-hidden", true);
+  }
+  else if (wasSelected)
+  {
+    aaSurvey.setAttribute("aria-hidden", false);
   }
 }
 
@@ -1205,7 +1459,7 @@ function populateLists()
       {
         loadCustomFilters([].concat(...filters));
         isCustomFiltersLoaded = true;
-      }).then(done);
+      }).then(done).catch(dispatchError);
     });
 
     Promise.all([
@@ -1313,7 +1567,7 @@ function onSubscriptionMessage(action, subscription)
 {
   // Ensure that recommendations have already been loaded so that we can
   // identify and handle recommended filter lists accordingly (see #6838)
-  promisedRecommendationsLoaded.then(() =>
+  promisedRecommendations.then(() =>
   {
     if (subscription.url in subscriptionsMap)
     {
@@ -1386,7 +1640,7 @@ function onSubscriptionMessage(action, subscription)
         setPrivacyConflict();
         break;
     }
-  });
+  }).catch(dispatchError);
 }
 
 function getSubscriptionFilters(subscription)
@@ -1405,7 +1659,7 @@ function hidePref(key, value)
 
 function getPrefElement(key)
 {
-  return document.querySelector("[data-pref='" + key + "']");
+  return $(`[data-pref="${key}"]`);
 }
 
 function getPref(key)
@@ -1428,9 +1682,7 @@ function onPrefMessage(key, value, initial)
       break;
   }
 
-  const checkbox = document.querySelector(
-    "[data-pref='" + key + "'] button[role='checkbox']"
-  );
+  const checkbox = $(`[data-pref="${key}"] button[role="checkbox"]`);
   if (checkbox)
     checkbox.setAttribute("aria-checked", value);
 }
@@ -1452,8 +1704,8 @@ port.onMessage.addListener((message) =>
             title = "";
           }
 
-          dialog.querySelector("h3").textContent = title;
-          dialog.querySelector(".url").textContent = url;
+          $("h3", dialog).textContent = title;
+          $(".url", dialog).textContent = url;
           openDialog("predefined");
           break;
         case "focusSection":
@@ -1463,7 +1715,7 @@ port.onMessage.addListener((message) =>
             section = "advanced";
             const elem = getPrefElement("notifications_ignoredcategories");
             elem.classList.add("highlight-animate");
-            elem.querySelector("button").focus();
+            $("button", elem).focus();
           }
 
           selectTabItem(section, document.body, false);
@@ -1478,6 +1730,7 @@ port.onMessage.addListener((message) =>
       break;
     case "subscriptions.respond":
       onSubscriptionMessage(message.action, message.args[0]);
+      setupFiltersBox();
       break;
   }
 });
@@ -1494,7 +1747,6 @@ port.postMessage({
   type: "prefs.listen",
   filter: [
     "notifications_ignoredcategories",
-    "notifications_showui",
     "shouldShowBlockElementMenu",
     "show_devtools_panel",
     "show_statsinicon",
@@ -1514,7 +1766,24 @@ onDOMLoaded();
 window.addEventListener("unload", () => port.disconnect());
 window.addEventListener("hashchange", onHashChange, false);
 
-},{"./api":1,"./dom":3,"./io-filter-table":8,"./io-list-box":9,"./io-popout":10,"./io-toggle":12}],3:[function(require,module,exports){
+// Show a generic error message
+window.addEventListener(
+  "error",
+  showNotification.bind(
+    null,
+    browser.i18n.getMessage("options_generic_error"),
+    "error"
+  )
+);
+
+function dispatchError(error)
+{
+  if (error)
+    window.console.error(error);
+  window.dispatchEvent(new CustomEvent("error"));
+}
+
+},{"./add-filters-by-url":1,"./api":2,"./dom":4,"./io-filter-table":10,"./io-list-box":11,"./io-popout":12,"./io-rating":13,"./io-toggle":15}],4:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -1679,7 +1948,7 @@ function asIndentedString(element, indentation = 0)
   return new XMLSerializer().serializeToString(element);
 }
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -1748,7 +2017,7 @@ IOCheckbox.define("io-checkbox");
 
 module.exports = IOCheckbox;
 
-},{"./io-element":5}],5:[function(require,module,exports){
+},{"./io-element":6}],6:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -1916,16 +2185,19 @@ class IOElement extends HyperHTMLElement
 //    return this.html`<div>${{i18n:'about-abp'}}</div>`;
 //  }
 const {setElementText} = ext.i18n;
-IOElement.intent("i18n", id =>
+IOElement.intent("i18n", idOrArgs =>
 {
   const fragment = document.createDocumentFragment();
-  setElementText(fragment, id);
+  if (typeof idOrArgs === "string")
+    setElementText(fragment, idOrArgs);
+  else if (idOrArgs instanceof Array)
+    setElementText(fragment, ...idOrArgs);
   return fragment;
 });
 
 module.exports = IOElement;
 
-},{"document-register-element/pony":24,"hyperhtml-element/cjs":31}],6:[function(require,module,exports){
+},{"document-register-element/pony":27,"hyperhtml-element/cjs":34}],7:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -1951,20 +2223,10 @@ require("./io-toggle");
 const IOElement = require("./io-element");
 const IOScrollbar = require("./io-scrollbar");
 
-const {utils, wire} = IOElement;
-
-const {port} = require("./api");
-const {$, events} = require("./dom");
-
-const prevFilterText = new WeakMap();
-
-port.postMessage({
-  type: "filters.listen",
-  filter: ["disabled"]
-});
+const {$} = require("./dom");
 
 // <io-filter-list disabled />.{filters = [...]}
-class IOFilterList extends IOElement
+class IOFilterBase extends IOElement
 {
   static get booleanAttributes()
   {
@@ -1996,16 +2258,7 @@ class IOFilterList extends IOElement
       rowHeight: 0,
       scrollTop: 0,
       scrollHeight: 0,
-      tbody: null,
-      sort: {
-        current: "",
-        asc: false
-      },
-      sortMap: {
-        status: "disabled",
-        rule: "text",
-        warning: "slow"
-      }
+      tbody: null
     };
   }
 
@@ -2061,8 +2314,6 @@ class IOFilterList extends IOElement
 
   created()
   {
-    setupPort.call(this);
-
     // force one off setup whenever the component enters the view
     if (!this.ready)
       this.addEventListener(
@@ -2128,6 +2379,169 @@ class IOFilterList extends IOElement
       });
       updateScrollbarPosition.call(this);
     }
+  }
+
+  renderTable()
+  {
+    throw new Error("renderTable not implemented");
+  }
+
+  render()
+  {
+    let list = this.state.filters;
+    if (this.state.infinite)
+    {
+      list = [];
+      const {rowHeight, scrollTop, viewHeight} = this.state;
+      const length = this.state.filters.length;
+      let count = 0;
+      let i = Math.floor(scrollTop / rowHeight);
+      // always add an extra row to make scrolling smooth
+      while ((count * rowHeight) < (viewHeight + rowHeight))
+      {
+        list[count++] = i < length ? this.state.filters[i++] : null;
+      }
+    }
+    this.renderTable(list);
+    postRender.call(this, list);
+  }
+
+  updateScrollbar()
+  {
+    const {rowHeight, viewHeight} = this.state;
+    const {length} = this.filters;
+    this.scrollbar.size = rowHeight * length;
+    this.setState({
+      scrollHeight: rowHeight * (length + 1) - viewHeight
+    });
+  }
+}
+
+module.exports = IOFilterBase;
+
+// ensure the number is always between 0 and a positive number
+// specially handy when filters are erased and the viewHeight
+// is higher than scrollHeight and other cases too
+function getScrollTop(value, scrollHeight)
+{
+  const scrollTop = Math.max(
+    0,
+    Math.min(scrollHeight || Infinity, value)
+  );
+  // avoid division by zero gotchas
+  return isNaN(scrollTop) ? 0 : scrollTop;
+}
+
+function postRender(list)
+{
+  const {tbody, scrollTop, rowHeight} = this.state;
+  if (this.state.infinite)
+  {
+    tbody.scrollTop = scrollTop % rowHeight;
+  }
+  // keep growing the fake list until the tbody becomes scrollable
+  else if (
+    !tbody ||
+    (tbody.scrollHeight <= tbody.clientHeight && tbody.clientHeight)
+  )
+  {
+    this.setState({
+      tbody: tbody || $("tbody", this),
+      filters: list.concat({})
+    });
+  }
+}
+
+function setScrollbarReactiveOpacity()
+{
+  // get native value for undefined opacity
+  const opacity = this.scrollbar.style.opacity;
+  // cache it once to never duplicate listeners
+  const cancelOpacity = () =>
+  {
+    // store default opacity value back
+    this.scrollbar.style.opacity = opacity;
+    // drop all listeners
+    document.removeEventListener("pointerup", cancelOpacity);
+    document.removeEventListener("pointercancel", cancelOpacity);
+  };
+  // add listeners on scrollbaro pointerdown event
+  this.scrollbar.addEventListener("pointerdown", () =>
+  {
+    this.scrollbar.style.opacity = 1;
+    document.addEventListener("pointerup", cancelOpacity);
+    document.addEventListener("pointercancel", cancelOpacity);
+  });
+}
+
+function updateScrollbarPosition()
+{
+  const {scrollbar, state} = this;
+  const {scrollHeight, scrollTop} = state;
+  scrollbar.position = scrollTop * scrollbar.range / scrollHeight;
+}
+
+},{"./dom":4,"./io-checkbox":5,"./io-element":6,"./io-scrollbar":14,"./io-toggle":15}],8:[function(require,module,exports){
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/* globals getErrorMessage */
+
+"use strict";
+
+require("./io-checkbox");
+require("./io-toggle");
+
+const {port} = require("./api");
+const {$, events} = require("./dom");
+const IOElement = require("./io-element");
+const IOFilterBase = require("./io-filter-base");
+
+const {stripTagsUnsafe} = ext.i18n;
+const {utils, wire} = IOElement;
+const prevFilterText = new WeakMap();
+
+port.postMessage({
+  type: "filters.listen",
+  filter: ["disabled"]
+});
+
+// <io-filter-list disabled />.{filters = [...]}
+class IOFilterList extends IOFilterBase
+{
+  get defaultState()
+  {
+    return Object.assign(super.defaultState, {
+      sort: {
+        current: "",
+        asc: false
+      },
+      sortMap: {
+        status: "disabled",
+        rule: "text",
+        warning: "slow"
+      }
+    });
+  }
+
+  created()
+  {
+    setupPort.call(this);
+    super.created();
   }
 
   onheaderclick(event)
@@ -2255,10 +2669,10 @@ class IOFilterList extends IOElement
       if (this.filters.some(f => f.text === filter.text && f !== filter))
       {
         const {reason} = filter;
-        filter.reason = browser.i18n.getMessage("filter_duplicated");
+        filter.reason = {type: "filter_duplicated"};
 
         // render only if there's something different to show
-        if (filter.reason !== reason)
+        if (!isSameError(filter.reason, reason))
         {
           this.render();
         }
@@ -2303,21 +2717,25 @@ class IOFilterList extends IOElement
       else
         delete filter.reason;
       // render only if there's something different to show
-      if (reason !== filter.reason)
+      if (!isSameError(filter.reason, reason))
         this.render();
     });
   }
 
   onfocus(event)
   {
-    this._filter = event.currentTarget.data;
+    const {currentTarget} = event;
+    this._filter = currentTarget.data;
+    currentTarget.closest("tr").classList.add("editing");
   }
 
   onblur(event)
   {
+    const {currentTarget} = event;
+    currentTarget.closest("tr").classList.remove("editing");
     // needed to avoid ellipsis on overflow hidden
     // make the filter look like disappeared from the list
-    event.currentTarget.scrollLeft = 0;
+    currentTarget.scrollLeft = 0;
     if (this._changingFocus)
     {
       this._filter = null;
@@ -2386,42 +2804,8 @@ class IOFilterList extends IOElement
     }
   }
 
-  postRender(list)
+  renderTable(visibleFilters)
   {
-    const {tbody, scrollTop, rowHeight} = this.state;
-    if (this.state.infinite)
-    {
-      tbody.scrollTop = scrollTop % rowHeight;
-    }
-    // keep growing the fake list until the tbody becomes scrollable
-    else if (
-      !tbody ||
-      (tbody.scrollHeight <= tbody.clientHeight && tbody.clientHeight)
-    )
-    {
-      this.setState({
-        tbody: tbody || $("tbody", this),
-        filters: list.concat({})
-      });
-    }
-  }
-
-  render()
-  {
-    let list = this.state.filters;
-    if (this.state.infinite)
-    {
-      list = [];
-      const {rowHeight, scrollTop, viewHeight} = this.state;
-      const length = this.state.filters.length;
-      let count = 0;
-      let i = Math.floor(scrollTop / rowHeight);
-      // always add an extra row to make scrolling smooth
-      while ((count * rowHeight) < (viewHeight + rowHeight))
-      {
-        list[count++] = i < length ? this.state.filters[i++] : null;
-      }
-    }
     const {length} = this.filters;
     this.html`<table cellpadding="0" cellspacing="0">
       <thead onclick="${this}" data-call="onheaderclick">
@@ -2436,10 +2820,9 @@ class IOFilterList extends IOElement
           warnings.set(this, createImageForType(false)).get(this)
         }</th>
       </thead>
-      <tbody>${list.map(getRow, this)}</tbody>
+      <tbody>${visibleFilters.map(getRow, this)}</tbody>
       ${this.scrollbar}
     </table>`;
-    this.postRender(list);
   }
 
   sortBy(type, isAscending)
@@ -2457,16 +2840,6 @@ class IOFilterList extends IOElement
     sort.asc = !isAscending;
     // before triggering the event
     th.click();
-  }
-
-  updateScrollbar()
-  {
-    const {rowHeight, viewHeight} = this.state;
-    const {length} = this.filters;
-    this.scrollbar.size = rowHeight * length;
-    this.setState({
-      scrollHeight: rowHeight * (length + 1) - viewHeight
-    });
   }
 }
 
@@ -2514,7 +2887,7 @@ function getRow(filter, i)
       </td>
       <td data-column="rule">
         <div
-          class="content"
+          class="content reset-font"
           contenteditable="${!this.disabled}"
           title="${filter.text}"
           onpaste="${this}"
@@ -2545,21 +2918,13 @@ const issues = new WeakMap();
 
 // used to show warnings in the last column
 const warnings = new WeakMap();
-const warningSlow = browser.i18n.getMessage("filter_slow");
 
 // relate either issues or warnings to a filter
-const createImageForFilter = (weakMap, filter) =>
+const createImageForFilter = (isIssue, filter) =>
 {
-  const isIssue = weakMap === issues;
+  const error = (isIssue) ? filter.reason : {type: "filter_slow"};
   const image = createImageForType(isIssue);
-  if (isIssue)
-  {
-    image.title = filter.reason ||
-      browser.i18n.getMessage("filter_action_failed");
-  }
-  else
-    image.title = warningSlow;
-  weakMap.set(filter, image);
+  image.title = stripTagsUnsafe(getErrorMessage(error));
   return image;
 };
 
@@ -2629,11 +2994,30 @@ function getScrollTop(value, scrollHeight)
 
 function getWarning(filter)
 {
-  if (typeof filter.reason === "string")
-    return issues.get(filter) || createImageForFilter(issues, filter);
-  if (filter.slow)
-    return warnings.get(filter) || createImageForFilter(warnings, filter);
-  return "";
+  let map;
+  if (filter.reason)
+  {
+    map = issues;
+  }
+  else if (filter.slow)
+  {
+    map = warnings;
+  }
+  else
+    return "";
+
+  let warning = map.get(filter);
+  if (warning)
+    return warning;
+
+  warning = createImageForFilter(map === issues, filter);
+  map.set(filter, warning);
+  return warning;
+}
+
+function isSameError(errorA = {}, errorB = {})
+{
+  return errorA.type === errorB.type && errorA.reason === errorB.reason;
 }
 
 function replaceFilter(filter, currentTarget)
@@ -2682,28 +3066,6 @@ function replaceFilter(filter, currentTarget)
   });
 }
 
-function setScrollbarReactiveOpacity()
-{
-  // get native value for undefined opacity
-  const opacity = this.scrollbar.style.opacity;
-  // cache it once to never duplicate listeners
-  const cancelOpacity = () =>
-  {
-    // store default opacity value back
-    this.scrollbar.style.opacity = opacity;
-    // drop all listeners
-    document.removeEventListener("pointerup", cancelOpacity);
-    document.removeEventListener("pointercancel", cancelOpacity);
-  };
-  // add listeners on scrollbaro pointerdown event
-  this.scrollbar.addEventListener("pointerdown", () =>
-  {
-    this.scrollbar.style.opacity = 1;
-    document.addEventListener("pointerup", cancelOpacity);
-    document.addEventListener("pointercancel", cancelOpacity);
-  });
-}
-
 // listen to filters messages and eventually
 // delegate the error handling
 function setupPort()
@@ -2716,7 +3078,7 @@ function setupPort()
       const filter = this.filters.find(f => f.text === text);
       if (filter && disabled !== filter.disabled)
       {
-        filter.reason = browser.i18n.getMessage("filter_disabled");
+        filter.reason = {type: "filter_disabled"};
         filter.disabled = disabled;
       }
       this.render();
@@ -2724,14 +3086,7 @@ function setupPort()
   });
 }
 
-function updateScrollbarPosition()
-{
-  const {scrollbar, state} = this;
-  const {scrollHeight, scrollTop} = state;
-  scrollbar.position = scrollTop * scrollbar.range / scrollHeight;
-}
-
-},{"./api":1,"./dom":3,"./io-checkbox":4,"./io-element":5,"./io-scrollbar":11,"./io-toggle":12}],7:[function(require,module,exports){
+},{"./api":2,"./dom":4,"./io-checkbox":5,"./io-element":6,"./io-filter-base":7,"./io-toggle":15}],9:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -2937,6 +3292,7 @@ class IOFilterSearch extends IOElement
     const {disabled} = this;
     this.html`
     <input
+      class="reset-font"
       placeholder="${this._placeholder}"
       onkeydown="${this}" onkeyup="${this}"
       ondrop="${this}" onpaste="${this}"
@@ -3051,7 +3407,7 @@ function search(value)
   return {accuracy, matches, value, filter: closerFilter};
 }
 
-},{"./dom":3,"./io-element":5}],8:[function(require,module,exports){
+},{"./dom":4,"./io-element":6}],10:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -3069,13 +3425,15 @@ function search(value)
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* globals getErrorMessage */
+
 "use strict";
 
 const IOElement = require("./io-element");
 const IOFilterList = require("./io-filter-list");
 const IOFilterSearch = require("./io-filter-search");
 
-const {clipboard} = require("./dom");
+const {$, clipboard} = require("./dom");
 
 const {bind, wire} = IOElement;
 
@@ -3170,16 +3528,10 @@ class IOFilterTable extends IOElement
     this.updateFooter();
     this.footer.classList.add("visible");
     const {errors} = event.detail;
-    const footerError = this.querySelector(".footer .error");
+    const footerError = $(".footer .error", this);
 
-    // Show a generic error message not only if we don't know what kind of
-    // error occurred but also if we don't have an error message for it yet
-    const errorMessages = errors.join("\n").trim();
-    bind(footerError)`${
-      errorMessages ?
-        errorMessages :
-        {i18n: "filter_action_failed"}
-    }`;
+    const errorMessages = errors.map(getErrorMessage);
+    bind(footerError)`${errorMessages.join("\n")}`;
   }
 
   onfooterclick(event)
@@ -3321,7 +3673,7 @@ IOFilterTable.define("io-filter-table");
 
 function cleanErrors()
 {
-  const footerError = this.querySelector(".footer .error");
+  const footerError = $(".footer .error", this);
   if (footerError)
     bind(footerError)``;
   this.updateFooter();
@@ -3333,7 +3685,7 @@ function updateList(list)
   list.updateScrollbar();
 }
 
-},{"./dom":3,"./io-element":5,"./io-filter-list":6,"./io-filter-search":7}],9:[function(require,module,exports){
+},{"./dom":4,"./io-element":6,"./io-filter-list":8,"./io-filter-search":9}],11:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -3357,7 +3709,7 @@ const DELAY = 200;
 
 const IOElement = require("./io-element");
 
-const {events} = require("./dom");
+const {$, $$, events} = require("./dom");
 
 // used to create options
 const {wire} = IOElement;
@@ -3378,18 +3730,29 @@ const KeyCode = {
   TAB: "Tab"
 };
 
+/*
+  <io-list-box
+    autoclose=boolean to close per each change
+    data-text="i18n entry text when it's closed"
+    data-expanded="optional i18n entry text when it's opened"
+  />
+*/
 class IOListBox extends IOElement
 {
   static get observedAttributes()
   {
-    return ["action", "change", "disabled", "expanded", "items", "placeholder"];
+    return ["action", "swap", "disabled", "expanded", "items"];
+  }
+
+  static get booleanAttributes()
+  {
+    return ["autoclose"];
   }
 
   created()
   {
     this._blurTimer = 0;
     this._bootstrap = true;
-    this._text = browser.i18n.getMessage("options_language_add");
     // in case the component has been addressed and
     // it has already an attached items property
     if (this.hasOwnProperty("items"))
@@ -3398,6 +3761,8 @@ class IOListBox extends IOElement
       delete this.items;
       this.items = items;
     }
+
+    this.addEventListener("blur", this, true);
   }
 
   // can be overridden but by default
@@ -3407,25 +3772,25 @@ class IOListBox extends IOElement
     return item.originalTitle;
   }
 
-  get change()
+  get swap()
   {
-    return !!this._change;
+    return !!this._swap;
   }
 
-  set change(value)
+  set swap(value)
   {
-    this._change = !!value;
+    this._swap = !!value;
   }
 
   // shortcuts to retrieve sub elements
   get label()
   {
-    return this.querySelector(`#${this.id}label`);
+    return $(`#${this.id}label`, this);
   }
 
   get popup()
   {
-    return this.querySelector(`#${this.id}popup`);
+    return $(`#${this.id}popup`, this);
   }
 
   // component status
@@ -3452,8 +3817,8 @@ class IOListBox extends IOElement
     setTimeout(
       () =>
       {
-        // be sure the eleemnt is blurred to re-open on focus
-        if (!value)
+        // be sure the element is blurred to re-open on focus
+        if (!value && this.expanded)
           this.ownerDocument.activeElement.blur();
         this.dispatchEvent(new CustomEvent(value ? "open" : "close"));
       },
@@ -3488,21 +3853,20 @@ class IOListBox extends IOElement
       this._bootstrap = false;
       for (const item of items)
       {
+        if (item.group)
+          continue;
+
         // if an item is selected
         if (!item.disabled)
         {
           // simulate hover it and exit
           hover.call(this, "items", item);
-          fixSize.call(this);
           return;
         }
       }
-      // if no item was selected, hover the first one
-      hover.call(this, "items", items[0]);
+      // if no item was selected, hover the first one that is not a group
+      hover.call(this, "items", items.find(item => !item.group));
     }
-
-    // ensure the list of items reflect the meant style
-    fixSize.call(this);
   }
 
   // events related methods
@@ -3517,6 +3881,9 @@ class IOListBox extends IOElement
   // label related events
   onblur(event)
   {
+    if (event.relatedTarget && this.contains(event.relatedTarget))
+      return;
+
     // ensure blur won't close the list right away or it's impossible
     // to get the selected raw on click (bad target)
     if (this.expanded)
@@ -3536,7 +3903,7 @@ class IOListBox extends IOElement
 
   onkeydown(event)
   {
-    const hovered = this.querySelector(".hover");
+    const hovered = $(".hover", this);
     switch (events.key(event))
     {
       case KeyCode.BACKSPACE:
@@ -3583,13 +3950,17 @@ class IOListBox extends IOElement
     const el = event.target.closest('[role="option"]');
     if (el)
     {
+      const detail = getItem.call(this, el.id);
+      const {unselectable} = detail;
       if (el.getAttribute("aria-disabled") !== "true")
       {
-        this.dispatchEvent(new CustomEvent("change", {
-          detail: getItem.call(this, el.id)
-        }));
+        this.dispatchEvent(new CustomEvent("change", {detail}));
+        this.render();
       }
-      this.expanded = false;
+      if ((this.swap || this.autoclose) && !unselectable)
+      {
+        this.expanded = false;
+      }
     }
   }
 
@@ -3602,46 +3973,58 @@ class IOListBox extends IOElement
   {
     const el = event.target.closest('[role="option"]');
     if (el && !el.classList.contains("hover"))
-      hover.call(this, "mouse",
-                  this._items.find(item => getID(item) === el.id));
+    {
+      const item = getItem.call(this, el.id);
+      if (item)
+        hover.call(this, "mouse", item);
+    }
   }
 
   // the view
   render()
   {
-    const {change} = this;
+    const {action, dataset, disabled, expanded, id, swap} = this;
     const enabled = this._items.filter(item => !item.disabled).length;
+    let buttonText = "";
+    if (expanded && dataset.expanded)
+      buttonText = dataset.expanded;
+    else
+      buttonText = dataset.text;
+    const {i18n} = browser;
     this.html`
     <button
       role="combobox"
       aria-readonly="true"
-      id="${this.id + "label"}"
-      disabled="${this.disabled}"
-      data-action="${this.action}"
-      aria-owns="${this.id + "popup"}"
-      aria-disabled="${this.disabled}"
-      aria-expanded="${this.expanded}"
-      aria-haspopup="${this.id + "popup"}"
+      id="${id + "label"}"
+      disabled="${disabled}"
+      data-action="${action}"
+      aria-owns="${id + "popup"}"
+      aria-disabled="${disabled}"
+      aria-expanded="${expanded}"
+      aria-haspopup="${id + "popup"}"
       onblur="${this}" onfocus="${this}"
       onkeydown="${this}" onmousedown="${this}"
-    >${this.expanded ? this.placeholder : this._text}</button>
+    >${"+ " + i18n.getMessage(buttonText)}</button>
     <ul
       role="listbox"
-      tab-index="-1"
-      id="${this.id + "popup"}"
-      aria-labelledby="${this.id + "label"}"
-      hidden="${!this.expanded}"
+      tabindex="-1"
+      id="${id + "popup"}"
+      aria-labelledby="${id + "label"}"
+      hidden="${!expanded}"
       onclick="${this}" onmouseover="${this}"
     >${this._items.map(item =>
     {
-      const id = getID(item);
-      const selected = !change && !item.disabled;
-      const disabled = selected && enabled === 1;
-      return wire(this, `html:${id}`)`
+      if (item.group)
+        return wire()`<li class="group">${item.description}</li>`;
+
+      const itemID = getID(item);
+      const selected = !swap && !item.disabled;
+      const liDisabled = item.unselectable || (selected && enabled === 1);
+      return wire(this, `html:${itemID}`)`
       <li
-        id="${id}"
+        id="${itemID}"
         role="option"
-        aria-disabled="${change ? !item.disabled : disabled}"
+        aria-disabled="${swap ? !item.disabled : liDisabled}"
         aria-selected="${selected}"
       >${this.getItemTitle(item)}</li>`;
     })}</ul>`;
@@ -3649,6 +4032,39 @@ class IOListBox extends IOElement
 }
 
 IOListBox.define("io-list-box");
+
+let resizeTimer = 0;
+window.addEventListener("resize", () =>
+{
+  // debounce the potentially heavy resize at 30 FPS rate
+  // which is, at least, twice as slower than standard 60 FPS
+  // scheduled when it comes to requestAnimationFrame
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() =>
+  {
+    resizeTimer = 0;
+    for (const ioListBox of $$("io-list-box"))
+    {
+      // avoid computing the width if there are no items
+      // or if the element is inside an invisible tab
+      // where such width cannot possibly be computed
+      if (!ioListBox.items || isVisible(ioListBox))
+        return;
+
+      ioListBox.style.setProperty("--width", "100%");
+      // theoretically one rAF should be sufficient
+      // https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model
+      // but some browser needs double rAF needed to ensure layout changes
+      // https://bugs.chromium.org/p/chromium/issues/detail?id=675795
+      // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/15469349/
+      // https://bugs.webkit.org/show_bug.cgi?id=177484
+      requestAnimationFrame(() =>
+      {
+        requestAnimationFrame(setWidth.bind(ioListBox));
+      });
+    }
+  }, 1000 / 30);
+});
 
 // to retrieve a unique ID per item
 function getID(item)
@@ -3662,17 +4078,19 @@ function getID(item)
 // to retrieve an item from an option id
 function getItem(id)
 {
-  return this._items.find(item => getID(item) === id);
+  return this._items.find(item => (!item.group && getID(item) === id));
 }
 
 // private helper
 function hover(type, item)
 {
   const id = getID(item);
-  const hovered = this.querySelector(".hover");
+  if (!id)
+    return;
+  const hovered = $(".hover", this);
   if (hovered)
     hovered.classList.remove("hover");
-  const option = this.querySelector(`#${id}`);
+  const option = $(`#${id}`, this);
   option.classList.add("hover");
   this.label.setAttribute("aria-activedescendant", id);
   const popup = this.popup;
@@ -3699,20 +4117,29 @@ function findNext(el, other)
   do
   {
     el = el[other];
-  } while (el && el !== first && !getItem.call(this, el.id).disabled);
+  }
+  // skip disabled items and separators/rows without an ID
+  while (el && el !== first && !isDisabled.call(this, el));
   return el === first ? null : el;
 }
 
-function fixSize()
+function isDisabled(el)
 {
-  if (!this._fixedSize)
-  {
-    this._fixedSize = true;
-    this.style.setProperty("--height", this.label.offsetHeight + "px");
-  }
+  return el.id && getItem.call(this, el.id).disabled;
 }
 
-},{"./dom":3,"./io-element":5}],10:[function(require,module,exports){
+function isVisible(el)
+{
+  const cstyle = window.getComputedStyle(el, null);
+  return cstyle.getPropertyValue("display") !== "none";
+}
+
+function setWidth()
+{
+  this.style.setProperty("--width", this.label.offsetWidth + "px");
+}
+
+},{"./dom":4,"./io-element":6}],12:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -3738,7 +4165,7 @@ class IOPopout extends IOElement
 {
   static get observedAttributes()
   {
-    return ["expanded", "i18n-body", "type"];
+    return ["anchor-icon", "expanded", "i18n-body", "type"];
   }
 
   created()
@@ -3759,7 +4186,7 @@ class IOPopout extends IOElement
     if (ev.relatedTarget && this.contains(ev.relatedTarget))
       return;
 
-    this.expanded = "";
+    this.expanded = null;
   }
 
   onclick(ev)
@@ -3772,12 +4199,13 @@ class IOPopout extends IOElement
 
       if (this.expanded)
       {
-        this.expanded = "";
+        this.expanded = null;
       }
-      else if (this.type == "tooltip")
+      else if (this.type == "dialog" || this.type == "tooltip")
       {
         const {bottom, top} = ev.target.getBoundingClientRect();
-        this.expanded = (screen.availHeight - bottom > top) ? "below" : "above";
+        const {clientHeight} = document.documentElement;
+        this.expanded = (clientHeight - bottom > top) ? "below" : "above";
       }
       else
       {
@@ -3786,7 +4214,7 @@ class IOPopout extends IOElement
     }
     else if (target.nodeName == "A" || target.nodeName == "BUTTON")
     {
-      this.expanded = "";
+      this.expanded = null;
     }
   }
 
@@ -3797,7 +4225,7 @@ class IOPopout extends IOElement
     const role = this.type || "tooltip";
     const content = [];
 
-    if (role == "tooltip")
+    if (role == "dialog" || role == "tooltip")
     {
       content.push(wire(this, ":close")`
         <button class="icon close secondary"></button>
@@ -3814,7 +4242,7 @@ class IOPopout extends IOElement
     content.push(...this._children);
 
     this.html`
-    <div class="${["wrapper", "icon", role].join(" ")}">
+    <div class="wrapper icon">
       <div role="${role}" aria-hidden="${!this.expanded}">
         ${content}
       </div>
@@ -3825,7 +4253,81 @@ class IOPopout extends IOElement
 
 IOPopout.define("io-popout");
 
-},{"./io-element":5}],11:[function(require,module,exports){
+},{"./io-element":6}],13:[function(require,module,exports){
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+"use strict";
+
+const api = require("./api");
+const IOElement = require("./io-element");
+
+class IORating extends IOElement
+{
+  static get observedAttributes()
+  {
+    return ["application"];
+  }
+
+  attributeChangedCallback()
+  {
+    this.render();
+  }
+
+  created()
+  {
+    this.render();
+  }
+
+  onclick(event)
+  {
+    const rating = parseInt(event.target.dataset.rating, 10);
+    let doclink = `${this.application}_review`;
+    if (rating < 4)
+    {
+      doclink += "_low";
+    }
+
+    api.doclinks.get(doclink).then((url) =>
+    {
+      browser.tabs.create({url});
+    });
+  }
+
+  render()
+  {
+    if (!this.application)
+      return;
+
+    this.html`
+      <img data-rating="1" src="skin/icons/star.svg" onclick="${this}">
+      <img data-rating="2" src="skin/icons/star.svg" onclick="${this}">
+      <img data-rating="3" src="skin/icons/star.svg" onclick="${this}">
+      <img data-rating="4" src="skin/icons/star.svg" onclick="${this}">
+      <img data-rating="5" src="skin/icons/star.svg" onclick="${this}">
+    `;
+  }
+}
+
+IORating.define("io-rating");
+
+module.exports = IORating;
+
+},{"./api":2,"./io-element":6}],14:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -4069,7 +4571,7 @@ function stop(event)
   event.stopPropagation();
 }
 
-},{"./dom":3,"./io-element":5}],12:[function(require,module,exports){
+},{"./dom":4,"./io-element":6}],15:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -4090,41 +4592,29 @@ function stop(event)
 "use strict";
 
 const IOElement = require("./io-element");
-const {boolean} = IOElement.utils;
 
 class IOToggle extends IOElement
 {
   // action, checked, and disabled should be reflected down the button
   static get observedAttributes()
   {
-    return ["action", "checked", "disabled"];
+    return ["checked", "disabled"];
+  }
+
+  static get booleanAttributes()
+  {
+    return ["checked", "disabled"];
+  }
+
+  attributeChangedCallback()
+  {
+    this.render();
   }
 
   created()
   {
     this.addEventListener("click", this);
     this.render();
-  }
-
-  get checked()
-  {
-    return this.hasAttribute("checked");
-  }
-
-  set checked(value)
-  {
-    boolean.attribute(this, "checked", value);
-    this.render();
-  }
-
-  get disabled()
-  {
-    return this.hasAttribute("disabled");
-  }
-
-  set disabled(value)
-  {
-    boolean.attribute(this, "disabled", value);
   }
 
   onclick(event)
@@ -4136,7 +4626,7 @@ class IOToggle extends IOElement
       {
         this.child.focus();
       }
-      this.dispatchEvent(new CustomEvent("change", {
+      this.firstElementChild.dispatchEvent(new CustomEvent("change", {
         bubbles: true,
         cancelable: true,
         detail: this.checked
@@ -4150,7 +4640,6 @@ class IOToggle extends IOElement
     <button
       role="checkbox"
       disabled="${this.disabled}"
-      data-action="${this.action}"
       aria-checked="${this.checked}"
       aria-disabled="${this.disabled}"
     />`;
@@ -4161,7 +4650,7 @@ IOToggle.define("io-toggle");
 
 module.exports = IOToggle;
 
-},{"./io-element":5}],13:[function(require,module,exports){
+},{"./io-element":6}],16:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var createContent = (function (document) {'use strict';
   var FRAGMENT = 'fragment';
@@ -4220,7 +4709,7 @@ var createContent = (function (document) {'use strict';
 }(document));
 module.exports = createContent;
 
-},{}],14:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 self.CustomEvent = typeof CustomEvent === 'function' ?
@@ -4237,7 +4726,7 @@ self.CustomEvent = typeof CustomEvent === 'function' ?
   }('prototype'));
 module.exports = self.CustomEvent;
 
-},{}],15:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 try { self.Map = Map; }
@@ -4274,7 +4763,7 @@ catch (Map) {
 }
 module.exports = self.Map;
 
-},{}],16:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 try { self.WeakSet = WeakSet; }
@@ -4300,7 +4789,7 @@ catch (WeakSet) {
 }
 module.exports = self.WeakSet;
 
-},{}],17:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var importNode = (function (
   document,
@@ -4345,7 +4834,7 @@ var importNode = (function (
 ));
 module.exports = importNode;
 
-},{}],18:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 var isArray = Array.isArray || (function (toString) {
   var $ = toString.call([]);
   return function isArray(object) {
@@ -4354,7 +4843,7 @@ var isArray = Array.isArray || (function (toString) {
 }({}.toString));
 module.exports = isArray;
 
-},{}],19:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var templateLiteral = (function () {'use strict';
   var RAW = 'raw';
@@ -4393,7 +4882,7 @@ var templateLiteral = (function () {'use strict';
 }());
 module.exports = templateLiteral;
 
-},{}],20:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 'use strict';
 const unique = (require('@ungap/template-literal'));
 
@@ -4406,13 +4895,13 @@ Object.defineProperty(exports, '__esModule', {value: true}).default = function (
   return args;
 };
 
-},{"@ungap/template-literal":19}],21:[function(require,module,exports){
+},{"@ungap/template-literal":22}],24:[function(require,module,exports){
 var trim = ''.trim || function () {
   return String(this).replace(/^\s+|\s+/g, '');
 };
 module.exports = trim;
 
-},{}],22:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 try { self.WeakMap = WeakMap; }
@@ -4449,7 +4938,7 @@ catch (WeakMap) {
 }
 module.exports = self.WeakMap;
 
-},{}],23:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 /*! (c) Andrea Giammarchi */
 function disconnected(poly) {'use strict';
   var CONNECTED = 'connected';
@@ -4561,7 +5050,7 @@ function disconnected(poly) {'use strict';
 }
 module.exports = disconnected;
 
-},{}],24:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /*!
 ISC License
 
@@ -6072,7 +6561,7 @@ function installCustomElements(window, polyfill) {'use strict';
 
 module.exports = installCustomElements;
 
-},{}],25:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict';
 /*! (c) 2018 Andrea Giammarchi (ISC) */
 
@@ -6296,7 +6785,7 @@ const domdiff = (
 
 Object.defineProperty(exports, '__esModule', {value: true}).default = domdiff;
 
-},{"./utils.js":26}],26:[function(require,module,exports){
+},{"./utils.js":29}],29:[function(require,module,exports){
 'use strict';
 const Map = (require('@ungap/essential-map'));
 
@@ -6679,7 +7168,7 @@ const smartDiff = (
 };
 exports.smartDiff = smartDiff;
 
-},{"@ungap/essential-map":15}],27:[function(require,module,exports){
+},{"@ungap/essential-map":18}],30:[function(require,module,exports){
 'use strict';
 // Custom
 var UID = '-' + Math.random().toFixed(6) + '%';
@@ -6712,7 +7201,7 @@ exports.TEXT_NODE = TEXT_NODE;
 exports.SHOULD_USE_TEXT_CONTENT = SHOULD_USE_TEXT_CONTENT;
 exports.VOID_ELEMENTS = VOID_ELEMENTS;
 
-},{}],28:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 'use strict';
 // globals
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
@@ -6819,7 +7308,7 @@ function cleanContent(fragment) {
   }
 }
 
-},{"./sanitizer.js":29,"./walker.js":30,"@ungap/create-content":13,"@ungap/import-node":17,"@ungap/trim":21,"@ungap/weakmap":22}],29:[function(require,module,exports){
+},{"./sanitizer.js":32,"./walker.js":33,"@ungap/create-content":16,"@ungap/import-node":20,"@ungap/trim":24,"@ungap/weakmap":25}],32:[function(require,module,exports){
 'use strict';
 const {UID, UIDC, VOID_ELEMENTS} = require('./constants.js');
 
@@ -6851,7 +7340,7 @@ function fullClosing($0, $1, $2) {
   return VOID_ELEMENTS.test($1) ? $0 : ('<' + $1 + $2 + '></' + $1 + '>');
 }
 
-},{"./constants.js":27}],30:[function(require,module,exports){
+},{"./constants.js":30}],33:[function(require,module,exports){
 'use strict';
 const Map = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/essential-map'));
 const trim = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/trim'));
@@ -6981,7 +7470,7 @@ function parseAttributes(node, holes, parts, path) {
   }
 }
 
-},{"./constants.js":27,"@ungap/essential-map":15,"@ungap/trim":21}],31:[function(require,module,exports){
+},{"./constants.js":30,"@ungap/essential-map":18,"@ungap/trim":24}],34:[function(require,module,exports){
 'use strict';
 /*! (C) 2017-2018 Andrea Giammarchi - ISC Style License */
 
@@ -7362,7 +7851,7 @@ function isReady(created) {
   return false;
 }
 
-},{"hyperhtml":37}],32:[function(require,module,exports){
+},{"hyperhtml":40}],35:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var hyperStyle = (function (){'use strict';
   // from https://github.com/developit/preact/blob/33fc697ac11762a1cb6e71e9847670d047af7ce5/src/varants.js
@@ -7449,7 +7938,7 @@ var hyperStyle = (function (){'use strict';
 }());
 module.exports = hyperStyle;
 
-},{}],33:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var Wire = (function (slice, proto) {
 
@@ -7499,7 +7988,7 @@ var Wire = (function (slice, proto) {
 }([].slice));
 module.exports = Wire;
 
-},{}],34:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 'use strict';
 const CustomEvent = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/custom-event'));
 const Map = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/essential-map'));
@@ -7667,7 +8156,7 @@ Object.defineProperties(
   }
 );
 
-},{"@ungap/custom-event":14,"@ungap/essential-map":15,"@ungap/weakmap":22}],35:[function(require,module,exports){
+},{"@ungap/custom-event":17,"@ungap/essential-map":18,"@ungap/weakmap":25}],38:[function(require,module,exports){
 'use strict';
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
 const tta = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/template-tag-arguments'));
@@ -7708,7 +8197,7 @@ function upgrade(template) {
 
 Object.defineProperty(exports, '__esModule', {value: true}).default = render;
 
-},{"../objects/Updates.js":39,"../shared/constants.js":40,"@ungap/template-tag-arguments":20,"@ungap/weakmap":22}],36:[function(require,module,exports){
+},{"../objects/Updates.js":42,"../shared/constants.js":43,"@ungap/template-tag-arguments":23,"@ungap/weakmap":25}],39:[function(require,module,exports){
 'use strict';
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
 const tta = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/template-tag-arguments'));
@@ -7794,7 +8283,7 @@ exports.content = content;
 exports.weakly = weakly;
 Object.defineProperty(exports, '__esModule', {value: true}).default = wire;
 
-},{"../objects/Updates.js":39,"@ungap/template-tag-arguments":20,"@ungap/weakmap":22,"hyperhtml-wire":33}],37:[function(require,module,exports){
+},{"../objects/Updates.js":42,"@ungap/template-tag-arguments":23,"@ungap/weakmap":25,"hyperhtml-wire":36}],40:[function(require,module,exports){
 'use strict';
 /*! (c) Andrea Giammarchi (ISC) */
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
@@ -7873,7 +8362,7 @@ function hyper(HTML) {
 }
 Object.defineProperty(exports, '__esModule', {value: true}).default = hyper
 
-},{"./classes/Component.js":34,"./hyper/render.js":35,"./hyper/wire.js":36,"./objects/Intent.js":38,"./objects/Updates.js":39,"@ungap/essential-weakset":16,"@ungap/weakmap":22,"domdiff":25}],38:[function(require,module,exports){
+},{"./classes/Component.js":37,"./hyper/render.js":38,"./hyper/wire.js":39,"./objects/Intent.js":41,"./objects/Updates.js":42,"@ungap/essential-weakset":19,"@ungap/weakmap":25,"domdiff":28}],41:[function(require,module,exports){
 'use strict';
 const attributes = {};
 const intents = {};
@@ -7915,7 +8404,7 @@ Object.defineProperty(exports, '__esModule', {value: true}).default = {
   }
 };
 
-},{}],39:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 'use strict';
 const CustomEvent = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/custom-event'));
 const WeakSet = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/essential-weakset'));
@@ -8263,7 +8752,7 @@ Tagger.prototype = {
   }
 };
 
-},{"../classes/Component.js":34,"../shared/constants.js":40,"./Intent.js":38,"@ungap/create-content":13,"@ungap/custom-event":14,"@ungap/essential-weakset":16,"@ungap/is-array":18,"disconnected":23,"domdiff":25,"domtagger":28,"hyperhtml-style":32,"hyperhtml-wire":33}],40:[function(require,module,exports){
+},{"../classes/Component.js":37,"../shared/constants.js":43,"./Intent.js":41,"@ungap/create-content":16,"@ungap/custom-event":17,"@ungap/essential-weakset":19,"@ungap/is-array":21,"disconnected":26,"domdiff":28,"domtagger":31,"hyperhtml-style":35,"hyperhtml-wire":36}],43:[function(require,module,exports){
 'use strict';
 // Node.CONSTANTS
 // 'cause some engine has no global Node defined
@@ -8283,4 +8772,4 @@ exports.CONNECTED = CONNECTED;
 const DISCONNECTED = 'dis' + CONNECTED;
 exports.DISCONNECTED = DISCONNECTED;
 
-},{}]},{},[2]);
+},{}]},{},[3]);

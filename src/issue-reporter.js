@@ -35,6 +35,11 @@ const doclinks = {
 };
 module.exports.doclinks = doclinks;
 
+const prefs = {
+  get: (key) => send("prefs.get", {key})
+};
+module.exports.prefs = prefs;
+
 // For now we are merely reusing the port for long-lived communications to fix
 // https://gitlab.com/eyeo/adblockplus/abpui/adblockplusui/issues/415
 const port = browser.runtime.connect({name: "ui"});
@@ -671,10 +676,13 @@ class IOElement extends HyperHTMLElement
 //    return this.html`<div>${{i18n:'about-abp'}}</div>`;
 //  }
 const {setElementText} = ext.i18n;
-IOElement.intent("i18n", id =>
+IOElement.intent("i18n", idOrArgs =>
 {
   const fragment = document.createDocumentFragment();
-  setElementText(fragment, id);
+  if (typeof idOrArgs === "string")
+    setElementText(fragment, idOrArgs);
+  else if (idOrArgs instanceof Array)
+    setElementText(fragment, ...idOrArgs);
   return fragment;
 });
 
@@ -702,6 +710,8 @@ module.exports = IOElement;
 
 const IOElement = require("./io-element");
 const DrawingHandler = require("./drawing-handler");
+
+const {$} = require("./dom");
 
 const {utils} = IOElement;
 
@@ -804,7 +814,7 @@ class IOHighlighter extends IOElement
     // through the newly created canvas
     if (!this.drawingHandler)
       this.drawingHandler = new DrawingHandler(
-        this.querySelector("canvas"),
+        $("canvas", this),
         parseInt(this.dataset.maxSize, 10) || 800
       );
   }
@@ -812,7 +822,7 @@ class IOHighlighter extends IOElement
   // shortcut for internal canvas.toDataURL()
   toDataURL()
   {
-    return this.querySelector("canvas").toDataURL();
+    return $("canvas", this).toDataURL();
   }
 }
 
@@ -825,7 +835,7 @@ const changeMode = (self, mode) =>
   self.setState({drawing});
 };
 
-},{"./drawing-handler":3,"./io-element":4}],6:[function(require,module,exports){
+},{"./dom":2,"./drawing-handler":3,"./io-element":4}],6:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -971,11 +981,21 @@ IOSteps.define("io-steps");
 "use strict";
 
 const {port} = require("./api");
+const {$, $$} = require("./dom");
 
 const reportData = new DOMParser().parseFromString("<report></report>",
                                                  "text/xml");
 let dataGatheringTabId = null;
 let isMinimumTimeMet = false;
+
+function getOriginalTabId()
+{
+  const tabId = parseInt(location.search.replace(/^\?/, ""), 10);
+  if (!tabId && tabId !== 0)
+    throw new Error("invalid tab id");
+
+  return tabId;
+}
 
 port.onMessage.addListener((message) =>
 {
@@ -986,13 +1006,12 @@ port.onMessage.addListener((message) =>
       {
         case "hits":
           const [request, filter, subscriptions] = message.args;
-          const requestsContainerElem = reportData.querySelector("requests");
-          const filtersElem = reportData.querySelector("filters");
+          const requestsContainerElem = $("requests", reportData);
+          const filtersElem = $("filters", reportData);
           // ELEMHIDE hitLog request doesn't contain url
           if (request.url)
           {
-            let requestElem = reportData
-                                .querySelector(`[location="${request.url}"]`);
+            let requestElem = $(`[location="${request.url}"]`, reportData);
             if (requestElem)
             {
               const countNum = parseInt(
@@ -1015,8 +1034,7 @@ port.onMessage.addListener((message) =>
           }
           if (filter)
           {
-            const existingFilter = reportData
-                                    .querySelector(`[text='${filter.text}']`);
+            const existingFilter = $(`[text='${filter.text}']`, reportData);
             if (existingFilter)
             {
               const countNum = parseInt(existingFilter.getAttribute("hitCount"),
@@ -1042,20 +1060,26 @@ module.exports = {
   closeRequestsCollectingTab,
   collectData()
   {
-    const tabId = parseInt(location.search.replace(/^\?/, ""), 10);
-
-    if (!tabId && tabId !== 0)
-      return Promise.reject(new Error("invalid tab id"));
+    let tabId;
+    try
+    {
+      tabId = getOriginalTabId();
+    }
+    catch (ex)
+    {
+      return Promise.reject(ex);
+    }
 
     return Promise.all([
       retrieveAddonInfo(),
       retrieveApplicationInfo(),
       retrievePlatformInfo(),
-      retrieveTabURL(tabId),
+      retrieveWindowInfo(tabId),
       collectRequests(tabId),
       retrieveSubscriptions()
     ]).then(() => reportData);
-  }
+  },
+  updateConfigurationInfo
 };
 
 function collectRequests(tabId)
@@ -1081,8 +1105,7 @@ function collectRequests(tabId)
 
       isMinimumTimeMet = true;
       document.getElementById("showData").disabled = false;
-      document.querySelector("io-steps")
-              .dispatchEvent(new CustomEvent("requestcollected"));
+      $("io-steps").dispatchEvent(new CustomEvent("requestcollected"));
       validateCommentsPage();
     }
     browser.tabs.onUpdated.addListener((updatedTabId, changeInfo) =>
@@ -1152,32 +1175,64 @@ function retrieveApplicationInfo()
 function retrievePlatformInfo()
 {
   const element = reportData.createElement("platform");
-  return browser.runtime.sendMessage({
-    type: "app.get",
-    what: "platform"
-  }).then(platform =>
-  {
-    element.setAttribute("name", capitalize(platform));
-    return browser.runtime.sendMessage({
+  const {getBrowserInfo, sendMessage} = browser.runtime;
+  return Promise.all([
+    // Only Firefox supports browser.runtime.getBrowserInfo()
+    (getBrowserInfo) ? getBrowserInfo() : null,
+    sendMessage({
+      type: "app.get",
+      what: "platform"
+    }),
+    sendMessage({
       type: "app.get",
       what: "platformVersion"
-    });
-  }).then(platformVersion =>
+    })
+  ])
+  .then(([browserInfo, platform, platformVersion]) =>
   {
+    if (browserInfo)
+    {
+      element.setAttribute("build", browserInfo.buildID);
+    }
+    element.setAttribute("name", capitalize(platform));
     element.setAttribute("version", platformVersion);
     reportData.documentElement.appendChild(element);
   });
 }
 
-function retrieveTabURL(tabId)
+function retrieveWindowInfo(tabId)
 {
-  return browser.tabs.get(tabId).then(tab =>
-  {
-    const element = reportData.createElement("window");
-    if (tab.url)
-      element.setAttribute("url", censorURL(tab.url));
-    reportData.documentElement.appendChild(element);
-  });
+  return browser.tabs.get(tabId)
+    .then((tab) =>
+    {
+      let openerUrl = null;
+      if (tab.openerTabId)
+      {
+        openerUrl = browser.tabs.get(tab.openerTabId)
+          .then((openerTab) => openerTab.url);
+      }
+
+      const referrerUrl = browser.tabs.executeScript(tabId, {
+        code: "document.referrer"
+      })
+      .then(([referrer]) => referrer);
+
+      return Promise.all([tab.url, openerUrl, referrerUrl]);
+    })
+    .then(([url, openerUrl, referrerUrl]) =>
+    {
+      const element = reportData.createElement("window");
+      if (openerUrl)
+      {
+        element.setAttribute("opener", censorURL(openerUrl));
+      }
+      if (referrerUrl)
+      {
+        element.setAttribute("referrer", censorURL(referrerUrl));
+      }
+      element.setAttribute("url", censorURL(url));
+      reportData.documentElement.appendChild(element);
+    });
 }
 
 function retrieveSubscriptions()
@@ -1230,6 +1285,223 @@ function retrieveSubscriptions()
   });
 }
 
+function setConfigurationInfo(configInfo)
+{
+  let extensionsContainer = $("extensions", reportData);
+  let optionsContainer = $("options", reportData);
+
+  if (!configInfo)
+  {
+    if (extensionsContainer)
+    {
+      extensionsContainer.parentNode.removeChild(extensionsContainer);
+    }
+    if (optionsContainer)
+    {
+      optionsContainer.parentNode.removeChild(optionsContainer);
+    }
+    return;
+  }
+
+  if (!extensionsContainer)
+  {
+    extensionsContainer = reportData.createElement("extensions");
+    reportData.documentElement.appendChild(extensionsContainer);
+  }
+  if (!optionsContainer)
+  {
+    optionsContainer = reportData.createElement("options");
+    reportData.documentElement.appendChild(optionsContainer);
+  }
+
+  extensionsContainer.innerHTML = "";
+  optionsContainer.innerHTML = "";
+
+  const {extensions, options} = configInfo;
+
+  for (const id in options)
+  {
+    const element = reportData.createElement("option");
+    element.setAttribute("id", id);
+    element.textContent = options[id];
+    optionsContainer.appendChild(element);
+  }
+
+  for (const extension of extensions)
+  {
+    const element = reportData.createElement("extension");
+    element.setAttribute("id", extension.id);
+    element.setAttribute("name", extension.name);
+    element.setAttribute("type", extension.type);
+    if (extension.version)
+    {
+      element.setAttribute("version", extension.version);
+    }
+    extensionsContainer.appendChild(element);
+  }
+}
+
+// Chrome doesn't update the JavaScript context to reflect changes in the
+// extension's permissions so we need to proxy our calls through a frame that
+// loads after we request the necessary permissions
+// https://bugs.chromium.org/p/chromium/issues/detail?id=594703
+function proxyApiCall(apiId, ...args)
+{
+  return new Promise((resolve) =>
+  {
+    const iframe = document.createElement("iframe");
+    iframe.hidden = true;
+    iframe.src = browser.runtime.getURL("proxy.html");
+    iframe.onload = () =>
+    {
+      function callback(...results)
+      {
+        document.body.removeChild(iframe);
+        resolve(results[0]);
+      }
+
+      // The following APIs are injected at runtime so we can't rely on our
+      // promise polyfill. Therefore we simplify things by proxying calls even
+      // if the API has been made available to us in the same frame.
+      const proxy = iframe.contentWindow.browser;
+      switch (apiId)
+      {
+        case "contentSettings.cookies":
+          if ("contentSettings" in proxy)
+          {
+            proxy.contentSettings.cookies.get(...args).then(callback);
+          }
+          else
+          {
+            callback(null);
+          }
+          break;
+        case "contentSettings.javascript":
+          if ("contentSettings" in proxy)
+          {
+            proxy.contentSettings.javascript.get(...args).then(callback);
+          }
+          else
+          {
+            callback(null);
+          }
+          break;
+        case "management.getAll":
+          if ("getAll" in proxy.management)
+          {
+            proxy.management.getAll(...args).then(callback);
+          }
+          else
+          {
+            callback(null);
+          }
+          break;
+      }
+    };
+    document.body.appendChild(iframe);
+  });
+}
+
+function retrieveExtensions()
+{
+  return proxyApiCall("management.getAll")
+    .then((installed) =>
+    {
+      const extensions = [];
+
+      for (const extension of installed)
+      {
+        if (!extension.enabled || extension.type != "extension")
+          continue;
+
+        extensions.push({
+          id: extension.id,
+          name: extension.name,
+          type: "extension",
+          version: extension.version
+        });
+      }
+
+      const {plugins} = navigator;
+      for (const plugin of plugins)
+      {
+        extensions.push({
+          id: plugin.filename,
+          name: plugin.name,
+          type: "plugin"
+        });
+      }
+
+      return extensions;
+    })
+    .catch((err) =>
+    {
+      console.error("Could not retrieve list of extensions");
+      return [];
+    });
+}
+
+function retrieveOptions()
+{
+  // Firefox doesn't support browser.contentSettings API
+  if (!("contentSettings" in browser))
+    return Promise.resolve({});
+
+  let tabId;
+  try
+  {
+    tabId = getOriginalTabId();
+  }
+  catch (ex)
+  {
+    return Promise.reject(ex);
+  }
+
+  return browser.tabs.get(tabId)
+    .then((tab) =>
+    {
+      const details = {primaryUrl: tab.url, incognito: tab.incognito};
+
+      return Promise.all([
+        proxyApiCall("contentSettings.cookies", details),
+        proxyApiCall("contentSettings.javascript", details),
+        tab.incognito
+      ]);
+    })
+    .then(([cookies, javascript, incognito]) =>
+    {
+      return {
+        cookieBehavior: cookies.setting == "allow" ||
+          cookies.setting == "session_only",
+        javascript: javascript.setting == "allow",
+        privateBrowsing: incognito
+      };
+    })
+    .catch((err) =>
+    {
+      console.error("Could not retrieve configuration options");
+      return {};
+    });
+}
+
+function updateConfigurationInfo(isAccessible)
+{
+  if (!isAccessible)
+  {
+    setConfigurationInfo(null);
+    return Promise.resolve();
+  }
+
+  return Promise.all([
+    retrieveExtensions(),
+    retrieveOptions()
+  ])
+  .then(([extensions, options]) =>
+  {
+    setConfigurationInfo({extensions, options});
+  });
+}
+
 function capitalize(str)
 {
   return str[0].toUpperCase() + str.slice(1);
@@ -1245,13 +1517,13 @@ function setReportType(event)
   reportData.documentElement.setAttribute("type", event.target.value);
 }
 
-for (const typeElement of document.querySelectorAll("#typeSelectorGroup input"))
+for (const typeElement of $$("#typeSelectorGroup input"))
 {
   typeElement.addEventListener("change", setReportType);
 }
 
 let commentElement = null;
-document.querySelector("#comment").addEventListener("input", (event) =>
+$("#comment").addEventListener("input", (event) =>
 {
   const comment = event.target.value;
   if (!comment)
@@ -1274,17 +1546,19 @@ document.querySelector("#comment").addEventListener("input", (event) =>
   }
 });
 
-const anonSubmissionField = document.querySelector("#anonymousSubmission");
-const emailField = document.querySelector("#email");
+const anonSubmissionField = $("#anonymousSubmission");
+const emailField = $("#email");
 emailField.addEventListener("input", validateCommentsPage);
 anonSubmissionField.addEventListener("click", validateCommentsPage);
 
 const emailElement = reportData.createElement("email");
 function validateCommentsPage()
 {
-  const sendButton = document.querySelector("#send");
-  document.querySelector("#anonymousSubmissionWarning")
-          .setAttribute("data-invisible", !anonSubmissionField.checked);
+  const sendButton = $("#send");
+  $("#anonymousSubmissionWarning").setAttribute(
+    "data-invisible",
+    !anonSubmissionField.checked
+  );
   if (anonSubmissionField.checked)
   {
     emailField.value = "";
@@ -1303,12 +1577,12 @@ function validateCommentsPage()
     sendButton.disabled = (value == "" || !emailField.validity.valid ||
       !isMinimumTimeMet);
   }
-  document.querySelector("io-steps")
-          .dispatchEvent(new CustomEvent("formvalidated",
-                        {detail: !sendButton.disabled}));
+  $("io-steps").dispatchEvent(
+    new CustomEvent("formvalidated", {detail: !sendButton.disabled})
+  );
 }
 
-},{"./api":1}],8:[function(require,module,exports){
+},{"./api":1,"./dom":2}],8:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -1332,6 +1606,8 @@ function validateCommentsPage()
 // and handled, by this file
 require("./io-steps");
 require("./io-highlighter");
+
+const {$, $$} = require("./dom");
 
 // managers are invoked right away
 // but their initialization might be asynchronous
@@ -1384,15 +1660,15 @@ const managers = [
         ioSteps.addEventListener("formvalidated", event =>
         {
           ioSteps.setCompleted(index, event.detail);
-          ioSteps.querySelector("button:last-child").disabled = true;
+          $("button:last-child", ioSteps).disabled = true;
           if (event.detail)
             resolve();
         });
       })
     ]).then(() =>
     {
-      document.querySelector("#continue").hidden = true;
-      document.querySelector("#send").hidden = false;
+      $("#continue").hidden = true;
+      $("#send").hidden = false;
     });
   },
 
@@ -1402,7 +1678,7 @@ const managers = [
     ioSteps.addEventListener("step:click", function once(event)
     {
       ioSteps.removeEventListener(event.type, once);
-      const ioHighlighter = document.querySelector("io-highlighter");
+      const ioHighlighter = $("io-highlighter");
       ioHighlighter.changeDepth.then(() =>
       {
         resolve({
@@ -1425,9 +1701,9 @@ const managers = [
 
 module.exports = ({screenshot}) => new Promise(resolve =>
 {
-  const ioSteps = document.querySelector("io-steps");
-  const pages = document.querySelectorAll("main > .page");
-  const btnContinue = document.querySelector("#continue");
+  const ioSteps = $("io-steps");
+  const pages = $$("main > .page");
+  const btnContinue = $("#continue");
   let currentPage = pages[0];
   let index = 0;
   ioSteps.addEventListener(
@@ -1464,10 +1740,10 @@ module.exports = ({screenshot}) => new Promise(resolve =>
 
 function enableContinue()
 {
-  document.querySelector("#continue").disabled = false;
+  $("#continue").disabled = false;
 }
 
-},{"./io-highlighter":5,"./io-steps":6}],9:[function(require,module,exports){
+},{"./dom":2,"./io-highlighter":5,"./io-steps":6}],9:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -1490,6 +1766,26 @@ function enableContinue()
 const stepsManager = require("./issue-reporter-steps-manager");
 const report = require("./issue-reporter-report");
 const {$, asIndentedString} = require("./dom");
+
+const optionalPermissions = {
+  permissions: [
+    "contentSettings",
+    "management"
+  ]
+};
+
+function containsPermissions()
+{
+  // Firefox doesn't trigger the promise's catch() but instead throws
+  try
+  {
+    return browser.permissions.contains(optionalPermissions);
+  }
+  catch (ex)
+  {
+    return Promise.reject(ex);
+  }
+}
 
 document.addEventListener("DOMContentLoaded", () =>
 {
@@ -1559,6 +1855,49 @@ document.addEventListener("DOMContentLoaded", () =>
     });
   });
 
+  // We query our permissions here to find out whether the browser supports them
+  containsPermissions()
+    .then(() =>
+    {
+      const includeConfig = $("#includeConfig");
+      includeConfig.addEventListener("change", (event) =>
+      {
+        if (!includeConfig.checked)
+        {
+          report.updateConfigurationInfo(false);
+          return;
+        }
+
+        event.preventDefault();
+
+        browser.permissions.request(optionalPermissions)
+          .then((granted) =>
+          {
+            return report.updateConfigurationInfo(granted)
+              .then(() =>
+              {
+                includeConfig.checked = granted;
+              });
+          })
+          // Catch error here already to ensure permission is removed
+          // even if we are unable to update the report data
+          .catch(console.error)
+          .then(() => browser.permissions.remove(optionalPermissions))
+          .then((success) =>
+          {
+            if (!success)
+              throw new Error("Failed to remove permissions");
+          })
+          .catch(console.error);
+      });
+    })
+    .catch((err) =>
+    {
+      // No need to ask for more data if we won't be able to access it anyway
+      const includeConfig = $("#includeConfigContainer");
+      includeConfig.hidden = true;
+    });
+
   const showDataOverlay = $("#showDataOverlay");
   $("#showData").addEventListener("click", event =>
   {
@@ -1584,13 +1923,6 @@ document.addEventListener("DOMContentLoaded", () =>
     showDataOverlay.hidden = true;
     $("#showData").focus();
   });
-
-
-  browser.runtime.sendMessage({
-    type: "app.get",
-    what: "doclink",
-    link: "reporter_privacy"
-  }).then(url => $("#privacyPolicy").href = url);
 });
 
 let notifyClosing = true;
@@ -1645,7 +1977,7 @@ function sendReport(reportData)
   for (const [param, value] of [
     ["version", 1],
     ["guid", generateUUID()],
-    ["lang", reportData.querySelector("adblock-plus")
+    ["lang", $("adblock-plus", reportData)
                        .getAttribute("locale")]
   ])
   {

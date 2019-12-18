@@ -69,7 +69,7 @@
 
 __webpack_require__(1);
 __webpack_require__(2);
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(5);
 
 
 /***/ }),
@@ -160,7 +160,7 @@ function injected(eventName, injectedIntoContentWindow)
     );
 
     // Apparently in HTMLObjectElement.prototype.contentWindow does not exist
-    // in older versions of Chrome such as 42.
+    // in older versions of Chrome such as 51.
     if (!contentWindowDesc)
       continue;
 
@@ -227,7 +227,7 @@ function injected(eventName, injectedIntoContentWindow)
   {
     for (let name of properties)
     {
-      if (src.hasOwnProperty(name))
+      if (Object.prototype.hasOwnProperty.call(src, name))
       {
         Object.defineProperty(dest, name,
                               Object.getOwnPropertyDescriptor(src, name));
@@ -382,7 +382,7 @@ function injected(eventName, injectedIntoContentWindow)
 
       // Since the old webkitRTCPeerConnection constructor takes an optional
       // second argument we need to take care to pass that through. Necessary
-      // for older versions of Chrome such as 49.
+      // for older versions of Chrome such as 51.
       let constraints = undefined;
       if (args.length > 1)
         constraints = args[1];
@@ -1020,13 +1020,17 @@ window.getURLsFromElement = getURLsFromElement;
 
 const {textToRegExp, filterToRegExp, splitSelector,
        qualifySelector} = __webpack_require__(4);
-const {indexOf} = __webpack_require__(5);
 
 let MIN_INVOCATION_INTERVAL = 3000;
 const MAX_SYNCHRONOUS_PROCESSING_TIME = 50;
 const abpSelectorRegexp = /:-abp-([\w-]+)\(/i;
 
 let testInfo = null;
+
+function toCSSStyleDeclaration(value)
+{
+  return Object.assign(document.createElement("test"), {style: value}).style;
+}
 
 function setTestMode()
 {
@@ -1058,7 +1062,16 @@ function getCachedPropertyValue(object, name, defaultValueFunc = () => {})
  */
 function positionInParent(node)
 {
-  return indexOf(node.parentNode.children, node) + 1;
+  let index = 0;
+  for (let child of node.parentNode.children)
+  {
+    if (child == node)
+      return index + 1;
+
+    index++;
+  }
+
+  return 0;
 }
 
 function makeSelector(node, selector = "")
@@ -1934,7 +1947,8 @@ class ElemHideEmulation
       mutations = mutations.filter(
         ({type, attributeName, target: {style: newValue}, oldValue}) =>
         !(type == "attributes" && attributeName == "style" &&
-          newValue.display == "none" && oldValue.display != "none")
+          newValue.display == "none" &&
+          toCSSStyleDeclaration(oldValue).display != "none")
       );
 
       if (mutations.length == 0)
@@ -1957,11 +1971,13 @@ class ElemHideEmulation
     if (this.patterns.length > 0)
     {
       this.queueFiltering();
+      let attributes = shouldObserveAttributes(this.patterns);
       this.observer.observe(
         this.document,
         {
           childList: true,
-          attributes: shouldObserveAttributes(this.patterns),
+          attributes,
+          attributeOldValue: attributes && !!testInfo,
           characterData: shouldObserveCharacterData(this.patterns),
           subtree: true
         }
@@ -2215,70 +2231,6 @@ exports.qualifySelector = qualifySelector;
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-present eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-
-
-function desc(properties)
-{
-  let descriptor = {};
-  let keys = Object.keys(properties);
-
-  for (let key of keys)
-    descriptor[key] = Object.getOwnPropertyDescriptor(properties, key);
-
-  return descriptor;
-}
-exports.desc = desc;
-
-function extend(cls, properties)
-{
-  return Object.create(cls.prototype, desc(properties));
-}
-exports.extend = extend;
-
-function findIndex(iterable, callback, thisArg)
-{
-  let index = 0;
-  for (let item of iterable)
-  {
-    if (callback.call(thisArg, item))
-      return index;
-
-    index++;
-  }
-
-  return -1;
-}
-exports.findIndex = findIndex;
-
-function indexOf(iterable, searchElement)
-{
-  return findIndex(iterable, item => item === searchElement);
-}
-exports.indexOf = indexOf;
-
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

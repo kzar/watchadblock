@@ -92,6 +92,13 @@ ext.i18n = {
     }
   },
 
+  // Used for visual strings cleanup(ex. tags from messages used in alert())
+  // Function is not meant to be used together with `innerHTML`
+  stripTagsUnsafe(text)
+  {
+    return text.replace(/<\/?[^>]+>/g, "");
+  },
+
   // Inserts i18n strings into matching elements. Any inner HTML already
   // in the element is parsed as JSON and used as parameters to
   // substitute into placeholders in the i18n message.
@@ -99,7 +106,7 @@ ext.i18n = {
   {
     function processString(str, currentElement)
     {
-      const match = /^(.*?)<(a|slot|strong)(\d)?>(.*?)<\/\2\3>(.*)$/.exec(str);
+      const match = /^(.*?)<(a|em|slot|strong)(\d)?>(.*?)<\/\2\3>(.*)$/.exec(str);
       if (match)
       {
         const [, before, name, index, innerText, after] = match;
@@ -140,24 +147,6 @@ function loadI18nStrings()
 {
   function resolveStringNames(container)
   {
-    // Deprecated, use data-i18n attribute instead
-    {
-      const elements = container.querySelectorAll("[class^='i18n_']");
-      for (const element of elements)
-      {
-        let args = JSON.parse("[" + element.textContent + "]");
-        if (args.length == 0)
-          args = null;
-
-        let {className} = element;
-        if (className instanceof SVGAnimatedString)
-          className = className.animVal;
-        const stringName = className.split(/\s/)[0].substring(5);
-
-        ext.i18n.setElementText(element, stringName, args);
-      }
-    }
-
     {
       const elements = container.querySelectorAll("[data-i18n]");
       for (const element of elements)
@@ -185,32 +174,6 @@ function loadI18nStrings()
   // individually.
   for (const template of document.querySelectorAll("template"))
     resolveStringNames(template.content);
-}
-
-// Provides a more readable string of the current date and time
-function i18nTimeDateStrings(when)
-{
-  const d = new Date(when);
-  const timeString = d.toLocaleTimeString();
-
-  const now = new Date();
-  if (d.toDateString() == now.toDateString())
-    return [timeString];
-  return [timeString, d.toLocaleDateString()];
-}
-
-// Formats date string to ["YYYY-MM-DD", "mm:ss"] format
-function i18nFormatDateTime(when)
-{
-  const date = new Date(when);
-  let dateParts = [date.getFullYear(), date.getMonth() + 1, date.getDate(),
-                   date.getHours(), date.getMinutes()];
-
-  dateParts = dateParts.map(
-    (datePart) => datePart < 10 ? "0" + datePart : datePart
-  );
-
-  return [dateParts.splice(0, 3).join("-"), dateParts.join(":")];
 }
 
 // Fill in the strings as soon as possible
