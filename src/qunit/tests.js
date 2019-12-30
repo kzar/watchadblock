@@ -116,7 +116,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "4.2.0";
+exports.addonVersion = "4.3.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
