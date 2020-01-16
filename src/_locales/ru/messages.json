@@ -1065,6 +1065,22 @@
     "message": "Вьетнамский + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_elemhideemulation_nodomain": {
+    "message": "No active domain specified for extended element hiding filter"
+  }, 
+  "filter_invalid": {
+    "message": "Invalid filter", 
+    "description": "Generic error shown when the user tries to add an invalid filter rule to their custom filters"
+  }, 
+  "filter_invalid_csp": {
+    "message": "Invalid Content Security Policy"
+  }, 
+  "filter_invalid_domain": {
+    "message": "Invalid (or empty) domain specified"
+  }, 
+  "filter_invalid_regexp": {
+    "message": "Invalid regular expression"
+  }, 
   "filter_israeli": {
     "message": "Иврит + EasyList", 
     "description": "A filter list combined with EasyList"
@@ -1080,6 +1096,12 @@
   "filter_russian": {
     "message": "Русский & Украинский + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_snippet_nodomain": {
+    "message": "No active domain specified for snippet filter"
+  }, 
+  "filter_unknown_option": {
+    "message": "Unknown filter option"
   }, 
   "filter_warning_removal_explained": {
     "message": "убирает предупреждения об использовании блокировщика рекламы", 
@@ -1955,6 +1977,12 @@
     "message": "ВАЖНО:", 
     "description": "Indicates that the user should take note of the message that follows."
   }, 
+  "notification_antiadblock_message": {
+    "message": "This site has been known to show targeted messages to AdBlock users. Do you want AdBlock to hide targeted messages?"
+  }, 
+  "notification_antiadblock_title": {
+    "message": "Hide targeted messages?"
+  }, 
   "ocean_theme": {
     "message": "Океан", 
     "description": "Name of a theme in the Themes tab of the Options page"
@@ -2016,6 +2044,12 @@
   "otherfilters": {
     "message": "Прочие фильтры", 
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
+  }, 
+  "overlay_notification_button_no": {
+    "message": "No"
+  }, 
+  "overlay_notification_button_yes": {
+    "message": "Yes"
   }, 
   "page_is_whitelisted": {
     "message": "Вы добавили этот сайт в белый список, поэтому вы видите рекламные объявления.", 
@@ -2766,6 +2800,10 @@
   "undo_last_block_site": {
     "message": "Отменить блокировку этого сайта", 
     "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
+  }, 
+  "unexpected_filter_list_header": {
+    "description": "Error message shown when the user attempts to add a custom filter that has the format of a header (e.g. \"[Adblock Plus 2.0]\") which are only allowed in filter lists", 
+    "message": "Filter list headers aren't allowed here"
   }, 
   "unpause_adblock": {
     "message": "Продолжить работу AdBlock", 

@@ -1872,7 +1872,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "4.3.1";
+exports.addonVersion = "4.4.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -12880,19 +12880,20 @@ __webpack_require__(36);
 __webpack_require__(65);
 __webpack_require__(66);
 __webpack_require__(67);
-__webpack_require__(71);
+__webpack_require__(68);
+__webpack_require__(72);
 __webpack_require__(33);
 __webpack_require__(38);
 __webpack_require__(39);
-__webpack_require__(72);
 __webpack_require__(73);
 __webpack_require__(74);
 __webpack_require__(75);
 __webpack_require__(76);
 __webpack_require__(77);
-__webpack_require__(37);
 __webpack_require__(78);
-module.exports = __webpack_require__(79);
+__webpack_require__(37);
+__webpack_require__(79);
+module.exports = __webpack_require__(80);
 
 
 /***/ }),
@@ -17363,9 +17364,14 @@ const storageGet = function (key) {
 };
 
 // Inputs: key:string, value:object.
+// If value === undefined, removes key from storage.
 // Returns undefined.
 const storageSet = function (key, value) {
   const store = localStorage;
+  if (value === undefined) {
+    store.removeItem(key);
+    return;
+  }
   try {
     store.setItem(key, JSON.stringify(value));
   } catch (ex) {
@@ -17699,12 +17705,105 @@ Object.assign(window, {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/*
+ * Same as the original source adblockpluschrome/adblockpluscore/lib/messageResponder.js
+ * except:
+ * - only included the FilterError class and the parseFilter function
+ * - added 'parseFilter' message listener
+ * - 'parseFilter' returns an object instead of an array
+ * - 'parseFilter' sets filter to the text in the case of an invalid header
+ * - linted according to our style rules
+
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+
+const { InvalidFilter } = __webpack_require__(0);
+
+class FilterError
+{
+  constructor(type, reason = null)
+  {
+    this.lineno = null;
+    this.reason = reason;
+    this.selector = null;
+    this.type = type;
+  }
+
+  toJSON()
+  {
+    return {
+      lineno: this.lineno,
+      reason: this.reason,
+      selector: this.selector,
+      type: this.type
+    };
+  }
+}
+
+function parseFilter(text)
+{
+  let filter = null;
+  let error = null;
+
+  text = Filter.normalize(text);
+  if (text)
+  {
+    if (text[0] == "[")
+    {
+      filter = text;
+      error = new FilterError("unexpected_filter_list_header");
+    }
+    else
+    {
+      filter = Filter.fromText(text);
+      if (filter instanceof InvalidFilter)
+        error = new FilterError("invalid_filter", filter.reason);
+    }
+  }
+
+  return { filter, error };
+}
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.command !== 'parseFilter' || !message.filterTextToParse) {
+    return;
+  }
+  sendResponse(parseFilter(message.filterTextToParse));
+});
+
+Object.assign(window, {
+  parseFilter,
+});
+
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 
 
 /* For ESLint: List any global identifiers used in this file below */
 /* global chrome, require, chromeStorageSetHelper, log, License, translate,
    gabQuestion, ext, getSettings, parseUri, sessionStorageGet, setSetting,
-  blockCounts, sessionStorageSet, updateButtonUIAndContextMenus, settings, storageGet */
+  blockCounts, sessionStorageSet, updateButtonUIAndContextMenus, settings,
+  storageGet, parseFilter */
 
 const { Filter } = __webpack_require__(0);
 const { WhitelistFilter } = __webpack_require__(0);
@@ -17726,7 +17825,7 @@ const info = __webpack_require__(3);
 // Object's used on the option, pop up, etc. pages...
 const { STATS } = __webpack_require__(35);
 const { SyncService } = __webpack_require__(37);
-const { DataCollectionV2 } = __webpack_require__(68);
+const { DataCollectionV2 } = __webpack_require__(69);
 const { LocalCDN } = __webpack_require__(17);
 const { ServerMessages } = __webpack_require__(14);
 const { recommendations } = __webpack_require__(23);
@@ -17746,7 +17845,7 @@ const {
   getIdFromURL,
   getSubscriptionInfoFromURL,
   isLanguageSpecific,
-} = __webpack_require__(70).SubscriptionAdapter;
+} = __webpack_require__(71).SubscriptionAdapter;
 
 Object.assign(window, {
   filterStorage,
@@ -18156,29 +18255,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   sendResponse({ response: pageIsWhitelisted(sender) });
 });
 
-const parseFilter = function (filterText) {
-  let filter = null;
-  let error = null;
-  const text = Filter.normalize(filterText);
-  if (text) {
-    if (text[0] === '[') {
-      error = 'unexpected_filter_list_header';
-    } else {
-      filter = Filter.fromText(text);
-      if (filter instanceof InvalidFilter) {
-        error = filter.reason;
-      }
-    }
-  }
-  return { filter, error };
-};
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.command !== 'parseFilter' || !message.filterTextToParse) {
-    return;
-  }
-  sendResponse(parseFilter(message.filterTextToParse));
-});
-
 const pausedKey = 'paused';
 // white-list all blocking requests regardless of frame / document, but still allows element hiding
 const pausedFilterText1 = '@@';
@@ -18470,7 +18546,7 @@ if (chrome.runtime.id) {
       checkQueryState();
     }
   };
-  const slashUpdateReleases = ['3.60.0', '3.61.0', '3.61.1', '3.62.0', '4.0.0', '4.0.1', '4.0.2', '4.1.0', '4.2.0'];
+  const slashUpdateReleases = ['3.60.0', '3.61.0', '3.61.1', '3.62.0', '4.0.0', '4.0.1', '4.0.2', '4.1.0', '4.2.0', '4.4.0'];
 
   // Display updated page after each updat
   chrome.runtime.onInstalled.addListener((details) => {
@@ -18484,11 +18560,6 @@ if (chrome.runtime.id) {
     ) {
       STATS.untilLoaded(() => {
         Prefs.untilLoaded.then(shouldShowUpdate);
-      });
-    }
-    if (details.reason === 'update') {
-      STATS.untilLoaded(() => {
-        recordGeneralMessage('extension_updated');
       });
     }
     localStorage.setItem(updateStorageKey, currentVersion);
@@ -18983,12 +19054,11 @@ Object.assign(window, {
   isLanguageSpecific,
   isAcceptableAds,
   isAcceptableAdsPrivacy,
-  parseFilter,
 });
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19005,7 +19075,7 @@ const { filterNotifier } = __webpack_require__(1);
 const { port } = __webpack_require__(7);
 const { postFilterStatsToLogServer } = __webpack_require__(14).ServerMessages;
 const info = __webpack_require__(3);
-const { idleHandler } = __webpack_require__(69);
+const { idleHandler } = __webpack_require__(70);
 
 const DataCollectionV2 = (function getDataCollectionV2() {
   const HOUR_IN_MS = 1000 * 60 * 60;
@@ -19031,9 +19101,15 @@ const DataCollectionV2 = (function getDataCollectionV2() {
     ) {
       chrome.tabs.executeScript(tabId,
         {
-          file: 'adblock-datacollection-contentscript.js',
+          file: 'polyfill.js',
           allFrames: true,
-        });
+        }).then(() => {
+        chrome.tabs.executeScript(tabId,
+          {
+            file: 'adblock-datacollection-contentscript.js',
+            allFrames: true,
+          });
+      });
     }
   };
 
@@ -19261,7 +19337,7 @@ exports.DataCollectionV2 = DataCollectionV2;
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19317,7 +19393,7 @@ exports.idleHandler = idleHandler;
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19489,7 +19565,7 @@ exports.SubscriptionAdapter = SubscriptionAdapter;
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19506,6 +19582,7 @@ const { Prefs } = __webpack_require__(2);
 const updateButtonUIAndContextMenus = function () {
   chrome.tabs.query({}).then((tabs) => {
     for (const tab of tabs) {
+      tab.url = tab.url ? tab.url : tab.pendingUrl;
       const page = new ext.Page(tab);
       if (adblockIsPaused() || adblockIsDomainPaused({ url: tab.url.href, id: tab.id })) {
         page.browserAction.setBadge({ number: '' });
@@ -19767,7 +19844,7 @@ Object.assign(window, {
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20132,7 +20209,7 @@ Object.assign(window, {
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20683,7 +20760,7 @@ Object.assign(window, {
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21098,7 +21175,7 @@ Object.assign(window, {
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21442,7 +21519,7 @@ Object.assign(window, {
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21474,7 +21551,7 @@ Object.assign(window, {
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21504,6 +21581,7 @@ const License = (function getLicense() {
   const popupMenuCtaClosedKey = 'popup_menu_cta_closed';
   const showPopupMenuThemesCtaKey = 'popup_menu_themes_cta';
   const licenseAlarmName = 'licenseAlarm';
+  const sevenDayAlarmName = 'sevenDayLicenseAlarm';
   let theLicense;
   const fiveMinutes = 300000;
   const initialized = false;
@@ -21538,6 +21616,33 @@ const License = (function getLicense() {
   });
   const MAB_CONFIG = isProd ? mabConfig.prod : mabConfig.dev;
 
+
+  const sevenDayAlarmIdleListener = function (newState) {
+    if (newState === 'active') {
+      License.checkSevenDayAlarm();
+    }
+  };
+
+  const removeSevenDayAlarmStateListener = function () {
+    chrome.idle.onStateChanged.removeListener(sevenDayAlarmIdleListener);
+  };
+
+  const addSevenDayAlarmStateListener = function () {
+    removeSevenDayAlarmStateListener();
+    chrome.idle.onStateChanged.addListener(sevenDayAlarmIdleListener);
+  };
+
+  const cleanUpSevenDayAlarm = function () {
+    removeSevenDayAlarmStateListener();
+    chrome.storage.local.remove(License.sevenDayAlarmName);
+    chrome.alarms.clear(License.sevenDayAlarmName);
+  };
+
+  const processSevenDayAlarm = function () {
+    cleanUpSevenDayAlarm();
+    License.showIconBadgeCTA(true);
+  };
+
   chrome.alarms.onAlarm.addListener((alarm) => {
     if (alarm && alarm.name === licenseAlarmName) {
       // At this point, no alarms exists, so
@@ -21546,6 +21651,9 @@ const License = (function getLicense() {
       License.ready().then(() => {
         License.updatePeriodically();
       });
+    }
+    if (alarm && alarm.name === sevenDayAlarmName) {
+      processSevenDayAlarm();
     }
   });
 
@@ -21576,6 +21684,55 @@ const License = (function getLicense() {
     }
   });
 
+  // check the 7 alarm when the browser starts
+  // or is woken up
+  const checkSevenDayAlarm = function () {
+    chrome.alarms.get(License.sevenDayAlarmName, (alarm) => {
+      if (alarm && Date.now() > alarm.scheduledTime) {
+        chrome.alarms.clear(License.sevenDayAlarmName, () => {
+          License.showIconBadgeCTA(true);
+          removeSevenDayAlarmStateListener();
+          chrome.storage.local.remove(License.sevenDayAlarmName);
+        });
+      } else if (alarm) {
+        // if the alarm should fire in the future,
+        // re-add the license so it fires at the correct time
+        const originalTime = alarm.scheduledTime;
+        chrome.alarms.clear(License.sevenDayAlarmName, (wasCleared) => {
+          if (wasCleared) {
+            chrome.alarms.create(License.sevenDayAlarmName, { when: originalTime });
+            chrome.storage.local.set({ [License.sevenDayAlarmName]: true });
+            License.addSevenDayAlarmStateListener();
+          }
+        });
+      } else {
+        // since there's no alarm, we may need to show the 'new' text,
+        // check if the temporary seven day alarm indicator is set, and
+        // if the install date is 7 days or more than now
+        chrome.storage.local.get(License.sevenDayAlarmName).then((data) => {
+          if (data && data[License.sevenDayAlarmName]) {
+            chrome.storage.local.get('blockage_stats').then((response) => {
+              const { blockage_stats } = response;
+              if (blockage_stats && blockage_stats.start) {
+                const installDate = new Date(blockage_stats.start);
+                const now = new Date();
+                const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+                const diffDays = Math.round((now - installDate) / oneDay);
+                if (diffDays >= 7) {
+                  License.showIconBadgeCTA(true);
+                  removeSevenDayAlarmStateListener();
+                  chrome.storage.local.remove(License.sevenDayAlarmName);
+                }
+              }
+            });
+          }
+        });
+        removeSevenDayAlarmStateListener();
+      }
+    });
+  };
+  addSevenDayAlarmStateListener();
+
   // Load the license from persistent storage
   // Should only be called during startup / initialization
   const loadFromStorage = function (callback) {
@@ -21598,6 +21755,11 @@ const License = (function getLicense() {
     pageReloadedOnSettingChangeKey,
     initialized,
     licenseAlarmName,
+    sevenDayAlarmName,
+    checkSevenDayAlarm,
+    addSevenDayAlarmStateListener,
+    removeSevenDayAlarmStateListener,
+    cleanUpSevenDayAlarm,
     licenseTimer: undefined, // the license update timer token
     licenseNotifier,
     MAB_CONFIG,
@@ -21608,7 +21770,6 @@ const License = (function getLicense() {
         if (typeof theLicense.myadblock_enrollment === 'undefined') {
           theLicense.myadblock_enrollment = true;
           License.set(theLicense);
-          // only process updates for now
           if (enrollReason === 'update') {
             License.showIconBadgeCTA(true);
           }
@@ -21832,7 +21993,7 @@ const License = (function getLicense() {
     showIconBadgeCTA(showBadge) {
       if (showBadge) {
         let newBadgeText = translate('new_badge');
-        // 'New' Badge Text that exceeds 4 characters is truncated on the toolbar badge,
+        // Text that exceeds 4 characters is truncated on the toolbar badge,
         // so we default to English
         if (!newBadgeText || newBadgeText.length >= 5) {
           newBadgeText = 'New';
@@ -21860,8 +22021,9 @@ const License = (function getLicense() {
         const storedValue = storageGet(statsInIconKey);
         if (typeof storedValue === 'boolean') {
           Prefs.show_statsinicon = storedValue;
+          storageSet(statsInIconKey); // remove the data, since we no longer need it
+          chrome.browserAction.setBadgeText({ text: '' });
         }
-        chrome.browserAction.setBadgeText({ text: '' });
       }
     },
     // fetchLicenseAPI automates the common steps required to call the /license/api endpoint.
@@ -21967,6 +22129,12 @@ Promise.all([onInstalledPromise, License.ready(), onBehaviorPromise]).then((deta
   // Enroll existing users in Premium
   if (detailsArray.length > 0 && detailsArray[0].reason) {
     License.enrollUser(detailsArray[0].reason);
+    if (detailsArray[0].reason === 'install') {
+      // create an alarm that will fire in ~ 7 days to show the "New" badge text
+      chrome.alarms.create(License.sevenDayAlarmName, { delayInMinutes: (60 * 24 * 7) });
+      License.addSevenDayAlarmStateListener();
+      chrome.storage.local.set({ [License.sevenDayAlarmName]: true });
+    }
   }
 });
 
@@ -22020,6 +22188,8 @@ License.ready().then(() => {
     }
   });
 
+  License.checkSevenDayAlarm();
+
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.command === 'setBlacklistCTAStatus') {
       if (typeof request.isEnabled === 'boolean') {
@@ -22059,7 +22229,7 @@ Object.assign(window, {
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22067,14 +22237,23 @@ Object.assign(window, {
 
 /** call by the data collection content script, and if the user has myadblock enabled */
 
+/*
+  inspired by the code in this module:
+    https://github.com/adblockplus/adblockpluschrome/blob/master/lib/contentFiltering.js#L248
+*/
+
 
 
 /* For ESLint: List any global identifiers used in this file below */
 /* global require, */
 
-const { ElemHide } = __webpack_require__(19);
+const {
+  elemHide,
+  createStyleSheet,
+  rulesFromStyleSheet,
+} = __webpack_require__(19);
 const { RegExpFilter } = __webpack_require__(0);
-const { ElemHideEmulation } = __webpack_require__(21);
+const { elemHideEmulation } = __webpack_require__(21);
 const { checkWhitelisted } = __webpack_require__(9);
 const { extractHostFromFrame } = __webpack_require__(8);
 const { port } = __webpack_require__(7);
@@ -22090,13 +22269,13 @@ port.on('getSelectors', (_message, sender) => {
     const specificOnly = checkWhitelisted(sender.page, sender.frame, null,
       RegExpFilter.typeMap.GENERICHIDE);
 
-    ({ selectors, exceptions } = ElemHide.generateStyleSheetForDomain(
+    ({ selectors, exceptions } = elemHide.generateStyleSheetForDomain(
       hostname,
-      specificOnly ? ElemHide.SPECIFIC_ONLY : ElemHide.ALL_MATCHING,
+      specificOnly ? elemHide.SPECIFIC_ONLY : elemHide.ALL_MATCHING,
       true, true,
     ));
 
-    for (const filter of ElemHideEmulation.getRulesForDomain(hostname)) {
+    for (const filter of elemHideEmulation.getRulesForDomain(hostname)) {
       emulatedPatterns.push({ selector: filter.selector, text: filter.text });
     }
   }
@@ -22108,7 +22287,7 @@ port.on('getSelectors', (_message, sender) => {
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
