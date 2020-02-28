@@ -269,6 +269,10 @@
     "message": "테마 적용", 
     "description": "Text of clickable element that applies the theme of a theme box in the Themes tab of the Options page"
   }, 
+  "back_help_flow": {
+    "message": "Go back one step in the help flow.", 
+    "description": "Aria label for back button in help flow (in popup menu)"
+  }, 
   "backup_sync_settings": {
     "message": "Automatically back up and sync your AdBlock settings across all your devices.", 
     "description": "Description of Sync on Sync tab"
@@ -584,6 +588,10 @@
   "close": {
     "message": "닫기", 
     "description": "Generic message for buttons that close a view or window"
+  }, 
+  "close_help_flow": {
+    "message": "Close help flow and go back to the pop-up menu.", 
+    "description": "Aria label for close button in help flow (in popup menu)"
   }, 
   "confirm_delete_extension": {
     "message": "Are you sure you want to delete this extension?", 
@@ -938,6 +946,10 @@
   "englishonly": {
     "message": "영문 전용", 
     "description": "Lets the user know that a link/page is only available in English."
+  }, 
+  "enjoying_adblock": {
+    "message": "Enjoying AdBlock?", 
+    "description": "Text of a footer in the popup menu help flow asking users to leave us a review."
   }, 
   "enter_url": {
     "message": "URL 입력", 
@@ -1665,6 +1677,10 @@
     "message": "Learn More", 
     "description": "Text in the aria-label attribute of an icon linking to extra information about an option."
   }, 
+  "leave_a_review": {
+    "message": "Leave us a review!", 
+    "description": "Text of a menu item in the popup menu asking users to leave us a review."
+  }, 
   "legend": {
     "message": "범례: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1692,6 +1708,10 @@
   "locked": {
     "message": "Locked", 
     "description": "Text in the aria-label attribute of an icon showing a feature/option is locked."
+  }, 
+  "love_adblock": {
+    "message": "Love AdBlock?", 
+    "description": "Text in a button that asks users to rate us."
   }, 
   "mac_app_message_menu_part_one": {
     "message": "신규 업데이트!", 
@@ -2127,6 +2147,10 @@
     "message": "질문 또는 제안할 것이 있나요?", 
     "description": "Subtitle on the Support tab"
   }, 
+  "rate_us": {
+    "message": "Rate Us", 
+    "description": "Text of a menu item in the popup menu asking users to leave us a review."
+  }, 
   "rebecca_purple_theme": {
     "message": "Rebecca Purple", 
     "description": "Name of a theme in the Themes tab of the Options page"
@@ -2345,6 +2369,10 @@
     "message": "전체 요청 보이기", 
     "description": "Menu entry to open the resource list page"
   }, 
+  "show_some_love": {
+    "message": "Show AdBlock some love!", 
+    "description": "Title of the tooltip of the rate us button CTA in the Options page."
+  }, 
   "showcontextmenus2": {
     "message": "마우스 오른쪽 버튼 메뉴에 메뉴 아이템 추가", 
     "description": "Checkbox on the 'General' tab of the Options page."
@@ -2466,6 +2494,10 @@
   "support_to_unlock": {
     "message": "Support to unlock", 
     "description": "Text in theme box of the Themes tab of the Options page (no more than 30 characters)"
+  }, 
+  "support_with_a_review": {
+    "message": "Support our team by leaving us a review.", 
+    "description": "Text of the tooltip of the rate us button CTA in the Options page."
   }, 
   "supportsite": {
     "message": "[[고객지원 사이트]]를 통해 알려주시기 바랍니다!", 
@@ -2956,6 +2988,16 @@
   "you_know_thats_a_bad_idea_right": {
     "message": "필터를 많이 구독할수록 AdBlock의 속도는 느려집니다. 과도하게 많은 구독 필터를 사용하면 브라우저가 작동을 중지할 수도 있습니다. 그래도 구독하려면 확인을 누르세요.", 
     "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  }, 
+  "youve_blocked_num_ads": {
+    "message": "You've blocked $numBlocked$ ads!", 
+    "description": "Text of a menu item in the popup menu asking users to leave us a review. The $numBlocked$ will be replaced with the number of ads the users has blocked, starting at 10,000.", 
+    "placeholders": {
+      "numBlocked": {
+        "content": "$1", 
+        "example": "10,000"
+      }
+    }
   }, 
   "ytadblockupdates": {
     "message": "AdBlock on YouTube™ 업데이트", 

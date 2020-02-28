@@ -611,6 +611,14 @@ catch (Map) {
         }
         return had;
       },
+      forEach: function forEach(callback, context) {
+        k.forEach(
+          function (key, i)  {
+            callback.call(context, v[i], key, this);
+          },
+          this
+        );
+      },
       get: function get(key) {
         return contains(key) ? v[i] : void 0;
       },
@@ -711,45 +719,59 @@ var isArray = Array.isArray || (function (toString) {
 module.exports = isArray;
 
 },{}],11:[function(require,module,exports){
-/*! (c) Andrea Giammarchi - ISC */
-var templateLiteral = (function () {'use strict';
-  var RAW = 'raw';
-  var isNoOp = typeof document !== 'object';
-  var templateLiteral = function (tl) {
-    if (
-      // for badly transpiled literals
-      !(RAW in tl) ||
-      // for some version of TypeScript
-      tl.propertyIsEnumerable(RAW) ||
-      // and some other version of TypeScript
-      !Object.isFrozen(tl[RAW]) ||
-      (
-        // or for Firefox < 55
-        /Firefox\/(\d+)/.test(
-          (document.defaultView.navigator || {}).userAgent
-        ) &&
-        parseFloat(RegExp.$1) < 55
-      )
-    ) {
-      var forever = {};
-      templateLiteral = function (tl) {
-        for (var key = '.', i = 0; i < tl.length; i++)
-          key += tl[i].length + '.' + tl[i];
-        return forever[key] || (forever[key] = tl);
-      };
-    } else {
-      isNoOp = true;
-    }
-    return TL(tl);
-  };
-  return TL;
-  function TL(tl) {
-    return isNoOp ? tl : templateLiteral(tl);
-  }
-}());
-module.exports = templateLiteral;
+'use strict';
+const WeakMap = (require('@ungap/weakmap'));
 
-},{}],12:[function(require,module,exports){
+var isNoOp = typeof document !== 'object';
+
+var templateLiteral = function (tl) {
+  var RAW = 'raw';
+  var isBroken = function (UA) {
+    return /(Firefox|Safari)\/(\d+)/.test(UA) &&
+          !/(Chrom[eium]+|Android)\/(\d+)/.test(UA);
+  };
+  var broken = isBroken((document.defaultView.navigator || {}).userAgent);
+  var FTS = !(RAW in tl) ||
+            tl.propertyIsEnumerable(RAW) ||
+            !Object.isFrozen(tl[RAW]);
+  if (broken || FTS) {
+    var forever = {};
+    var foreverCache = function (tl) {
+      for (var key = '.', i = 0; i < tl.length; i++)
+        key += tl[i].length + '.' + tl[i];
+      return forever[key] || (forever[key] = tl);
+    };
+    // Fallback TypeScript shenanigans
+    if (FTS)
+      templateLiteral = foreverCache;
+    // try fast path for other browsers:
+    // store the template as WeakMap key
+    // and forever cache it only when it's not there.
+    // this way performance is still optimal,
+    // penalized only when there are GC issues
+    else {
+      var wm = new WeakMap;
+      var set = function (tl, unique) {
+        wm.set(tl, unique);
+        return unique;
+      };
+      templateLiteral = function (tl) {
+        return wm.get(tl) || set(tl, foreverCache(tl));
+      };
+    }
+  } else {
+    isNoOp = true;
+  }
+  return TL(tl);
+};
+
+module.exports = TL;
+
+function TL(tl) {
+  return isNoOp ? tl : templateLiteral(tl);
+}
+
+},{"@ungap/weakmap":14}],12:[function(require,module,exports){
 'use strict';
 const unique = (require('@ungap/template-literal'));
 
@@ -808,22 +830,22 @@ module.exports = self.WeakMap;
 },{}],15:[function(require,module,exports){
 /*! (c) Andrea Giammarchi */
 function disconnected(poly) {'use strict';
-  var CONNECTED = 'connected';
-  var DISCONNECTED = 'dis' + CONNECTED;
   var Event = poly.Event;
   var WeakSet = poly.WeakSet;
   var notObserving = true;
-  var observer = new WeakSet;
+  var observer = null;
   return function observe(node) {
     if (notObserving) {
       notObserving = !notObserving;
+      observer = new WeakSet;
       startObserving(node.ownerDocument);
     }
     observer.add(node);
     return node;
   };
   function startObserving(document) {
-    var dispatched = null;
+    var connected = new WeakSet;
+    var disconnected = new WeakSet;
     try {
       (new MutationObserver(changes)).observe(
         document,
@@ -859,32 +881,30 @@ function disconnected(poly) {'use strict';
       );
     }
     function changes(records) {
-      dispatched = new Tracker;
       for (var
         record,
         length = records.length,
         i = 0; i < length; i++
       ) {
         record = records[i];
-        dispatchAll(record.removedNodes, DISCONNECTED, CONNECTED);
-        dispatchAll(record.addedNodes, CONNECTED, DISCONNECTED);
+        dispatchAll(record.removedNodes, 'disconnected', disconnected, connected);
+        dispatchAll(record.addedNodes, 'connected', connected, disconnected);
       }
-      dispatched = null;
     }
-    function dispatchAll(nodes, type, counter) {
+    function dispatchAll(nodes, type, wsin, wsout) {
       for (var
         node,
         event = new Event(type),
         length = nodes.length,
         i = 0; i < length;
         (node = nodes[i++]).nodeType === 1 &&
-        dispatchTarget(node, event, type, counter)
+        dispatchTarget(node, event, type, wsin, wsout)
       );
     }
-    function dispatchTarget(node, event, type, counter) {
-      if (observer.has(node) && !dispatched[type].has(node)) {
-        dispatched[counter].delete(node);
-        dispatched[type].add(node);
+    function dispatchTarget(node, event, type, wsin, wsout) {
+      if (observer.has(node) && !wsin.has(node)) {
+        wsout.delete(node);
+        wsin.add(node);
         node.dispatchEvent(event);
         /*
         // The event is not bubbling (perf reason: should it?),
@@ -906,12 +926,8 @@ function disconnected(poly) {'use strict';
         children = node.children || [],
         length = children.length,
         i = 0; i < length;
-        dispatchTarget(children[i++], event, type, counter)
+        dispatchTarget(children[i++], event, type, wsin, wsout)
       );
-    }
-    function Tracker() {
-      this[CONNECTED] = new WeakSet;
-      this[DISCONNECTED] = new WeakSet;
     }
   }
 }
@@ -1359,8 +1375,11 @@ function installCustomElements(window, polyfill) {'use strict';
     // V0 polyfill entry
     REGISTER_ELEMENT = 'registerElement',
   
+    // pseudo-random number used as expando/unique name on feature detection
+    UID = window.Math.random() * 10e4 >> 0,
+  
     // IE < 11 only + old WebKit for attributes + feature detection
-    EXPANDO_UID = '__' + REGISTER_ELEMENT + (window.Math.random() * 10e4 >> 0),
+    EXPANDO_UID = '__' + REGISTER_ELEMENT + UID,
   
     // shortcuts and costants
     ADD_EVENT_LISTENER = 'addEventListener',
@@ -1388,7 +1407,7 @@ function installCustomElements(window, polyfill) {'use strict';
     PREFIX_IS = '=',
   
     // valid and invalid node names
-    validName = /^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$/,
+    validName = /^[A-Z][._A-Z0-9]*-[-._A-Z0-9]*$/,
     invalidNames = [
       'ANNOTATION-XML',
       'COLOR-PROFILE',
@@ -1561,6 +1580,12 @@ function installCustomElements(window, polyfill) {'use strict';
   
     attachShadow = HTMLElementPrototype.attachShadow,
     cloneNode = HTMLElementPrototype.cloneNode,
+    closest = HTMLElementPrototype.closest || function (name) {
+      var self = this;
+      while (self && self.nodeName !== name)
+        self = self.parentNode;
+      return self;
+    },
     dispatchEvent = HTMLElementPrototype.dispatchEvent,
     getAttribute = HTMLElementPrototype.getAttribute,
     hasAttribute = HTMLElementPrototype.hasAttribute,
@@ -2004,6 +2029,18 @@ function installCustomElements(window, polyfill) {'use strict';
   
   }
   
+  // needed due unbelievable IE11 behavior
+  // https://github.com/WebReflection/document-register-element/issues/175#issuecomment-520904688
+  addEventListener(
+    'beforeunload',
+    function () {
+      delete document.createElement;
+      delete document.importNode;
+      delete document[REGISTER_ELEMENT];
+    },
+    false
+  );
+  
   function ASAP() {
     var queue = asapQueue.splice(0, asapQueue.length);
     asapTimer = 0;
@@ -2169,7 +2206,7 @@ function installCustomElements(window, polyfill) {'use strict';
       i = getTypeIndex(node),
       counterAction
     ;
-    if (-1 < i) {
+    if ((-1 < i) && !closest.call(node, 'TEMPLATE')) {
       patchIfNotAlready(node, protos[i]);
       i = 0;
       if (action === ATTACHED && !node[ATTACHED]) {
@@ -2192,8 +2229,6 @@ function installCustomElements(window, polyfill) {'use strict';
       ))) fn.call(node);
     }
   }
-  
-  
   
   // V1 in da House!
   function CustomElementRegistry() {}
@@ -2403,7 +2438,7 @@ function installCustomElements(window, polyfill) {'use strict';
           return Reflect.construct(HTMLAnchorElement, [], DRE);
         },
         {},
-        'document-register-element-a'
+        'document-register-element-a' + UID
       ));
     } catch(o_O) {
       // or force the polyfill if not
@@ -2429,6 +2464,49 @@ function installCustomElements(window, polyfill) {'use strict';
 module.exports = installCustomElements;
 
 },{}],17:[function(require,module,exports){
+'use strict';
+/*! (c) Andrea Giammarchi - ISC */
+
+// Custom
+var UID = '-' + Math.random().toFixed(6) + '%';
+//                           Edge issue!
+
+var UID_IE = false;
+
+try {
+  if (!(function (template, content, tabindex) {
+    return content in template && (
+      (template.innerHTML = '<p ' + tabindex + '="' + UID + '"></p>'),
+      template[content].childNodes[0].getAttribute(tabindex) == UID
+    );
+  }(document.createElement('template'), 'content', 'tabindex'))) {
+    UID = '_dt: ' + UID.slice(1, -1) + ';';
+    UID_IE = true;
+  }
+} catch(meh) {}
+
+var UIDC = '<!--' + UID + '-->';
+
+// DOM
+var COMMENT_NODE = 8;
+var DOCUMENT_FRAGMENT_NODE = 11;
+var ELEMENT_NODE = 1;
+var TEXT_NODE = 3;
+
+var SHOULD_USE_TEXT_CONTENT = /^(?:style|textarea)$/i;
+var VOID_ELEMENTS = /^(?:area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/i;
+
+exports.UID = UID;
+exports.UIDC = UIDC;
+exports.UID_IE = UID_IE;
+exports.COMMENT_NODE = COMMENT_NODE;
+exports.DOCUMENT_FRAGMENT_NODE = DOCUMENT_FRAGMENT_NODE;
+exports.ELEMENT_NODE = ELEMENT_NODE;
+exports.TEXT_NODE = TEXT_NODE;
+exports.SHOULD_USE_TEXT_CONTENT = SHOULD_USE_TEXT_CONTENT;
+exports.VOID_ELEMENTS = VOID_ELEMENTS;
+
+},{}],18:[function(require,module,exports){
 'use strict';
 /*! (c) 2018 Andrea Giammarchi (ISC) */
 
@@ -2503,7 +2581,6 @@ const domdiff = (
   if (futureSame && currentStart < currentEnd) {
     remove(
       get,
-      parentNode,
       currentNodes,
       currentStart,
       currentEnd
@@ -2562,14 +2639,12 @@ const domdiff = (
     if (-1 < i) {
       remove(
         get,
-        parentNode,
         currentNodes,
         currentStart,
         i
       );
       remove(
         get,
-        parentNode,
         currentNodes,
         i + futureChanges,
         currentEnd
@@ -2592,7 +2667,6 @@ const domdiff = (
     );
     remove(
       get,
-      parentNode,
       currentNodes,
       currentStart,
       currentEnd
@@ -2652,18 +2726,23 @@ const domdiff = (
 
 Object.defineProperty(exports, '__esModule', {value: true}).default = domdiff;
 
-},{"./utils.js":18}],18:[function(require,module,exports){
+},{"./utils.js":19}],19:[function(require,module,exports){
 'use strict';
-const Map = (require('@ungap/essential-map'));
-
+const {indexOf: iOF} = [];
 const append = (get, parent, children, start, end, before) => {
-  if ((end - start) < 2)
-    parent.insertBefore(get(children[start], 1), before);
-  else {
-    const fragment = parent.ownerDocument.createDocumentFragment();
-    while (start < end)
-      fragment.appendChild(get(children[start++], 1));
-    parent.insertBefore(fragment, before);
+  const isSelect = 'selectedIndex' in parent;
+  let noSelection = isSelect;
+  while (start < end) {
+    const child = get(children[start], 1);
+    parent.insertBefore(child, before);
+    if (isSelect && noSelection && child.selected) {
+      noSelection = !noSelection;
+      let {selectedIndex} = parent;
+      parent.selectedIndex = selectedIndex < 0 ?
+        start :
+        iOF.call(parent.querySelectorAll('option'), child);
+    }
+    start++;
   }
 };
 exports.append = append;
@@ -2734,15 +2813,9 @@ const next = (get, list, i, length, before) => i < length ?
                 before);
 exports.next = next;
 
-const remove = (get, parent, children, start, end) => {
-  if ((end - start) < 2)
-    parent.removeChild(get(children[start], -1));
-  else {
-    const range = parent.ownerDocument.createRange();
-    range.setStartBefore(get(children[start], -1));
-    range.setEndAfter(get(children[end - 1], -1));
-    range.deleteContents();
-  }
+const remove = (get, children, start, end) => {
+  while (start < end)
+    drop(get(children[start++], -1));
 };
 exports.remove = remove;
 
@@ -2776,13 +2849,12 @@ const HS = (
   for (let i = 1; i < minLen; i++)
     tresh[i] = currentEnd;
 
-  const keymap = new Map;
-  for (let i = currentStart; i < currentEnd; i++)
-    keymap.set(currentNodes[i], i);
+  const nodes = currentNodes.slice(currentStart, currentEnd);
 
   for (let i = futureStart; i < futureEnd; i++) {
-    const idxInOld = keymap.get(futureNodes[i]);
-    if (idxInOld != null) {
+    const index = nodes.indexOf(futureNodes[i]);
+    if (-1 < index) {
+      const idxInOld = index + currentStart;
       k = findK(tresh, minLen, idxInOld);
       /* istanbul ignore else */
       if (-1 < k) {
@@ -2923,7 +2995,7 @@ const applyDiff = (
   currentLength,
   before
 ) => {
-  const live = new Map;
+  const live = [];
   const length = diff.length;
   let currentIndex = currentStart;
   let i = 0;
@@ -2935,7 +3007,7 @@ const applyDiff = (
         break;
       case INSERTION:
         // TODO: bulk appends for sequential nodes
-        live.set(futureNodes[futureStart], 1);
+        live.push(futureNodes[futureStart]);
         append(
           get,
           parentNode,
@@ -2943,7 +3015,7 @@ const applyDiff = (
           futureStart++,
           futureStart,
           currentIndex < currentLength ?
-            get(currentNodes[currentIndex], 1) :
+            get(currentNodes[currentIndex], 0) :
             before
         );
         break;
@@ -2960,12 +3032,11 @@ const applyDiff = (
         break;
       case DELETION:
         // TODO: bulk removes for sequential nodes
-        if (live.has(currentNodes[currentStart]))
+        if (-1 < live.indexOf(currentNodes[currentStart]))
           currentStart++;
         else
           remove(
             get,
-            parentNode,
             currentNodes,
             currentStart++,
             currentStart
@@ -3035,40 +3106,50 @@ const smartDiff = (
 };
 exports.smartDiff = smartDiff;
 
-},{"@ungap/essential-map":7}],19:[function(require,module,exports){
-'use strict';
-// Custom
-var UID = '-' + Math.random().toFixed(6) + '%';
-//                           Edge issue!
-if (!(function (template, content, tabindex) {
-  return content in template && (
-    (template.innerHTML = '<p ' + tabindex + '="' + UID + '"></p>'),
-    template[content].childNodes[0].getAttribute(tabindex) == UID
-  );
-}(document.createElement('template'), 'content', 'tabindex'))) {
-  UID = '_dt: ' + UID.slice(1, -1) + ';';
+const drop = node => (node.remove || dropChild).call(node);
+
+function dropChild() {
+  const {parentNode} = this;
+  /* istanbul ignore else */
+  if (parentNode)
+    parentNode.removeChild(this);
 }
-var UIDC = '<!--' + UID + '-->';
-
-// DOM
-var COMMENT_NODE = 8;
-var DOCUMENT_FRAGMENT_NODE = 11;
-var ELEMENT_NODE = 1;
-var TEXT_NODE = 3;
-
-var SHOULD_USE_TEXT_CONTENT = /^(?:style|textarea)$/i;
-var VOID_ELEMENTS = /^(?:area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/i;
-
-exports.UID = UID;
-exports.UIDC = UIDC;
-exports.COMMENT_NODE = COMMENT_NODE;
-exports.DOCUMENT_FRAGMENT_NODE = DOCUMENT_FRAGMENT_NODE;
-exports.ELEMENT_NODE = ELEMENT_NODE;
-exports.TEXT_NODE = TEXT_NODE;
-exports.SHOULD_USE_TEXT_CONTENT = SHOULD_USE_TEXT_CONTENT;
-exports.VOID_ELEMENTS = VOID_ELEMENTS;
 
 },{}],20:[function(require,module,exports){
+'use strict';
+/*! (c) Andrea Giammarchi - ISC */
+
+const {UID, UIDC, VOID_ELEMENTS} = require('domconstants');
+
+Object.defineProperty(exports, '__esModule', {value: true}).default = function (template) {
+  return template.join(UIDC)
+          .replace(selfClosing, fullClosing)
+          .replace(attrSeeker, attrReplacer);
+}
+
+var spaces = ' \\f\\n\\r\\t';
+var almostEverything = '[^' + spaces + '\\/>"\'=]+';
+var attrName = '[' + spaces + ']+' + almostEverything;
+var tagName = '<([A-Za-z]+[A-Za-z0-9:._-]*)((?:';
+var attrPartials = '(?:\\s*=\\s*(?:\'[^\']*?\'|"[^"]*?"|<[^>]*?>|' + almostEverything.replace('\\/', '') + '))?)';
+
+var attrSeeker = new RegExp(tagName + attrName + attrPartials + '+)([' + spaces + ']*/?>)', 'g');
+var selfClosing = new RegExp(tagName + attrName + attrPartials + '*)([' + spaces + ']*/>)', 'g');
+var findAttributes = new RegExp('(' + attrName + '\\s*=\\s*)([\'"]?)' + UIDC + '\\2', 'gi');
+
+function attrReplacer($0, $1, $2, $3) {
+  return '<' + $1 + $2.replace(findAttributes, replaceAttributes) + $3;
+}
+
+function replaceAttributes($0, $1, $2) {
+  return $1 + ($2 || '"') + UID + ($2 || '"');
+}
+
+function fullClosing($0, $1, $2) {
+  return VOID_ELEMENTS.test($1) ? $0 : ('<' + $1 + $2 + '></' + $1 + '>');
+}
+
+},{"domconstants":17}],21:[function(require,module,exports){
 'use strict';
 // globals
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
@@ -3077,19 +3158,18 @@ const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* i
 const createContent = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/create-content'));
 const importNode = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/import-node'));
 const trim = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/trim'));
+const sanitize = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('domsanitizer'));
 
 // local
-const sanitize = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('./sanitizer.js'));
 const {find, parse} = require('./walker.js');
 
 // the domtagger 🎉
 Object.defineProperty(exports, '__esModule', {value: true}).default = domtagger;
 
 var parsed = new WeakMap;
-var referenced = new WeakMap;
 
 function createInfo(options, template) {
-  var markup = sanitize(template);
+  var markup = (options.convert || sanitize)(template);
   var transform = options.transform;
   if (transform)
     markup = transform(markup);
@@ -3100,37 +3180,59 @@ function createInfo(options, template) {
   var info = {
     content: content,
     updates: function (content) {
-      var callbacks = [];
+      var updates = [];
       var len = holes.length;
       var i = 0;
+      var off = 0;
       while (i < len) {
         var info = holes[i++];
         var node = find(content, info.path);
         switch (info.type) {
           case 'any':
-            callbacks.push(options.any(node, []));
+            updates.push({fn: options.any(node, []), sparse: false});
             break;
           case 'attr':
-            callbacks.push(options.attribute(node, info.name, info.node));
+            var sparse = info.sparse;
+            var fn = options.attribute(node, info.name, info.node);
+            if (sparse === null)
+              updates.push({fn: fn, sparse: false});
+            else {
+              off += sparse.length - 2;
+              updates.push({fn: fn, sparse: true, values: sparse});
+            }
             break;
           case 'text':
-            callbacks.push(options.text(node));
+            updates.push({fn: options.text(node), sparse: false});
             node.textContent = '';
             break;
         }
       }
+      len += off;
       return function () {
         var length = arguments.length;
-        var values = length - 1;
-        var i = 1;
-        if (len !== values) {
+        if (len !== (length - 1)) {
           throw new Error(
-            values + ' values instead of ' + len + '\n' +
-            template.join(', ')
+            (length - 1) + ' values instead of ' + len + '\n' +
+            template.join('${value}')
           );
         }
-        while (i < length)
-          callbacks[i - 1](arguments[i++]);
+        var i = 1;
+        var off = 1;
+        while (i < length) {
+          var update = updates[i - off];
+          if (update.sparse) {
+            var values = update.values;
+            var value = values[0];
+            var j = 1;
+            var l = values.length;
+            off += l - 2;
+            while (j < l)
+              value += arguments[i++] + values[j++];
+            update.fn(value);
+          }
+          else
+            update.fn(arguments[i++]);
+        }
         return content;
       };
     }
@@ -3141,23 +3243,17 @@ function createInfo(options, template) {
 
 function createDetails(options, template) {
   var info = parsed.get(template) || createInfo(options, template);
-  var content = importNode.call(document, info.content, true);
-  var details = {
-    content: content,
-    template: template,
-    updates: info.updates(content)
-  };
-  referenced.set(options, details);
-  return details;
+  return info.updates(importNode.call(document, info.content, true));
 }
 
+var empty = [];
 function domtagger(options) {
+  var previous = empty;
+  var updates = cleanContent;
   return function (template) {
-    var details = referenced.get(options);
-    if (details == null || details.template !== template)
-      details = createDetails(options, template);
-    details.updates.apply(null, arguments);
-    return details.content;
+    if (previous !== template)
+      updates = createDetails(options, (previous = template));
+    return updates.apply(null, arguments);
   };
 }
 
@@ -3175,53 +3271,29 @@ function cleanContent(fragment) {
   }
 }
 
-},{"./sanitizer.js":21,"./walker.js":22,"@ungap/create-content":5,"@ungap/import-node":9,"@ungap/trim":13,"@ungap/weakmap":14}],21:[function(require,module,exports){
+},{"./walker.js":22,"@ungap/create-content":5,"@ungap/import-node":9,"@ungap/trim":13,"@ungap/weakmap":14,"domsanitizer":20}],22:[function(require,module,exports){
 'use strict';
-const {UID, UIDC, VOID_ELEMENTS} = require('./constants.js');
-
-Object.defineProperty(exports, '__esModule', {value: true}).default = function (template) {
-  return template.join(UIDC)
-          .replace(selfClosing, fullClosing)
-          .replace(attrSeeker, attrReplacer);
-}
-
-var spaces = ' \\f\\n\\r\\t';
-var almostEverything = '[^ ' + spaces + '\\/>"\'=]+';
-var attrName = '[ ' + spaces + ']+' + almostEverything;
-var tagName = '<([A-Za-z]+[A-Za-z0-9:_-]*)((?:';
-var attrPartials = '(?:\\s*=\\s*(?:\'[^\']*?\'|"[^"]*?"|<[^>]*?>|' + almostEverything + '))?)';
-
-var attrSeeker = new RegExp(tagName + attrName + attrPartials + '+)([ ' + spaces + ']*/?>)', 'g');
-var selfClosing = new RegExp(tagName + attrName + attrPartials + '*)([ ' + spaces + ']*/>)', 'g');
-var findAttributes = new RegExp('(' + attrName + '\\s*=\\s*)([\'"]?)' + UIDC + '\\2', 'gi');
-
-function attrReplacer($0, $1, $2, $3) {
-  return '<' + $1 + $2.replace(findAttributes, replaceAttributes) + $3;
-}
-
-function replaceAttributes($0, $1, $2) {
-  return $1 + ($2 || '"') + UID + ($2 || '"');
-}
-
-function fullClosing($0, $1, $2) {
-  return VOID_ELEMENTS.test($1) ? $0 : ('<' + $1 + $2 + '></' + $1 + '>');
-}
-
-},{"./constants.js":19}],22:[function(require,module,exports){
-'use strict';
-const Map = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/essential-map'));
 const trim = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/trim'));
 
 const {
-  UID, UIDC, COMMENT_NODE, ELEMENT_NODE, SHOULD_USE_TEXT_CONTENT, TEXT_NODE
-} = require('./constants.js');
+  UID, UIDC, UID_IE, COMMENT_NODE, ELEMENT_NODE, SHOULD_USE_TEXT_CONTENT, TEXT_NODE
+} = require('domconstants');
 
 exports.find = find;
 exports.parse = parse;
 
-function create(type, node, path, name) {
-  return {name: name, node: node, path: path, type: type};
-}
+/* istanbul ignore next */
+var normalizeAttributes = UID_IE ?
+  function (attributes, parts) {
+    var html = parts.join(' ');
+    return parts.slice.call(attributes, 0).sort(function (left, right) {
+      return html.indexOf(left.name) <= html.indexOf(right.name) ? -1 : 1;
+    });
+  } :
+  function (attributes, parts) {
+    return parts.slice.call(attributes, 0);
+  }
+;
 
 function find(node, path) {
   var length = path.length;
@@ -3244,16 +3316,27 @@ function parse(node, holes, parts, path) {
         parse(child, holes, parts, childPath);
         break;
       case COMMENT_NODE:
-        if (child.textContent === UID) {
+        var textContent = child.textContent;
+        if (textContent === UID) {
           parts.shift();
           holes.push(
             // basicHTML or other non standard engines
             // might end up having comments in nodes
             // where they shouldn't, hence this check.
             SHOULD_USE_TEXT_CONTENT.test(node.nodeName) ?
-              create('text', node, path) :
-              create('any', child, path.concat(i))
+              Text(node, path) :
+              Any(child, path.concat(i))
           );
+        } else {
+          switch (textContent.slice(0, 2)) {
+            case '/*':
+              if (textContent.slice(-2) !== '*/')
+                break;
+            case '\uD83D\uDC7B': // ghost
+              node.removeChild(child);
+              i--;
+              length--;
+          }
         }
         break;
       case TEXT_NODE:
@@ -3267,7 +3350,7 @@ function parse(node, holes, parts, path) {
           trim.call(child.textContent) === UIDC
         ) {
           parts.shift();
-          holes.push(create('text', node, path));
+          holes.push(Text(node, path));
         }
         break;
     }
@@ -3276,42 +3359,63 @@ function parse(node, holes, parts, path) {
 }
 
 function parseAttributes(node, holes, parts, path) {
-  var cache = new Map;
   var attributes = node.attributes;
+  var cache = [];
   var remove = [];
-  var array = remove.slice.call(attributes, 0);
+  var array = normalizeAttributes(attributes, parts);
   var length = array.length;
   var i = 0;
   while (i < length) {
     var attribute = array[i++];
-    if (attribute.value === UID) {
+    var direct = attribute.value === UID;
+    var sparse;
+    if (direct || 1 < (sparse = attribute.value.split(UIDC)).length) {
       var name = attribute.name;
       // the following ignore is covered by IE
       // and the IE9 double viewBox test
       /* istanbul ignore else */
-      if (!cache.has(name)) {
-        var realName = parts.shift().replace(/^(?:|[\S\s]*?\s)(\S+?)\s*=\s*['"]?$/, '$1');
+      if (cache.indexOf(name) < 0) {
+        cache.push(name);
+        var realName = parts.shift().replace(
+          direct ?
+            /^(?:|[\S\s]*?\s)(\S+?)\s*=\s*('|")?$/ :
+            new RegExp(
+              '^(?:|[\\S\\s]*?\\s)(' + name + ')\\s*=\\s*(\'|")[\\S\\s]*',
+              'i'
+            ),
+            '$1'
+        );
         var value = attributes[realName] ||
                       // the following ignore is covered by browsers
                       // while basicHTML is already case-sensitive
                       /* istanbul ignore next */
                       attributes[realName.toLowerCase()];
-        cache.set(name, value);
-        holes.push(create('attr', value, path, realName));
+        if (direct)
+          holes.push(Attr(value, path, realName, null));
+        else {
+          var skip = sparse.length - 2;
+          while (skip--)
+            parts.shift();
+          holes.push(Attr(value, path, realName, sparse));
+        }
       }
       remove.push(attribute);
     }
   }
   length = remove.length;
   i = 0;
+
+  /* istanbul ignore next */
+  var cleanValue = 0 < length && UID_IE && !('ownerSVGElement' in node);
   while (i < length) {
     // Edge HTML bug #16878726
     var attr = remove[i++];
-    if (/^id$/i.test(attr.name))
-      node.removeAttribute(attr.name);
-    // standard browsers would work just fine here
-    else
-      node.removeAttributeNode(attr);
+    // IE/Edge bug lighterhtml#63 - clean the value or it'll persist
+    /* istanbul ignore next */
+    if (cleanValue)
+      attr.value = '';
+    // IE/Edge bug lighterhtml#64 - don't use removeAttributeNode
+    node.removeAttribute(attr.name);
   }
 
   // This is a very specific Firefox/Safari issue
@@ -3337,7 +3441,33 @@ function parseAttributes(node, holes, parts, path) {
   }
 }
 
-},{"./constants.js":19,"@ungap/essential-map":7,"@ungap/trim":13}],23:[function(require,module,exports){
+function Any(node, path) {
+  return {
+    type: 'any',
+    node: node,
+    path: path
+  };
+}
+
+function Attr(node, path, name, sparse) {
+  return {
+    type: 'attr',
+    node: node,
+    path: path,
+    name: name,
+    sparse: sparse
+  };
+}
+
+function Text(node, path) {
+  return {
+    type: 'text',
+    node: node,
+    path: path
+  };
+}
+
+},{"@ungap/trim":13,"domconstants":17}],23:[function(require,module,exports){
 'use strict';
 /*! (C) 2017-2018 Andrea Giammarchi - ISC Style License */
 
@@ -3543,24 +3673,32 @@ class HyperHTMLElement extends HTMLElement {
     if (options && options.extends) {
       const Native = document.createElement(options.extends).constructor;
       const Intermediate = class extends Native {};
-      const Super = getPrototypeOf(Class);
-      ownKeys(Super)
-        .filter(key => [
-          'length', 'name', 'arguments', 'caller', 'prototype'
-        ].indexOf(key) < 0)
-        .forEach(key => defineProperty(
-          Intermediate,
-          key,
-          getOwnPropertyDescriptor(Super, key)
-        )
-      );
-      ownKeys(Super.prototype)
-        .forEach(key => defineProperty(
-          Intermediate.prototype,
-          key,
-          getOwnPropertyDescriptor(Super.prototype, key)
-        )
-      );
+      const ckeys = ['length', 'name', 'arguments', 'caller', 'prototype'];
+      const pkeys = [];
+      let Super = null;
+      let BaseClass = Class;
+      while (Super = getPrototypeOf(BaseClass)) {
+        [
+          {target: Intermediate, base: Super, keys: ckeys},
+          {target: Intermediate.prototype, base: Super.prototype, keys: pkeys}
+        ]
+        .forEach(({target, base, keys}) => {
+          ownKeys(base)
+            .filter(key => keys.indexOf(key) < 0)
+            .forEach((key) => {
+              keys.push(key);
+              defineProperty(
+                target,
+                key,
+                getOwnPropertyDescriptor(base, key)
+              );
+            });
+        });
+
+        BaseClass = Super;
+        if (Super === HyperHTMLElement)
+          break;
+      }
       setPrototypeOf(Class, Intermediate);
       setPrototypeOf(proto, Intermediate.prototype);
       customElements.define(name, Class, options);
@@ -4229,7 +4367,7 @@ function hyper(HTML) {
 }
 Object.defineProperty(exports, '__esModule', {value: true}).default = hyper
 
-},{"./classes/Component.js":26,"./hyper/render.js":27,"./hyper/wire.js":28,"./objects/Intent.js":30,"./objects/Updates.js":31,"@ungap/essential-weakset":8,"@ungap/weakmap":14,"domdiff":17}],30:[function(require,module,exports){
+},{"./classes/Component.js":26,"./hyper/render.js":27,"./hyper/wire.js":28,"./objects/Intent.js":30,"./objects/Updates.js":31,"@ungap/essential-weakset":8,"@ungap/weakmap":14,"domdiff":18}],30:[function(require,module,exports){
 'use strict';
 const attributes = {};
 const intents = {};
@@ -4323,6 +4461,19 @@ const asNode = (item, i) => {
 // returns true if domdiff can handle the value
 const canDiff = value => 'ELEMENT_NODE' in value;
 
+const hyperSetter = (node, name, svg) => svg ?
+  value => {
+    try {
+      node[name] = value;
+    }
+    catch (nope) {
+      node.setAttribute(name, value);
+    }
+  } :
+  value => {
+    node[name] = value;
+  };
+
 // when a Promise is used as interpolation value
 // its result must be parsed once resolved.
 // This callback is in charge of understanding what to do
@@ -4373,6 +4524,9 @@ Tagger.prototype = {
     // handle it differently from others
     if (name === 'style')
       return hyperStyle(node, original, isSVG);
+    // direct accessors for <input .value=${...}> and friends
+    else if (name.slice(0, 1) === '.')
+      return hyperSetter(node, name.slice(1), isSVG);
     // the name is an event one,
     // add/remove event listeners accordingly
     else if (/^on/.test(name)) {
@@ -4404,12 +4558,13 @@ Tagger.prototype = {
       return newValue => {
         if (oldValue !== newValue) {
           oldValue = newValue;
-          if (node[name] !== newValue) {
-            node[name] = newValue;
-            if (newValue == null) {
-              node.removeAttribute(name);
-            }
+          if (node[name] !== newValue && newValue == null) {
+            // cleanup on null to avoid silly IE/Edge bug
+            node[name] = '';
+            node.removeAttribute(name);
           }
+          else
+            node[name] = newValue;
         }
       };
     }
@@ -4619,7 +4774,7 @@ Tagger.prototype = {
   }
 };
 
-},{"../classes/Component.js":26,"../shared/constants.js":32,"./Intent.js":30,"@ungap/create-content":5,"@ungap/custom-event":6,"@ungap/essential-weakset":8,"@ungap/is-array":10,"disconnected":15,"domdiff":17,"domtagger":20,"hyperhtml-style":24,"hyperhtml-wire":25}],32:[function(require,module,exports){
+},{"../classes/Component.js":26,"../shared/constants.js":32,"./Intent.js":30,"@ungap/create-content":5,"@ungap/custom-event":6,"@ungap/essential-weakset":8,"@ungap/is-array":10,"disconnected":15,"domdiff":18,"domtagger":21,"hyperhtml-style":24,"hyperhtml-wire":25}],32:[function(require,module,exports){
 'use strict';
 // Node.CONSTANTS
 // 'cause some engine has no global Node defined

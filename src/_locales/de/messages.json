@@ -269,6 +269,10 @@
     "message": "Motiv anwenden", 
     "description": "Text of clickable element that applies the theme of a theme box in the Themes tab of the Options page"
   }, 
+  "back_help_flow": {
+    "message": "Gehen Sie im Hilfefluss einen Schritt zurück.", 
+    "description": "Aria label for back button in help flow (in popup menu)"
+  }, 
   "backup_sync_settings": {
     "message": "Sichern und synchronisieren Sie Ihre AdBlock-Einstellungen automatisch auf all Ihren Geräten.", 
     "description": "Description of Sync on Sync tab"
@@ -501,10 +505,6 @@
     "message": "Wir haben Änderungen an AdBlock vorgenommen!", 
     "description": "Link to Options page with more information about the changes."
   }, 
-  "check_email": {
-    "message": "Bitte überprüfen Sie Ihre E-Mail.", 
-    "description": "Prompt the user to check their email for a message from AdBlock"
-  }, 
   "check_out_premium": {
     "message": "Wenn Sie mehr erfahren möchten, testen Sie [[Premium]].", 
     "description": "Part 2 of message shown when user opts out of call-to-action"
@@ -530,7 +530,7 @@
     "description": "instruction for how to check Firefox for a reported ad"
   }, 
   "checkinfirefox_2": {
-    "message": "Installieren Sie AdBlock Plus für Firefox, wenn Sie das noch nicht getan haben.", 
+    "message": "Installieren Sie Adblock Plus für Firefox, wenn Sie das noch nicht getan haben.", 
     "description": "Instruction for how to check Firefox for a reported ad. Don't translate the name 'Adblock Plus'."
   }, 
   "checkinfirefox_3": {
@@ -550,7 +550,7 @@
     "description": "instruction for how to check Firefox or Chrome for a reported ad"
   }, 
   "checkinfirefoxorchrome_2": {
-    "message": "Installieren Sie AdBlock Plus für Firefox oder AdBlock für Chrome, wenn Sie das noch nicht getan haben.", 
+    "message": "Installieren Sie Adblock Plus für Firefox oder AdBlock für Chrome, wenn Sie das noch nicht getan haben.", 
     "description": "Instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'Adblock Plus'."
   }, 
   "checkinfirefoxorchrometitle": {
@@ -589,6 +589,10 @@
     "message": "Schließen", 
     "description": "Generic message for buttons that close a view or window"
   }, 
+  "close_help_flow": {
+    "message": "Schließen Sie den Hilfefluss und kehren Sie zum Pop-up-Menü zurück.", 
+    "description": "Aria label for close button in help flow (in popup menu)"
+  }, 
   "confirm_delete_extension": {
     "message": "Möchten Sie diese Erweiterung wirklich löschen?", 
     "description": "Warning/confirmation message shown when the user clicks on the delete icon for this extension"
@@ -610,10 +614,6 @@
   "contact_support": {
     "message": "[[Kontaktieren Sie unser Support-Team!]]", 
     "description": "Message for help flow in popup menu."
-  }, 
-  "contact_support_if_errors_continue": {
-    "message": "Wenn dieser Fehler weiterhin auftritt, kontaktieren Sie bitte: [[Kundendienst]].", 
-    "description": "Warn the user if they continue to see the same error they should contact AdBlock support."
   }, 
   "contact_the_site": {
     "message": "Wir empfehlen Ihnen, sich mit der Site in Verbindung zu setzen.", 
@@ -778,8 +778,18 @@
     "message": "Anfrage"
   }, 
   "devtools_request_url": {
-    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
-    "message": "<a0></a0> umgeschrieben zu <a1></a1>"
+    "description": "A request URL in the AdBlock DevTools panel", 
+    "message": "<a0>$original$</a0> umgeschrieben zu <a1>$rewritten$</a1>", 
+    "placeholders": {
+      "original": {
+        "content": "$1", 
+        "example": "http://example.com/foo"
+      }, 
+      "rewritten": {
+        "content": "$2", 
+        "example": "http://example.com/bar"
+      }
+    }
   }, 
   "devtools_type_title": {
     "description": "Type column header text", 
@@ -937,6 +947,10 @@
     "message": "Nur Englisch", 
     "description": "Lets the user know that a link/page is only available in English."
   }, 
+  "enjoying_adblock": {
+    "message": "Gefällt Ihnen AdBlock?", 
+    "description": "Text of a footer in the popup menu help flow asking users to leave us a review."
+  }, 
   "enter_url": {
     "message": "Eine URL eingeben", 
     "description": "Placeholder text in the Custom Filter list URL bar"
@@ -1066,20 +1080,20 @@
     "description": "A filter list combined with EasyList"
   }, 
   "filter_elemhideemulation_nodomain": {
-    "message": "No active domain specified for extended element hiding filter"
+    "message": "Keine aktive Domain für den Filter zum Ausblenden erweiterter Elemente angegeben"
   }, 
   "filter_invalid": {
-    "message": "Invalid filter", 
+    "message": "Ungültiger Filter", 
     "description": "Generic error shown when the user tries to add an invalid filter rule to their custom filters"
   }, 
   "filter_invalid_csp": {
-    "message": "Invalid Content Security Policy"
+    "message": "Ungültige Inhaltssicherheitsrichtlinie"
   }, 
   "filter_invalid_domain": {
-    "message": "Invalid (or empty) domain specified"
+    "message": "Ungültige (oder leere) Domain angegeben"
   }, 
   "filter_invalid_regexp": {
-    "message": "Invalid regular expression"
+    "message": "Ungültiger normaler Ausdruck"
   }, 
   "filter_israeli": {
     "message": "Hebräisch + EasyList", 
@@ -1098,10 +1112,10 @@
     "description": "A filter list combined with EasyList"
   }, 
   "filter_snippet_nodomain": {
-    "message": "No active domain specified for snippet filter"
+    "message": "Keine aktive Domain für Snippet-Filter angegeben"
   }, 
   "filter_unknown_option": {
-    "message": "Unknown filter option"
+    "message": "Unbekannte Filteroption"
   }, 
   "filter_warning_removal_explained": {
     "message": "entfernt Warnungen über die Benutzung von Ad-Blockern", 
@@ -1112,7 +1126,7 @@
     "description": "A filter list"
   }, 
   "filteracceptable_ads_privacy": {
-    "message": "Datenschutz für annehmbare Werbung", 
+    "message": "Datenschutz für Annehmbare Werbung", 
     "description": "A filter list"
   }, 
   "filteradblock_custom": {
@@ -1663,6 +1677,10 @@
     "message": "Mehr erfahren", 
     "description": "Text in the aria-label attribute of an icon linking to extra information about an option."
   }, 
+  "leave_a_review": {
+    "message": "Schreiben Sie uns eine Bewertung!", 
+    "description": "Text of a menu item in the popup menu asking users to leave us a review."
+  }, 
   "legend": {
     "message": "Legende: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1690,6 +1708,10 @@
   "locked": {
     "message": "Gesperrt", 
     "description": "Text in the aria-label attribute of an icon showing a feature/option is locked."
+  }, 
+  "love_adblock": {
+    "message": "Lieben Sie AdBlock?", 
+    "description": "Text in a button that asks users to rate us."
   }, 
   "mac_app_message_menu_part_one": {
     "message": "Neu!", 
@@ -1791,40 +1813,6 @@
     "message": "Als Dank für Ihre Unterstützung und das Aktivieren von MyAdBlock erhalten Sie Zugriff auf die neuesten Werkzeuge und Features, sobald diese veröffentlicht werden.", 
     "description": "Main text of the teaser MyAdBlock feature in the MyAdBlock tab of the Options page"
   }, 
-  "myadblock_enrollment_hide_forever": {
-    "message": "Diese Meldung nicht mehr anzeigen", 
-    "description": "The label for a checkbox that will hide the enrollment box forever."
-  }, 
-  "myadblock_enrollment_link_info": {
-    "message": "Wenn Sie den Link anklicken, können Sie MyAdBlock einfach in anderen Chrome-Browsern einrichten.", 
-    "description": "Explains what happens when clicking the magic link."
-  }, 
-  "myadblock_enrollment_resend_button": {
-    "message": "Link erneut senden", 
-    "description": "Text on the MyAdBlock enrollment resend email button"
-  }, 
-  "myadblock_enrollment_resend_error": {
-    "message": "Beim erneuten Versenden Ihrer Bestätigungs-E-Mail ist ein Fehler aufgetreten.", 
-    "description": "MyAdBlock license email failed to send error message."
-  }, 
-  "myadblock_enrollment_resend_success": {
-    "message": "Wir haben einen magischen Link an $email$ geschickt.", 
-    "description": "MyAdBlock license email successfully sent message.", 
-    "placeholders": {
-      "email": {
-        "content": "$1", 
-        "example": "alice@example.com"
-      }
-    }
-  }, 
-  "myadblock_enrollment_success": {
-    "message": "Sie können den magischen Link in Ihrer Bestätigungs-E-Mail nutzen, um MyAdBlock in anderen Chrome-Browsern freizuschalten.", 
-    "description": "MyAdBlock successfully licensed message."
-  }, 
-  "myadblock_enrollment_title": {
-    "message": "MyAdBlock ist auf diesem Browser eingerichtet!", 
-    "description": "The title of the MyAdBlock enrollment box."
-  }, 
   "myadblock_feedback_button": {
     "message": "Feedback übermitteln", 
     "description": "Text on the MyAdBlock feedback button"
@@ -1911,7 +1899,7 @@
   }, 
   "name": {
     "description": "Extension name to be shown for release / published builds.  The extension name 'AdBlock' should NOT be translated, but the text after the dash should be translated", 
-    "message": "AdBlock — best ad blocker"
+    "message": "AdBlock – der beste Ad-Blocker"
   }, 
   "name_adblock_on_youtube": {
     "message": "AdBlock auf YouTube™", 
@@ -1978,10 +1966,10 @@
     "description": "Indicates that the user should take note of the message that follows."
   }, 
   "notification_antiadblock_message": {
-    "message": "This site has been known to show targeted messages to AdBlock users. Do you want AdBlock to hide targeted messages?"
+    "message": "Diese Site ist bekannt dafür, den AdBlock-Nutzern gezielte Nachrichten anzuzeigen. Soll AdBlock zielgerichtete Nachrichten ausblenden?"
   }, 
   "notification_antiadblock_title": {
-    "message": "Hide targeted messages?"
+    "message": "Zielgerichtete Nachrichten ausblenden?"
   }, 
   "ocean_theme": {
     "message": "Ozean", 
@@ -2046,10 +2034,10 @@
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
   "overlay_notification_button_no": {
-    "message": "No"
+    "message": "Nein"
   }, 
   "overlay_notification_button_yes": {
-    "message": "Yes"
+    "message": "Ja"
   }, 
   "page_is_whitelisted": {
     "message": "Diese Seite ist auf Ihrer Whitelist – daher sehen Sie eine Werbung.", 
@@ -2091,10 +2079,6 @@
     "message": "AdBlock ist derzeit pausiert – es gibt wahrscheinlich ein Problem mit der Site, das nichts mit AdBlock zu tun hat.", 
     "description": "Message for help flow in popup menu."
   }, 
-  "please_try_again": {
-    "message": "Bitte erneut versuchen.", 
-    "description": "Prompt the user to retry the last action."
-  }, 
   "popup_menu": {
     "message": "Pop-up-Menü", 
     "description": "General text used to define the pop-up menu."
@@ -2114,18 +2098,6 @@
   "premium_benefits_explained": {
     "message": "Als Dank für Ihre Unterstützung und das Aktivieren von AdBlock Premium erhalten Sie Zugriff auf die neuesten Werkzeuge und Features, sobald diese veröffentlicht werden.", 
     "description": "Main text of the teaser AdBlock Premium feature in the AdBlock Premium tab of the Options page"
-  }, 
-  "premium_enrollment_link_info": {
-    "message": "Wenn Sie den Link anklicken, können Sie AdBlock Premium einfach in anderen Chrome-Browsern einrichten.", 
-    "description": "DO NOT TRANSLATE. Explains what happens when clicking the magic link."
-  }, 
-  "premium_enrollment_success": {
-    "message": "Sie können den magischen Link in Ihrer Bestätigungs-E-Mail nutzen, um AdBlock Premium in anderen Chrome-Browsern freizuschalten.", 
-    "description": "DO NOT TRANSLATE. AdBlock Premium successfully licensed message."
-  }, 
-  "premium_enrollment_title": {
-    "message": "AdBlock Premium ist auf diesem Browser eingerichtet!", 
-    "description": "DO NOT TRANSLATE. The title of the AdBlock Premium enrollment box."
   }, 
   "premium_page_title": {
     "message": "AdBlock Premium: Eine bessere Art, um im Internet zu surfen.", 
@@ -2174,6 +2146,10 @@
   "questionoridea": {
     "message": "Haben Sie eine Frage oder eine neue Idee?", 
     "description": "Subtitle on the Support tab"
+  }, 
+  "rate_us": {
+    "message": "Bewerten Sie uns", 
+    "description": "Text of a menu item in the popup menu asking users to leave us a review."
   }, 
   "rebecca_purple_theme": {
     "message": "Rebecca-Lila", 
@@ -2393,6 +2369,10 @@
     "message": "Alle Anfragen anzeigen", 
     "description": "Menu entry to open the resource list page"
   }, 
+  "show_some_love": {
+    "message": "Zeigen Sie AdBlock ein wenig Liebe!", 
+    "description": "Title of the tooltip of the rate us button CTA in the Options page."
+  }, 
   "showcontextmenus2": {
     "message": "Objekte zum Rechtsklickmenü hinzufügen", 
     "description": "Checkbox on the 'General' tab of the Options page."
@@ -2514,6 +2494,10 @@
   "support_to_unlock": {
     "message": "Zum Freischalten unterstützen", 
     "description": "Text in theme box of the Themes tab of the Options page (no more than 30 characters)"
+  }, 
+  "support_with_a_review": {
+    "message": "Unterstützen Sie unser Team und schreiben Sie eine Bewertung.", 
+    "description": "Text of the tooltip of the rate us button CTA in the Options page."
   }, 
   "supportsite": {
     "message": "Nehmen Sie über unsere [[Kundendienst-Website]] mit uns Kontakt auf!", 
@@ -2661,10 +2645,6 @@
     "message": "Kundendienst", 
     "description": "A tab on the Options page"
   }, 
-  "tabthemes": {
-    "message": "Motive", 
-    "description": "A tab on the Options page"
-  }, 
   "tabtranslations": {
     "message": "Übersetzungen", 
     "description": "A tab on the Options page"
@@ -2803,7 +2783,7 @@
   }, 
   "unexpected_filter_list_header": {
     "description": "Error message shown when the user attempts to add a custom filter that has the format of a header (e.g. \"[Adblock Plus 2.0]\") which are only allowed in filter lists", 
-    "message": "Filter list headers aren't allowed here"
+    "message": "Filterlisten-Header sind hier nicht erlaubt"
   }, 
   "unpause_adblock": {
     "message": "AdBlock fortsetzen", 
@@ -3004,6 +2984,16 @@
   "you_know_thats_a_bad_idea_right": {
     "message": "Je mehr Filter Sie benutzen, desto langsamer läuft AdBlock. Wenn Sie zu viele Filter verwenden, kann ihr Browser auf einigen Websites sogar abstürzen. Drücken Sie OK, um diese Liste trotzdem zu abonnieren.", 
     "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  }, 
+  "youve_blocked_num_ads": {
+    "message": "Sie haben $numBlocked$ Werbung geblockt!", 
+    "description": "Text of a menu item in the popup menu asking users to leave us a review. The $numBlocked$ will be replaced with the number of ads the users has blocked, starting at 10,000.", 
+    "placeholders": {
+      "numBlocked": {
+        "content": "$1", 
+        "example": "10,000"
+      }
+    }
   }, 
   "ytadblockupdates": {
     "message": "AdBlock auf YouTube™ – Updates", 

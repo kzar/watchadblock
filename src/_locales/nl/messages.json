@@ -14,11 +14,11 @@
     }
   }, 
   "aalinkadreport": {
-    "message": "Meer informatie over het Acceptable Ads-programma.", 
+    "message": "Meer informatie over het Acceptabele advertenties-programma.", 
     "description": "Acceptable Ads link message on ad report page"
   }, 
   "aamessageadreport": {
-    "message": "Als je dit soort advertenties liever niet ziet, kun je het best de Acceptable Ads-filterlijst uitschakelen.", 
+    "message": "Als je dit soort advertenties liever niet ziet, kun je het best de Acceptabele advertenties-filterlijst uitschakelen.", 
     "description": "Acceptable Ads message on ad report page"
   }, 
   "ab_filters_subscription_lastDownload_checksumMismatch": {
@@ -38,7 +38,7 @@
     "description": "Filter lists tab of the Options page: Message when you subscribe to a non-list URL."
   }, 
   "acceptable_ads_content_blocking_disbled_message": {
-    "message": "We hebben je afgemeld voor Acceptable Ads omdat je content blokkeren in Safari hebt ingeschakeld. Je kunt maar een van beide tegelijkertijd selecteren. ([[Waarom?]])", 
+    "message": "We hebben je afgemeld voor Acceptabele advertenties omdat je content blokkeren in Safari hebt ingeschakeld. Je kunt maar een van beide tegelijkertijd selecteren. ([[Waarom?]])", 
     "description": "Warning shown when Safari Content Blocking is enabled while the Acceptable Ads filter list was already enabled."
   }, 
   "acceptable_ads_privacy": {
@@ -46,7 +46,7 @@
     "description": "The text of an Acceptable Ads sub-option in the General tab"
   }, 
   "acceptableadsdisable_done": {
-    "message": "Je bent niet meer geabonneerd op de Acceptable Ads-filterlijst.", 
+    "message": "Je bent niet meer geabonneerd op de Acceptabele advertenties-filterlijst.", 
     "description": "Message shown to users after disabling Acceptable Ads via the Options page."
   }, 
   "acceptableadsdisable_how_to_reenable": {
@@ -268,6 +268,10 @@
   "apply_theme": {
     "message": "Thema toepassen", 
     "description": "Text of clickable element that applies the theme of a theme box in the Themes tab of the Options page"
+  }, 
+  "back_help_flow": {
+    "message": "Ga één stap terug in de hulpstroom.", 
+    "description": "Aria label for back button in help flow (in popup menu)"
   }, 
   "backup_sync_settings": {
     "message": "Maak automatisch een back-up van je AdBlock-instellingen en synchroniseer ze op al je apparaten.", 
@@ -501,10 +505,6 @@
     "message": "We hebben wijzigingen doorgevoerd in AdBlock!", 
     "description": "Link to Options page with more information about the changes."
   }, 
-  "check_email": {
-    "message": "Controleer je e-mail.", 
-    "description": "Prompt the user to check their email for a message from AdBlock"
-  }, 
   "check_out_premium": {
     "message": "Als je op zoek bent naar meer informatie, bekijk dan [[Premium]].", 
     "description": "Part 2 of message shown when user opts out of call-to-action"
@@ -570,7 +570,7 @@
     "description": "Label at the bottom of the 'Customize' tab of the Options page"
   }, 
   "clickdisableaa": {
-    "message": "Klik hierop: [[Acceptable Ads uitschakelen]]", 
+    "message": "Klik hierop: [[Acceptabele advertenties uitschakelen]]", 
     "description": "Instruction on ad report page"
   }, 
   "clickdisableotherextensions": {
@@ -588,6 +588,10 @@
   "close": {
     "message": "Sluiten", 
     "description": "Generic message for buttons that close a view or window"
+  }, 
+  "close_help_flow": {
+    "message": "Sluit de hulpstroom en keer terug naar het pop-upvenster.", 
+    "description": "Aria label for close button in help flow (in popup menu)"
   }, 
   "confirm_delete_extension": {
     "message": "Weet je zeker dat je deze extensie wilt verwijderen?", 
@@ -610,10 +614,6 @@
   "contact_support": {
     "message": "[[Neem contact op met ons supportteam!]]", 
     "description": "Message for help flow in popup menu."
-  }, 
-  "contact_support_if_errors_continue": {
-    "message": "Als je deze fout blijft zien, kun je het best contact opnemen met [[support]].", 
-    "description": "Warn the user if they continue to see the same error they should contact AdBlock support."
   }, 
   "contact_the_site": {
     "message": "We raden je aan om contact op te nemen met de site.", 
@@ -778,15 +778,25 @@
     "message": "Verzoek"
   }, 
   "devtools_request_url": {
-    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
-    "message": "<a0></a0> herschreven naar <a1></a1>"
+    "description": "A request URL in the AdBlock DevTools panel", 
+    "message": "<a0>$original$</a0> herschreven naar <a1>$rewritten$</a1>", 
+    "placeholders": {
+      "original": {
+        "content": "$1", 
+        "example": "http://example.com/foo"
+      }, 
+      "rewritten": {
+        "content": "$2", 
+        "example": "http://example.com/bar"
+      }
+    }
   }, 
   "devtools_type_title": {
     "description": "Type column header text", 
     "message": "Type"
   }, 
   "disableaa": {
-    "message": "Bekijk de Acceptable Ads-filters:", 
+    "message": "Bekijk de Acceptabele advertenties-filters:", 
     "description": "Section header on the ad report page"
   }, 
   "disableallextensions": {
@@ -937,6 +947,10 @@
     "message": "Alleen in het Engels", 
     "description": "Lets the user know that a link/page is only available in English."
   }, 
+  "enjoying_adblock": {
+    "message": "Geniet je van AdBlock?", 
+    "description": "Text of a footer in the popup menu help flow asking users to leave us a review."
+  }, 
   "enter_url": {
     "message": "voer een URL in", 
     "description": "Placeholder text in the Custom Filter list URL bar"
@@ -1066,20 +1080,20 @@
     "description": "A filter list combined with EasyList"
   }, 
   "filter_elemhideemulation_nodomain": {
-    "message": "No active domain specified for extended element hiding filter"
+    "message": "Geen actief domein gespecificeerd voor verbergingsfilter"
   }, 
   "filter_invalid": {
-    "message": "Invalid filter", 
+    "message": "Ongeldig filter", 
     "description": "Generic error shown when the user tries to add an invalid filter rule to their custom filters"
   }, 
   "filter_invalid_csp": {
-    "message": "Invalid Content Security Policy"
+    "message": "Ongeldig contentbeveiligingsbeleid"
   }, 
   "filter_invalid_domain": {
-    "message": "Invalid (or empty) domain specified"
+    "message": "Ongeldig (of leeg) domein gespecificeerd"
   }, 
   "filter_invalid_regexp": {
-    "message": "Invalid regular expression"
+    "message": "Ongeldige reguliere expressie"
   }, 
   "filter_israeli": {
     "message": "Hebreeuws + EasyList", 
@@ -1098,21 +1112,21 @@
     "description": "A filter list combined with EasyList"
   }, 
   "filter_snippet_nodomain": {
-    "message": "No active domain specified for snippet filter"
+    "message": "Geen actief domein gespecificeerd voor deeltjesfilter"
   }, 
   "filter_unknown_option": {
-    "message": "Unknown filter option"
+    "message": "Onbekende filteroptie"
   }, 
   "filter_warning_removal_explained": {
     "message": "verwijdert waarschuwingen over het gebruik van adblockers", 
     "description": "A filter list explanation"
   }, 
   "filteracceptable_ads": {
-    "message": "Acceptable Ads", 
+    "message": "Acceptabele advertenties", 
     "description": "A filter list"
   }, 
   "filteracceptable_ads_privacy": {
-    "message": "Privacy Acceptable Ads", 
+    "message": "Privacy Acceptabele advertenties", 
     "description": "A filter list"
   }, 
   "filteradblock_custom": {
@@ -1663,6 +1677,10 @@
     "message": "Meer info", 
     "description": "Text in the aria-label attribute of an icon linking to extra information about an option."
   }, 
+  "leave_a_review": {
+    "message": "Laat een recensie voor ons achter!", 
+    "description": "Text of a menu item in the popup menu asking users to leave us a review."
+  }, 
   "legend": {
     "message": "Legenda: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1690,6 +1708,10 @@
   "locked": {
     "message": "Vergrendeld", 
     "description": "Text in the aria-label attribute of an icon showing a feature/option is locked."
+  }, 
+  "love_adblock": {
+    "message": "Dol op AdBlock?", 
+    "description": "Text in a button that asks users to rate us."
   }, 
   "mac_app_message_menu_part_one": {
     "message": "Nieuw!", 
@@ -1791,40 +1813,6 @@
     "message": "In ruil voor je steun door het inschakelen van MyAdBlock krijg je toegang tot de laatste gereedschappen en functies zodra die uit zijn.", 
     "description": "Main text of the teaser MyAdBlock feature in the MyAdBlock tab of the Options page"
   }, 
-  "myadblock_enrollment_hide_forever": {
-    "message": "Dit bericht niet meer weergeven", 
-    "description": "The label for a checkbox that will hide the enrollment box forever."
-  }, 
-  "myadblock_enrollment_link_info": {
-    "message": "Als je op deze link klikt, kun je MyAdBlock eenvoudig instellen in andere Chrome-browsers.", 
-    "description": "Explains what happens when clicking the magic link."
-  }, 
-  "myadblock_enrollment_resend_button": {
-    "message": "link opnieuw sturen", 
-    "description": "Text on the MyAdBlock enrollment resend email button"
-  }, 
-  "myadblock_enrollment_resend_error": {
-    "message": "Er was een probleem met het opnieuw sturen van je bevestigingsmail.", 
-    "description": "MyAdBlock license email failed to send error message."
-  }, 
-  "myadblock_enrollment_resend_success": {
-    "message": "We hebben een magische link gestuurd naar $email$.", 
-    "description": "MyAdBlock license email successfully sent message.", 
-    "placeholders": {
-      "email": {
-        "content": "$1", 
-        "example": "alice@example.com"
-      }
-    }
-  }, 
-  "myadblock_enrollment_success": {
-    "message": "Je kunt de magische link gebruiken in je bevestigingsmail om MyAdBlock te ontgrendelen in andere Chrome-browsers.", 
-    "description": "MyAdBlock successfully licensed message."
-  }, 
-  "myadblock_enrollment_title": {
-    "message": "MyAdBlock is ingesteld voor deze browser!", 
-    "description": "The title of the MyAdBlock enrollment box."
-  }, 
   "myadblock_feedback_button": {
     "message": "Feedback verzenden", 
     "description": "Text on the MyAdBlock feedback button"
@@ -1902,7 +1890,7 @@
     "description": "The text of the header the MyAdBlock Options page"
   }, 
   "myadblockoptionspageheader": {
-    "message": "Opties MyAbBlock", 
+    "message": "Opties MyAdBlock", 
     "description": "The text of the header the MyAdBlock Options page"
   }, 
   "myadblockpicreplacementswitchlabel": {
@@ -1911,7 +1899,7 @@
   }, 
   "name": {
     "description": "Extension name to be shown for release / published builds.  The extension name 'AdBlock' should NOT be translated, but the text after the dash should be translated", 
-    "message": "AdBlock — best ad blocker"
+    "message": "AdBlock - de beste advertentieblokker"
   }, 
   "name_adblock_on_youtube": {
     "message": "AdBlock op YouTube™", 
@@ -1978,10 +1966,10 @@
     "description": "Indicates that the user should take note of the message that follows."
   }, 
   "notification_antiadblock_message": {
-    "message": "This site has been known to show targeted messages to AdBlock users. Do you want AdBlock to hide targeted messages?"
+    "message": "Deze site staat bekend om het tonen van gerichte berichten aan AdBlock-gebruikers. Wil je dat AdBlock gerichte berichten verbergt?"
   }, 
   "notification_antiadblock_title": {
-    "message": "Hide targeted messages?"
+    "message": "Gerichte berichten verbergen?"
   }, 
   "ocean_theme": {
     "message": "Oceaan", 
@@ -2046,10 +2034,10 @@
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
   "overlay_notification_button_no": {
-    "message": "No"
+    "message": "Nee"
   }, 
   "overlay_notification_button_yes": {
-    "message": "Yes"
+    "message": "Ja"
   }, 
   "page_is_whitelisted": {
     "message": "Deze pagina staat op je whitelist, daarom zie je een advertentie.", 
@@ -2091,10 +2079,6 @@
     "message": "AdBlock is momenteel gepauzeerd, dus het lijkt erop dat er een probleem is met de site dat niets te maken heeft met AdBlock.", 
     "description": "Message for help flow in popup menu."
   }, 
-  "please_try_again": {
-    "message": "Probeer het opnieuw.", 
-    "description": "Prompt the user to retry the last action."
-  }, 
   "popup_menu": {
     "message": "pop-upmenu", 
     "description": "General text used to define the pop-up menu."
@@ -2114,18 +2098,6 @@
   "premium_benefits_explained": {
     "message": "In ruil voor je steun door het inschakelen van AdBlock Premium krijg je toegang tot de laatste gereedschappen en functies zodra die uit zijn.", 
     "description": "Main text of the teaser AdBlock Premium feature in the AdBlock Premium tab of the Options page"
-  }, 
-  "premium_enrollment_link_info": {
-    "message": "Als je op deze link klikt, kun je AdBlock Premium eenvoudig instellen in andere Chrome-browsers.", 
-    "description": "DO NOT TRANSLATE. Explains what happens when clicking the magic link."
-  }, 
-  "premium_enrollment_success": {
-    "message": "Je kunt de magische link gebruiken in je bevestigingsmail om AdBlock Premium te ontgrendelen in andere Chrome-browsers.", 
-    "description": "DO NOT TRANSLATE. AdBlock Premium successfully licensed message."
-  }, 
-  "premium_enrollment_title": {
-    "message": "AdBlock Premium is ingesteld voor deze browser!", 
-    "description": "DO NOT TRANSLATE. The title of the AdBlock Premium enrollment box."
   }, 
   "premium_page_title": {
     "message": "AdBlock Premium: een betere manier om te surfen.", 
@@ -2174,6 +2146,10 @@
   "questionoridea": {
     "message": "Heb je een vraag of een nieuw idee?", 
     "description": "Subtitle on the Support tab"
+  }, 
+  "rate_us": {
+    "message": "Beoordeel ons", 
+    "description": "Text of a menu item in the popup menu asking users to leave us a review."
   }, 
   "rebecca_purple_theme": {
     "message": "Rebecca Purple", 
@@ -2393,6 +2369,10 @@
     "message": "Alle verzoeken weergeven", 
     "description": "Menu entry to open the resource list page"
   }, 
+  "show_some_love": {
+    "message": "Geef AdBlock wat liefde!", 
+    "description": "Title of the tooltip of the rate us button CTA in the Options page."
+  }, 
   "showcontextmenus2": {
     "message": "Items toevoegen aan het rechtermuisknop-menu", 
     "description": "Checkbox on the 'General' tab of the Options page."
@@ -2514,6 +2494,10 @@
   "support_to_unlock": {
     "message": "Steun om te ontgrendelen", 
     "description": "Text in theme box of the Themes tab of the Options page (no more than 30 characters)"
+  }, 
+  "support_with_a_review": {
+    "message": "Steun ons team door een recensie achter te laten.", 
+    "description": "Text of the tooltip of the rate us button CTA in the Options page."
   }, 
   "supportsite": {
     "message": "Laat het ons weten op onze [[ondersteuningssite]]!", 
@@ -2661,10 +2645,6 @@
     "message": "Ondersteuning", 
     "description": "A tab on the Options page"
   }, 
-  "tabthemes": {
-    "message": "Thema's", 
-    "description": "A tab on the Options page"
-  }, 
   "tabtranslations": {
     "message": "Vertalers", 
     "description": "A tab on the Options page"
@@ -2803,7 +2783,7 @@
   }, 
   "unexpected_filter_list_header": {
     "description": "Error message shown when the user attempts to add a custom filter that has the format of a header (e.g. \"[Adblock Plus 2.0]\") which are only allowed in filter lists", 
-    "message": "Filter list headers aren't allowed here"
+    "message": "Filterlijstkoppen zijn hier niet toegestaan"
   }, 
   "unpause_adblock": {
     "message": "AdBlock hervatten", 
@@ -3004,6 +2984,16 @@
   "you_know_thats_a_bad_idea_right": {
     "message": "Hoe meer filterlijsten je gebruikt, hoe langzamer AdBlock wordt. Als je te veel lijsten gebruikt, kan je browser zelfs vastlopen op bepaalde websites. Druk op Oké om je toch te abonneren op deze lijst.", 
     "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  }, 
+  "youve_blocked_num_ads": {
+    "message": "Je hebt $numBlocked$ advertenties geblokkeerd!", 
+    "description": "Text of a menu item in the popup menu asking users to leave us a review. The $numBlocked$ will be replaced with the number of ads the users has blocked, starting at 10,000.", 
+    "placeholders": {
+      "numBlocked": {
+        "content": "$1", 
+        "example": "10,000"
+      }
+    }
   }, 
   "ytadblockupdates": {
     "message": "Updates AdBlock op YouTube™", 

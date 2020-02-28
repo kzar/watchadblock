@@ -269,6 +269,10 @@
     "message": "Aplica el tema", 
     "description": "Text of clickable element that applies the theme of a theme box in the Themes tab of the Options page"
   }, 
+  "back_help_flow": {
+    "message": "Go back one step in the help flow.", 
+    "description": "Aria label for back button in help flow (in popup menu)"
+  }, 
   "backup_sync_settings": {
     "message": "Feu còpies de seguretat i sincronitzeu automàticament la vostra configuració de l'AdBlock en tots els dispositius.", 
     "description": "Description of Sync on Sync tab"
@@ -588,6 +592,10 @@
   "close": {
     "message": "Tanca", 
     "description": "Generic message for buttons that close a view or window"
+  }, 
+  "close_help_flow": {
+    "message": "Close help flow and go back to the pop-up menu.", 
+    "description": "Aria label for close button in help flow (in popup menu)"
   }, 
   "confirm_delete_extension": {
     "message": "Esteu segur que voleu suprimir aquesta extensió?", 
@@ -936,6 +944,10 @@
   "englishonly": {
     "message": "Només en anglès", 
     "description": "Lets the user know that a link/page is only available in English."
+  }, 
+  "enjoying_adblock": {
+    "message": "Enjoying AdBlock?", 
+    "description": "Text of a footer in the popup menu help flow asking users to leave us a review."
   }, 
   "enter_url": {
     "message": "introduïu una URL", 
@@ -1663,6 +1675,10 @@
     "message": "Més informació", 
     "description": "Text in the aria-label attribute of an icon linking to extra information about an option."
   }, 
+  "leave_a_review": {
+    "message": "Leave us a review!", 
+    "description": "Text of a menu item in the popup menu asking users to leave us a review."
+  }, 
   "legend": {
     "message": "Llegenda: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1690,6 +1706,10 @@
   "locked": {
     "message": "Bloquejat", 
     "description": "Text in the aria-label attribute of an icon showing a feature/option is locked."
+  }, 
+  "love_adblock": {
+    "message": "Love AdBlock?", 
+    "description": "Text in a button that asks users to rate us."
   }, 
   "mac_app_message_menu_part_one": {
     "message": "Nou!", 
@@ -2175,6 +2195,10 @@
     "message": "Teniu alguna pregunta i/o suggeriment?", 
     "description": "Subtitle on the Support tab"
   }, 
+  "rate_us": {
+    "message": "Rate Us", 
+    "description": "Text of a menu item in the popup menu asking users to leave us a review."
+  }, 
   "rebecca_purple_theme": {
     "message": "Rebecca Violeta", 
     "description": "Name of a theme in the Themes tab of the Options page"
@@ -2393,6 +2417,10 @@
     "message": "Mostra totes les sol·licituds", 
     "description": "Menu entry to open the resource list page"
   }, 
+  "show_some_love": {
+    "message": "Show AdBlock some love!", 
+    "description": "Title of the tooltip of the rate us button CTA in the Options page."
+  }, 
   "showcontextmenus2": {
     "message": "Afegeix ítems al menú de clic amb botó dret", 
     "description": "Checkbox on the 'General' tab of the Options page."
@@ -2514,6 +2542,10 @@
   "support_to_unlock": {
     "message": "Ajuda per desbloquejar", 
     "description": "Text in theme box of the Themes tab of the Options page (no more than 30 characters)"
+  }, 
+  "support_with_a_review": {
+    "message": "Support our team by leaving us a review.", 
+    "description": "Text of the tooltip of the rate us button CTA in the Options page."
   }, 
   "supportsite": {
     "message": "Feu-nos-ho saber en el nostre [[lloc web de suport]]!", 
@@ -3004,6 +3036,16 @@
   "you_know_thats_a_bad_idea_right": {
     "message": "Com més llistes de filtres utilitzeu, amb més lentitud s'executarà l'AdBlock. L'ús de masses llistes pot arribar a fer fallar el navegador en determinats llocs web. Premeu «D'acord» per subscriure-us a aquesta llista de totes maneres.", 
     "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  }, 
+  "youve_blocked_num_ads": {
+    "message": "You've blocked $numBlocked$ ads!", 
+    "description": "Text of a menu item in the popup menu asking users to leave us a review. The $numBlocked$ will be replaced with the number of ads the users has blocked, starting at 10,000.", 
+    "placeholders": {
+      "numBlocked": {
+        "content": "$1", 
+        "example": "10,000"
+      }
+    }
   }, 
   "ytadblockupdates": {
     "message": "Actualitzacions de l'AdBlock al YouTube™", 

@@ -1,7 +1,7 @@
 'use strict';
 
 /* For ESLint: List any global identifiers used in this file below */
-/* global chrome, adblock_installed, adblock_userid, adblock_version */
+/* global browser, adblock_installed, adblock_userid, adblock_version */
 
 const invalidGUIDChars = /[^a-z0-9]/g;
 
@@ -75,7 +75,7 @@ function receiveMessage(event) {
     && event.data.command === 'payment_success'
   ) {
     window.removeEventListener('message', receiveMessage);
-    chrome.runtime.sendMessage({ command: 'payment_success', version: 1 })
+    browser.runtime.sendMessage({ command: 'payment_success', version: 1 })
       .then((response) => {
         window.postMessage(response, '*');
       });
@@ -84,15 +84,6 @@ function receiveMessage(event) {
 
 (function onLoad() {
   if (abort) {
-    return;
-  }
-
-  // https://bugs.chromium.org/p/chromium/issues/detail?id=129353
-  // Trap calls to WebSocket constructor, and expose websocket-based network
-  // requests to AdBlock
-
-  // Fix won't be applied on older versions of Chromium.
-  if (window.WebSocket instanceof Function === false) {
     return;
   }
 
@@ -125,12 +116,12 @@ function receiveMessage(event) {
       && window.top === window.self
   ) {
     window.addEventListener('message', receiveMessage, false);
-    chrome.storage.local.get('userid').then((response) => {
+    browser.storage.local.get('userid').then((response) => {
       let adblockUserId = response.userid;
       if (adblockUserId.match(invalidGUIDChars)) {
         adblockUserId = 'invalid';
       }
-      const adblockVersion = chrome.runtime.getManifest().version;
+      const adblockVersion = browser.runtime.getManifest().version;
       const elem = document.createElement('script');
       const scriptToInject = `(${getAdblockDomain.toString()})();`
             + `(${cleanup.toString()})();`
@@ -181,11 +172,11 @@ const runBandaids = function () {
       }`, 0);
     },
     getadblockquestion() {
-      chrome.runtime.sendMessage({ command: 'addGABTabListeners' });
+      browser.runtime.sendMessage({ command: 'addGABTabListeners' });
       const personalBtn = document.getElementById('personal-use');
       const enterpriseBtn = document.getElementById('enterprise-use');
       const buttonListener = function () {
-        chrome.runtime.sendMessage({ command: 'removeGABTabListeners', saveState: true });
+        browser.runtime.sendMessage({ command: 'removeGABTabListeners', saveState: true });
         if (enterpriseBtn) {
           enterpriseBtn.removeEventListener('click', buttonListener);
         }
@@ -201,7 +192,7 @@ const runBandaids = function () {
       }
     },
     getadblock() {
-      chrome.storage.local.get('userid').then((response) => {
+      browser.storage.local.get('userid').then((response) => {
         if (response.userid) {
           const elemDiv = document.createElement('div');
           elemDiv.id = 'adblockUserId';
@@ -213,7 +204,7 @@ const runBandaids = function () {
       const enableShowSurvey = document.getElementById('enable_show_survey');
       if (enableShowSurvey) {
         enableShowSurvey.onclick = function showSurvey() {
-          chrome.runtime.sendMessage({ command: 'setSetting', name: 'show_survey', isEnabled: !enableShowSurvey.checked });
+          browser.runtime.sendMessage({ command: 'setSetting', name: 'show_survey', isEnabled: !enableShowSurvey.checked });
         };
       }
       const aaElements = document.querySelectorAll('#disableacceptableads');
@@ -224,9 +215,9 @@ const runBandaids = function () {
               return;
             }
             event.preventDefault();
-            chrome.runtime.sendMessage({ command: 'unsubscribe', id: 'acceptable_ads' }).then(() => {
-              chrome.runtime.sendMessage({ command: 'recordGeneralMessage', msg: 'disableacceptableads_clicked' }).then(() => {
-                chrome.runtime.sendMessage({ command: 'openTab', urlToOpen: 'options.html?aadisabled=true#general' });
+            browser.runtime.sendMessage({ command: 'unsubscribe', id: 'acceptable_ads' }).then(() => {
+              browser.runtime.sendMessage({ command: 'recordGeneralMessage', msg: 'disableacceptableads_clicked' }).then(() => {
+                browser.runtime.sendMessage({ command: 'openTab', urlToOpen: 'options.html?aadisabled=true#general' });
               });
             });
           };
@@ -243,7 +234,7 @@ const runBandaids = function () {
             }
             event.stopImmediatePropagation();
             event.preventDefault();
-            chrome.runtime.sendMessage({ command: 'openTab', urlToOpen: 'options.html#mab' });
+            browser.runtime.sendMessage({ command: 'openTab', urlToOpen: 'options.html#mab' });
           };
         }
       }
@@ -261,42 +252,36 @@ const runBandaids = function () {
         adMinTime: 15000,
       };
 
-      const tmuteSelectors = {
-        player: 'video-player__container', // Player class
-        playerVideo: '.video-player__container video', // Player video selector
-        playerAd: '.video-player__container iframe', // Player ad selector
-        muteButton: "button[data-a-target='player-mute-unmute-button']", // (un)mute button selector
-        adNotice: 'tw-absolute tw-c-background-overlay tw-c-text-overlay tw-inline-block tw-left-0 tw-pd-1 tw-top-0', // Ad notice class
-        overlay: 'video-player__overlay', // Player overlay class
-      };
-
       const unmuteLabels = ['Unmute (m)', 'Stummschalten aufheben (m)', 'Activar sonido (m)', "Réactiver l'audio (M)", 'Attiva audio (m)', '取消静音（m）', '取消靜音 (m)', 'ミュート解除（m）', 'Dempen opheffen (m)', 'Tirar do mudo (m)', 'Включить звук (m)', 'Slå på ljudet (m)'];
       let currentPlayer;
       let playerObserver;
       let maxTimeTimer;
       let titleObserver;
+      let tmuteSelectors;
 
       // Toggle mute/hide status of player
       function mutePlayer() {
-        const muteButton = document.querySelectorAll(tmuteSelectors.muteButton);
-        const playerVideo = document.querySelectorAll(tmuteSelectors.playerVideo);
-        const playerAd = document.querySelectorAll(tmuteSelectors.playerAd);
-        if (muteButton.length >= 1) {
+        const muteButton = document.querySelector(tmuteSelectors.muteButton);
+        const playerVideo = document.querySelector(tmuteSelectors.playerVideo);
+        const playerAd = document.querySelector(tmuteSelectors.playerAd);
+        if (muteButton) {
           // if the player is muted before the ad started (by the user), don't mute/unmute
           if (tmuteVars.alreadyMuted === false) {
-            muteButton[0].click();
+            muteButton.click();
           }
           tmuteVars.playerMuted = !tmuteVars.playerMuted;
-          playerVideo[0].style.visibility = (tmuteVars.playerMuted === true) ? 'hidden' : 'visible';
-          playerAd[0].style.visibility = (tmuteVars.playerMuted === true) ? 'hidden' : 'visible';
+          playerVideo.style.visibility = (tmuteVars.playerMuted === true) ? 'hidden' : 'visible';
+          playerAd.style.visibility = (tmuteVars.playerMuted === true) ? 'hidden' : 'visible';
           return true;
         }
         return false;
       }
 
       function maxTimeElapsed() {
-        const advert = document.getElementsByClassName(tmuteSelectors.adNotice);
-        advert[0].parentNode.removeChild(advert[0]);
+        const advert = document.querySelector(tmuteSelectors.adNotice);
+        if (advert && advert.parentNode) {
+          advert.parentNode.removeChild(advert);
+        }
         mutePlayer();
       }
 
@@ -305,15 +290,15 @@ const runBandaids = function () {
       }
 
       function checkAd() {
-        const advert = document.getElementsByClassName(tmuteSelectors.adNotice);
-        if (advert.length >= 1 && tmuteVars.playerMuted === false) {
+        const advert = document.querySelector(tmuteSelectors.adNotice);
+        if (advert && tmuteVars.playerMuted === false) {
           stopPlayerObserver();
           clearTimeout(maxTimeTimer);
           // eslint-disable-next-line no-use-before-define
           muteAndObservePlayer();
           return false;
         }
-        if (advert.length === 0 && tmuteVars.playerMuted === true) {
+        if (!advert && tmuteVars.playerMuted === true) {
           clearTimeout(maxTimeTimer);
           mutePlayer();
         }
@@ -321,7 +306,7 @@ const runBandaids = function () {
       }
 
       function startPlayerObserver() {
-        const overlayNode = document.getElementsByClassName(tmuteSelectors.overlay)[0];
+        const overlayNode = document.querySelector(tmuteSelectors.overlay);
         const options = { childList: true };
 
         if (playerObserver === undefined) {
@@ -343,7 +328,7 @@ const runBandaids = function () {
 
       function checkPlayer(retry = 0) {
         if (!currentPlayer) {
-          currentPlayer = document.getElementsByClassName(tmuteSelectors.player).length >= 1;
+          currentPlayer = Boolean(document.querySelector(tmuteSelectors.player));
 
           if (!currentPlayer) {
             if (retry === 0) {
@@ -353,19 +338,19 @@ const runBandaids = function () {
             }
             return;
           }
-        } else if (document.getElementsByClassName(tmuteSelectors.player).length === 0) {
+        } else if (!document.querySelector(tmuteSelectors.player)) {
           return;
         }
 
         // Check if player is already muted
-        const muteButton = document.querySelectorAll(tmuteSelectors.muteButton)[0];
+        const muteButton = document.querySelector(tmuteSelectors.muteButton);
         tmuteVars.alreadyMuted = muteButton && unmuteLabels.includes(muteButton.getAttribute('aria-label'));
         if (tmuteVars.playerMuted === true) {
           tmuteVars.alreadyMuted = false;
         }
 
-        const advert = document.getElementsByClassName(tmuteSelectors.adNotice);
-        if (advert.length >= 1 && tmuteVars.playerMuted === false) {
+        const advert = document.querySelector(tmuteSelectors.adNotice);
+        if (advert && tmuteVars.playerMuted === false) {
           muteAndObservePlayer();
         } else {
           startPlayerObserver();
@@ -373,7 +358,7 @@ const runBandaids = function () {
       }
 
       function startTitleObserver() {
-        const titleNode = document.querySelectorAll('title')[0];
+        const titleNode = document.querySelector('title');
         const options = { childList: true };
 
         if (titleObserver === undefined) {
@@ -382,8 +367,9 @@ const runBandaids = function () {
         titleObserver.observe(titleNode, options);
       }
 
-      chrome.runtime.sendMessage({ command: 'getSettings' }).then((settings) => {
-        if (settings.twitch_hiding) {
+      browser.runtime.sendMessage({ command: 'getTwitchSettings' }).then((settings) => {
+        if (settings.twitchEnabled) {
+          tmuteSelectors = settings.twitchSettings;
           checkPlayer();
           startTitleObserver();
         }

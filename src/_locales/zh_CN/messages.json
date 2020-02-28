@@ -269,6 +269,10 @@
     "message": "应用主题", 
     "description": "Text of clickable element that applies the theme of a theme box in the Themes tab of the Options page"
   }, 
+  "back_help_flow": {
+    "message": "返回帮助流程中的一步。", 
+    "description": "Aria label for back button in help flow (in popup menu)"
+  }, 
   "backup_sync_settings": {
     "message": "在您的所有设备上自动备份并同步AdBlock设置。", 
     "description": "Description of Sync on Sync tab"
@@ -501,10 +505,6 @@
     "message": "我们对 AdBlock 做出了一些变更！", 
     "description": "Link to Options page with more information about the changes."
   }, 
-  "check_email": {
-    "message": "请检查你的电子邮件。", 
-    "description": "Prompt the user to check their email for a message from AdBlock"
-  }, 
   "check_out_premium": {
     "message": "如想了解更多信息，请查看[[Premium]]。", 
     "description": "Part 2 of message shown when user opts out of call-to-action"
@@ -589,6 +589,10 @@
     "message": "关闭", 
     "description": "Generic message for buttons that close a view or window"
   }, 
+  "close_help_flow": {
+    "message": "关闭帮助流程并返回弹出式菜单。", 
+    "description": "Aria label for close button in help flow (in popup menu)"
+  }, 
   "confirm_delete_extension": {
     "message": "确定要删除此扩展吗？", 
     "description": "Warning/confirmation message shown when the user clicks on the delete icon for this extension"
@@ -610,10 +614,6 @@
   "contact_support": {
     "message": "[[请联系我们的支持团队！]]", 
     "description": "Message for help flow in popup menu."
-  }, 
-  "contact_support_if_errors_continue": {
-    "message": "如果错误仍然存在，请联络[[支持团队]]。", 
-    "description": "Warn the user if they continue to see the same error they should contact AdBlock support."
   }, 
   "contact_the_site": {
     "message": "我们建议与该网站联系。", 
@@ -778,8 +778,18 @@
     "message": "请求"
   }, 
   "devtools_request_url": {
-    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
-    "message": "<a0></a0> 改写为 <a1></a1>"
+    "description": "A request URL in the AdBlock DevTools panel", 
+    "message": "<a0>$original$</a0> 改写为 <a1>$rewritten$</a1>", 
+    "placeholders": {
+      "original": {
+        "content": "$1", 
+        "example": "http://example.com/foo"
+      }, 
+      "rewritten": {
+        "content": "$2", 
+        "example": "http://example.com/bar"
+      }
+    }
   }, 
   "devtools_type_title": {
     "description": "Type column header text", 
@@ -937,6 +947,10 @@
     "message": "仅英语。", 
     "description": "Lets the user know that a link/page is only available in English."
   }, 
+  "enjoying_adblock": {
+    "message": "喜欢 AdBlock 吗？", 
+    "description": "Text of a footer in the popup menu help flow asking users to leave us a review."
+  }, 
   "enter_url": {
     "message": "输入网址", 
     "description": "Placeholder text in the Custom Filter list URL bar"
@@ -1066,20 +1080,20 @@
     "description": "A filter list combined with EasyList"
   }, 
   "filter_elemhideemulation_nodomain": {
-    "message": "No active domain specified for extended element hiding filter"
+    "message": "没有为扩展元素隐藏过滤器指定活动域"
   }, 
   "filter_invalid": {
-    "message": "Invalid filter", 
+    "message": "无效的拦截规则", 
     "description": "Generic error shown when the user tries to add an invalid filter rule to their custom filters"
   }, 
   "filter_invalid_csp": {
-    "message": "Invalid Content Security Policy"
+    "message": "无效的内容安全政策"
   }, 
   "filter_invalid_domain": {
-    "message": "Invalid (or empty) domain specified"
+    "message": "指定的域名无效（或为空）"
   }, 
   "filter_invalid_regexp": {
-    "message": "Invalid regular expression"
+    "message": "无效的正则表达式"
   }, 
   "filter_israeli": {
     "message": "希伯来语 + EasyList", 
@@ -1098,10 +1112,10 @@
     "description": "A filter list combined with EasyList"
   }, 
   "filter_snippet_nodomain": {
-    "message": "No active domain specified for snippet filter"
+    "message": "未为片段拦截规则指定活动域名"
   }, 
   "filter_unknown_option": {
-    "message": "Unknown filter option"
+    "message": "未知拦截规则选项"
   }, 
   "filter_warning_removal_explained": {
     "message": "移除因使用广告拦截工具而弹出的提示性内容", 
@@ -1663,6 +1677,10 @@
     "message": "了解更多", 
     "description": "Text in the aria-label attribute of an icon linking to extra information about an option."
   }, 
+  "leave_a_review": {
+    "message": "给我们留下评论！", 
+    "description": "Text of a menu item in the popup menu asking users to leave us a review."
+  }, 
   "legend": {
     "message": "图例：", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1690,6 +1708,10 @@
   "locked": {
     "message": "未解锁", 
     "description": "Text in the aria-label attribute of an icon showing a feature/option is locked."
+  }, 
+  "love_adblock": {
+    "message": "喜欢 AdBlock 吗？", 
+    "description": "Text in a button that asks users to rate us."
   }, 
   "mac_app_message_menu_part_one": {
     "message": "新增！", 
@@ -1791,40 +1813,6 @@
     "message": "为感谢你支持并启用 MyAdBlock，你将在最新工具和功能推出时获得优先使用权。", 
     "description": "Main text of the teaser MyAdBlock feature in the MyAdBlock tab of the Options page"
   }, 
-  "myadblock_enrollment_hide_forever": {
-    "message": "不再显示此消息", 
-    "description": "The label for a checkbox that will hide the enrollment box forever."
-  }, 
-  "myadblock_enrollment_link_info": {
-    "message": "点击该链接可以轻松在其他 Chrome 浏览器中设置 MyAdBlock。", 
-    "description": "Explains what happens when clicking the magic link."
-  }, 
-  "myadblock_enrollment_resend_button": {
-    "message": "重新发送链接", 
-    "description": "Text on the MyAdBlock enrollment resend email button"
-  }, 
-  "myadblock_enrollment_resend_error": {
-    "message": "重新发送确认电子邮件时出现问题。", 
-    "description": "MyAdBlock license email failed to send error message."
-  }, 
-  "myadblock_enrollment_resend_success": {
-    "message": "我们已向 $email$ 发送魔术链接。", 
-    "description": "MyAdBlock license email successfully sent message.", 
-    "placeholders": {
-      "email": {
-        "content": "$1", 
-        "example": "alice@example.com"
-      }
-    }
-  }, 
-  "myadblock_enrollment_success": {
-    "message": "你可以使用确认电子邮件中的魔术链接在其他 Chrome 浏览器中解锁 MyAdBlock。", 
-    "description": "MyAdBlock successfully licensed message."
-  }, 
-  "myadblock_enrollment_title": {
-    "message": "MyAdBlock 已在此浏览器中设置完成！", 
-    "description": "The title of the MyAdBlock enrollment box."
-  }, 
   "myadblock_feedback_button": {
     "message": "提交反馈", 
     "description": "Text on the MyAdBlock feedback button"
@@ -1911,7 +1899,7 @@
   }, 
   "name": {
     "description": "Extension name to be shown for release / published builds.  The extension name 'AdBlock' should NOT be translated, but the text after the dash should be translated", 
-    "message": "AdBlock — best ad blocker"
+    "message": "AdBlock — 最佳广告拦截工具"
   }, 
   "name_adblock_on_youtube": {
     "message": "AdBlock on YouTube™", 
@@ -1978,10 +1966,10 @@
     "description": "Indicates that the user should take note of the message that follows."
   }, 
   "notification_antiadblock_message": {
-    "message": "This site has been known to show targeted messages to AdBlock users. Do you want AdBlock to hide targeted messages?"
+    "message": "已知该网站会向 AdBlock 用户显示定向消息。您希望 AdBlock 隐藏定向消息吗？"
   }, 
   "notification_antiadblock_title": {
-    "message": "Hide targeted messages?"
+    "message": "是否隐藏定向消息？"
   }, 
   "ocean_theme": {
     "message": "海洋", 
@@ -2046,10 +2034,10 @@
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
   "overlay_notification_button_no": {
-    "message": "No"
+    "message": "否"
   }, 
   "overlay_notification_button_yes": {
-    "message": "Yes"
+    "message": "是"
   }, 
   "page_is_whitelisted": {
     "message": "此页面在您的白名单上，所以您才会看到广告。", 
@@ -2091,10 +2079,6 @@
     "message": "AdBlock 目前已暂停，因此该网站看来存在与 AdBlock 无关的问题。", 
     "description": "Message for help flow in popup menu."
   }, 
-  "please_try_again": {
-    "message": "请重试。", 
-    "description": "Prompt the user to retry the last action."
-  }, 
   "popup_menu": {
     "message": "弹窗菜单", 
     "description": "General text used to define the pop-up menu."
@@ -2114,18 +2098,6 @@
   "premium_benefits_explained": {
     "message": "为感谢您支持并启用AdBlock Premium，您将在最新工具和功能推出时获得优先使用权。", 
     "description": "Main text of the teaser AdBlock Premium feature in the AdBlock Premium tab of the Options page"
-  }, 
-  "premium_enrollment_link_info": {
-    "message": "Clicking the link makes it easy to set up AdBlock Premium in other Chrome browsers.", 
-    "description": "DO NOT TRANSLATE. Explains what happens when clicking the magic link."
-  }, 
-  "premium_enrollment_success": {
-    "message": "您可以使用确认电子邮件中的魔术链接在其他Chrome浏览器中解锁AdBlock Premium。", 
-    "description": "DO NOT TRANSLATE. AdBlock Premium successfully licensed message."
-  }, 
-  "premium_enrollment_title": {
-    "message": "AdBlock Premium已在此浏览器上设置完成！", 
-    "description": "DO NOT TRANSLATE. The title of the AdBlock Premium enrollment box."
   }, 
   "premium_page_title": {
     "message": "AdBlock Premium：浏览互联网的更好方法。", 
@@ -2174,6 +2146,10 @@
   "questionoridea": {
     "message": "有问题或点子？", 
     "description": "Subtitle on the Support tab"
+  }, 
+  "rate_us": {
+    "message": "评价我们", 
+    "description": "Text of a menu item in the popup menu asking users to leave us a review."
   }, 
   "rebecca_purple_theme": {
     "message": "瑞贝卡紫", 
@@ -2393,6 +2369,10 @@
     "message": "显示所有请求", 
     "description": "Menu entry to open the resource list page"
   }, 
+  "show_some_love": {
+    "message": "展示你对 AdBlock 的喜爱！", 
+    "description": "Title of the tooltip of the rate us button CTA in the Options page."
+  }, 
   "showcontextmenus2": {
     "message": "将功能选项添加到右键菜单中", 
     "description": "Checkbox on the 'General' tab of the Options page."
@@ -2514,6 +2494,10 @@
   "support_to_unlock": {
     "message": "支持以解锁", 
     "description": "Text in theme box of the Themes tab of the Options page (no more than 30 characters)"
+  }, 
+  "support_with_a_review": {
+    "message": "给我们评论，支持我们的团队。", 
+    "description": "Text of the tooltip of the rate us button CTA in the Options page."
   }, 
   "supportsite": {
     "message": "访问[[支持网站]]告诉我们！", 
@@ -2661,10 +2645,6 @@
     "message": "支持", 
     "description": "A tab on the Options page"
   }, 
-  "tabthemes": {
-    "message": "主题", 
-    "description": "A tab on the Options page"
-  }, 
   "tabtranslations": {
     "message": "翻译", 
     "description": "A tab on the Options page"
@@ -2803,7 +2783,7 @@
   }, 
   "unexpected_filter_list_header": {
     "description": "Error message shown when the user attempts to add a custom filter that has the format of a header (e.g. \"[Adblock Plus 2.0]\") which are only allowed in filter lists", 
-    "message": "Filter list headers aren't allowed here"
+    "message": "此处不允许拦截规则列表标题拦截规则列表"
   }, 
   "unpause_adblock": {
     "message": "恢复运行 AdBlock", 
@@ -3004,6 +2984,16 @@
   "you_know_thats_a_bad_idea_right": {
     "message": "使用的拦截规则列表越多，AdBlock 的运行速度就会越慢。使用列表过多甚至可能使你的浏览器在访问部分网站时崩溃。按“好”来订阅此列表。", 
     "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  }, 
+  "youve_blocked_num_ads": {
+    "message": "你拦截了 $numBlocked$ 个广告！", 
+    "description": "Text of a menu item in the popup menu asking users to leave us a review. The $numBlocked$ will be replaced with the number of ads the users has blocked, starting at 10,000.", 
+    "placeholders": {
+      "numBlocked": {
+        "content": "$1", 
+        "example": "10,000"
+      }
+    }
   }, 
   "ytadblockupdates": {
     "message": "AdBlock on YouTube™ 更新", 

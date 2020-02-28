@@ -1,10 +1,11 @@
 'use strict';
 
 /* For ESLint: List any global identifiers used in this file below */
-/* global chrome, getSettings, translate, FilterListUtil, activateTab,
-   CustomFilterListUploadUtil, localizePage, storageSet */
+/* global browser, getSettings, translate, FilterListUtil, activateTab,
+   CustomFilterListUploadUtil, localizePage, storageSet, chromeStorageSetHelper,
+   chromeStorageGetHelper */
 
-const backgroundPage = chrome.extension.getBackgroundPage();
+const backgroundPage = browser.extension.getBackgroundPage();
 const { Filter } = backgroundPage;
 const { WhitelistFilter } = backgroundPage;
 const { Subscription } = backgroundPage;
@@ -26,6 +27,8 @@ const { License } = backgroundPage;
 const { SyncService } = backgroundPage;
 const { isValidTheme } = backgroundPage;
 const { abpPrefPropertyNames } = backgroundPage;
+const { info } = backgroundPage;
+const { rateUsCtaKey } = backgroundPage;
 const FIVE_SECONDS = 5000;
 const TWENTY_SECONDS = FIVE_SECONDS * 4;
 let autoReloadingPage;
@@ -33,7 +36,7 @@ let autoReloadingPage;
 const language = navigator.language.match(/^[a-z]+/i)[0];
 let optionalSettings = {};
 let delayedSubscriptionSelection = null;
-const port = chrome.runtime.connect({ name: 'ui' });
+const port = browser.runtime.connect({ name: 'ui' });
 let syncErrorCode = 0;
 
 // Function to check the last known Sync Error Code,
@@ -49,7 +52,7 @@ function checkForSyncError(handler) {
 }
 
 function displayVersionNumber() {
-  const currentVersion = chrome.runtime.getManifest().version;
+  const currentVersion = browser.runtime.getManifest().version;
   $('#version_number').text(translate('optionsversion', [currentVersion]));
 }
 
@@ -59,7 +62,7 @@ function displayTranslationCredit() {
   }
   const translators = [];
 
-  $.getJSON(chrome.runtime.getURL('translators.json'), (response) => {
+  $.getJSON(browser.runtime.getURL('translators.json'), (response) => {
     const lang = navigator.language;
     let matchFound = false;
     for (const id in response) {
@@ -164,6 +167,7 @@ function setSelectedThemeColor() {
     optionsTheme = settings.color_themes.options_page;
   }
   $('body').attr('id', optionsTheme).data('theme', optionsTheme);
+  $('#sidebar-adblock-logo').attr('src', `icons/${optionsTheme}/logo.svg`);
 }
 
 const requestSyncMessageRemoval = function (delayTime) {
@@ -345,7 +349,7 @@ const updateAcceptableAdsUI = function (checkAA, checkAAprivacy) {
     $aaInput.removeClass('feature').prop('checked', true).addClass('feature');
     $aaPrivacyInput.prop('checked', true);
     $aaYellowBanner.slideUp();
-    if (navigator.doNotTrack) {
+    if (navigator.doNotTrack === '1') {
       $aaPrivacyHelper.slideUp();
     } else {
       $aaPrivacyHelper.slideDown();
@@ -358,10 +362,11 @@ const updateAcceptableAdsUI = function (checkAA, checkAAprivacy) {
   }
 };
 
-$(document).ready(() => {
+$(() => {
   const onSettingsChanged = function (name, currentValue) {
     if (name === 'color_themes') {
       $('body').attr('id', currentValue.options_page).data('theme', currentValue.options_page);
+      $('#sidebar-adblock-logo').attr('src', `icons/${currentValue.options_page}/logo.svg`);
     }
   };
   settingsNotifier.on('settings.changed', onSettingsChanged);
@@ -374,6 +379,18 @@ $(document).ready(() => {
   displayVersionNumber();
   localizePage();
   displayTranslationCredit();
+
+  if (info.application === 'chrome') {
+    chromeStorageGetHelper(rateUsCtaKey).then((alreadyRatedUs) => {
+      if (!alreadyRatedUs) {
+        $('#rate-us-cta').show();
+        $('#rate-us-cta a#rate-us').on('click', () => {
+          chromeStorageSetHelper(rateUsCtaKey, true);
+          $('#rate-us-cta').hide();
+        });
+      }
+    });
+  }
 });
 
 storageSet(License.pageReloadedOnSettingChangeKey, false);
