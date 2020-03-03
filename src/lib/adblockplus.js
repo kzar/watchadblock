@@ -1872,7 +1872,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "4.7.1";
+exports.addonVersion = "4.7.2";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -22454,16 +22454,26 @@ port.on('getSelectors', (_message, sender) => {
 
   // Works for all |input| that are not 'stringified' or stringified' once or twice
   const parse = (input) => {
+    console.log('parsing input');
+    console.log(input);
     try {
       // |input| is double 'stringified'
-      return JSON.parse(JSON.parse(input));
+      const returnObj = JSON.parse(JSON.parse(input));
+      console.log('parsed output');
+      console.log(returnObj);
+      return returnObj;
     } catch (e) {
       // |input| is not double 'stringified'
       try {
         // |input| is 'stringified' once
-        return JSON.parse(input);
+        const returnObj = JSON.parse(input);
+        console.log('parsed output');
+        console.log(returnObj);
+        return returnObj;
       } catch (err) {
         // |input| is not 'stringified' so return it unparsed
+        console.log('returing input');
+        console.log(input);
         return input;
       }
     }
@@ -22697,6 +22707,7 @@ port.on('getSelectors', (_message, sender) => {
   };
 
   browser.storage.local.get(null).then((currentData) => {
+    console.log('currentData', currentData);
     const edgeMigrationNeeded = currentData.filter_lists;
     if (edgeMigrationNeeded) {
       try {
