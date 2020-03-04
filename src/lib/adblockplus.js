@@ -1872,7 +1872,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "4.7.2";
+exports.addonVersion = "4.7.3";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -11280,7 +11280,7 @@ exports.STATS = STATS;
 
 
 /* For ESLint: List any global identifiers used in this file below */
-/* global browser, require, exports, STATS, log, getSettings, Prefs, openTab, License */
+/* global browser, require, exports, STATS, log, getSettings, Prefs, openTab */
 
 // if the ping response indicates a survey (tab or overlay)
 // gracefully processes the request
@@ -11346,7 +11346,6 @@ const SURVEY = (function getSurvey() {
         }
         if (data && data.should_survey === 'true' && surveyAllowed) {
           surveyAllowed = false;
-          License.checkPingResponse(responseData);
           callback(data);
         }
       });
@@ -22454,26 +22453,16 @@ port.on('getSelectors', (_message, sender) => {
 
   // Works for all |input| that are not 'stringified' or stringified' once or twice
   const parse = (input) => {
-    console.log('parsing input');
-    console.log(input);
     try {
       // |input| is double 'stringified'
-      const returnObj = JSON.parse(JSON.parse(input));
-      console.log('parsed output');
-      console.log(returnObj);
-      return returnObj;
+      return JSON.parse(JSON.parse(input));
     } catch (e) {
       // |input| is not double 'stringified'
       try {
         // |input| is 'stringified' once
-        const returnObj = JSON.parse(input);
-        console.log('parsed output');
-        console.log(returnObj);
-        return returnObj;
+        return JSON.parse(input);
       } catch (err) {
         // |input| is not 'stringified' so return it unparsed
-        console.log('returing input');
-        console.log(input);
         return input;
       }
     }
@@ -22707,7 +22696,6 @@ port.on('getSelectors', (_message, sender) => {
   };
 
   browser.storage.local.get(null).then((currentData) => {
-    console.log('currentData', currentData);
     const edgeMigrationNeeded = currentData.filter_lists;
     if (edgeMigrationNeeded) {
       try {
