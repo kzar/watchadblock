@@ -1872,7 +1872,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "4.7.3";
+exports.addonVersion = "4.7.4";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -22696,7 +22696,7 @@ port.on('getSelectors', (_message, sender) => {
   };
 
   browser.storage.local.get(null).then((currentData) => {
-    const edgeMigrationNeeded = currentData.filter_lists;
+    const edgeMigrationNeeded = currentData.filter_lists || currentData.subscribed_filter_lists;
     if (edgeMigrationNeeded) {
       try {
         storeMigrationLogs('Migration started.');
