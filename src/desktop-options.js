@@ -51,7 +51,29 @@ module.exports = {
 function checkIfValid(event)
 {
   const {currentTarget} = event;
-  currentTarget.setAttribute("aria-invalid", !currentTarget.checkValidity());
+  const isValid = currentTarget.checkValidity();
+
+  currentTarget.setAttribute("aria-invalid", !isValid);
+
+  let errorText = "";
+  if (!isValid)
+  {
+    const url = currentTarget.value;
+    if (url)
+    {
+      let errorId = null;
+      if (!(new RegExp(currentTarget.pattern).test(url)))
+      {
+        errorId = "options_dialog_import_subscription_location_error_protocol";
+      }
+      else
+      {
+        errorId = "options_dialog_import_subscription_location_error";
+      }
+      errorText = browser.i18n.getMessage(errorId);
+    }
+  }
+  $("#import-list-url ~ .error-msg").textContent = errorText;
 }
 
 function filtersBlur()
@@ -176,6 +198,16 @@ const prefs = {
 };
 module.exports.prefs = prefs;
 
+const subscriptions = {
+  getInitIssues: () => send("subscriptions.getInitIssues")
+};
+module.exports.subscriptions = subscriptions;
+
+const stats = {
+  getBlocked: (tab) => send("stats.getBlockedPerPage", {tab})
+};
+module.exports.stats = stats;
+
 // For now we are merely reusing the port for long-lived communications to fix
 // https://gitlab.com/eyeo/adblockplus/abpui/adblockplusui/issues/415
 const port = browser.runtime.connect({name: "ui"});
@@ -216,6 +248,8 @@ const {
   setupAddFiltersByURL
 } = require("./add-filters-by-url");
 
+const ALLOWED_PROTOCOLS = /^(?:data|https):/;
+
 const {port} = api;
 const {stripTagsUnsafe} = ext.i18n;
 
@@ -243,6 +277,7 @@ const filterErrors = new Map([
 ]);
 const timestampUI = Symbol();
 const whitelistedDomainRegexp = /^@@\|\|([^/:]+)\^\$document$/;
+const whitelistedPageRegexp = /^@@\|([^?|]+(?:\?[^|]*)?)\|?\$document$/;
 // Period of time in milliseconds
 const minuteInMs = 60000;
 const hourInMs = 3600000;
@@ -474,11 +509,24 @@ Collection.prototype.updateItem = function(item)
       }
       else if (item.downloadStatus != "synchronize_ok")
       {
-        const error = filterErrors.get(item.downloadStatus);
-        if (error)
+        let errorId = null;
+        // Core doesn't tell us why the URL is invalid so we have to check
+        // ourselves whether the filter list is using a supported protocol
+        // https://gitlab.com/eyeo/adblockplus/adblockpluscore/blob/d3f6b1b7e3880eab6356b132493a4a947c87d33f/lib/downloader.js#L270
+        if (item.downloadStatus === "synchronize_invalid_url" &&
+            !ALLOWED_PROTOCOLS.test(item.url))
+        {
+          errorId = "options_filterList_lastDownload_invalidURLProtocol";
+        }
+        else
+        {
+          errorId = filterErrors.get(item.downloadStatus);
+        }
+
+        if (errorId)
         {
           message.classList.add("error");
-          message.textContent = getMessage(error);
+          message.textContent = getMessage(errorId);
         }
         else
           message.textContent = item.downloadStatus;
@@ -667,10 +715,30 @@ function updateSubscription(subscription)
 
 function updateFilter(filter)
 {
-  const match = filter.text.match(whitelistedDomainRegexp);
-  if (match && !filtersMap[filter.text])
+  let whitelistTitle = null;
+
+  const domainMatch = filter.text.match(whitelistedDomainRegexp);
+  if (domainMatch && !filtersMap[filter.text])
   {
-    filter.title = match[1];
+    whitelistTitle = domainMatch[1];
+  }
+  else
+  {
+    const pageMatch = filter.text.match(whitelistedPageRegexp);
+    if (pageMatch && !filtersMap[filter.text])
+    {
+      const url = pageMatch[1];
+      whitelistTitle = url.replace(/^[\w-]+:\/+(?:www\.)?/, "");
+      if (/\?$/.test(whitelistTitle))
+      {
+        whitelistTitle += "…";
+      }
+    }
+  }
+
+  if (whitelistTitle)
+  {
+    filter.title = whitelistTitle;
     collections.whitelist.addItem(filter);
     if (isCustomFiltersLoaded)
     {
@@ -1495,9 +1563,14 @@ function populateLists()
 function addWhitelistedDomain()
 {
   const domain = $("#whitelisting-textbox");
+  const value = domain.value.trim();
+
+  if (!value)
+    return;
+
   for (const whitelistItem of collections.whitelist.items)
   {
-    if (whitelistItem.title == domain.value)
+    if (whitelistItem.title == value)
     {
       whitelistItem[timestampUI] = Date.now();
       collections.whitelist.updateItem(whitelistItem);
@@ -1505,18 +1578,21 @@ function addWhitelistedDomain()
       break;
     }
   }
-  const value = domain.value.trim();
-  if (value)
+
+  try
   {
-    const host = /^https?:\/\//i.test(value) ? new URL(value).host : value;
+    const {host} = new URL(/^https?:/.test(value) ? value : `http://${value}`);
     sendMessageHandleErrors({
       type: "filters.add",
       text: "@@||" + host.toLowerCase() + "^$document"
     });
+    domain.value = "";
+    $("#whitelisting-add-button").disabled = true;
   }
-
-  domain.value = "";
-  $("#whitelisting-add-button").disabled = true;
+  catch (error)
+  {
+    dispatchError(error);
+  }
 }
 
 function addEnableSubscription(url, title, homepage)
@@ -1553,7 +1629,8 @@ function onFilterMessage(action, filter)
       break;
     case "removed":
       const knownFilter = filtersMap[filter.text];
-      if (whitelistedDomainRegexp.test(knownFilter.text))
+      if (whitelistedDomainRegexp.test(knownFilter.text) ||
+          whitelistedPageRegexp.test(knownFilter.text))
         collections.whitelist.removeItem(knownFilter);
       else
         removeCustomFilter(filter.text);
@@ -1696,7 +1773,6 @@ port.onMessage.addListener((message) =>
       {
         case "addSubscription":
           const subscription = message.args[0];
-          const dialog = $("#dialog-content-predefined");
 
           let {title, url} = subscription;
           if (!title || title == url)
@@ -1704,9 +1780,17 @@ port.onMessage.addListener((message) =>
             title = "";
           }
 
-          $("h3", dialog).textContent = title;
-          $(".url", dialog).textContent = url;
-          openDialog("predefined");
+          if (ALLOWED_PROTOCOLS.test(url))
+          {
+            const dialog = $("#dialog-content-predefined");
+            $("h3", dialog).textContent = title;
+            $(".url", dialog).textContent = url;
+            openDialog("predefined");
+          }
+          else
+          {
+            openDialog("invalid");
+          }
           break;
         case "focusSection":
           let section = message.args[0];
@@ -4388,7 +4472,7 @@ class IOScrollbar extends IOElement
       "wheel",
       (event) =>
       {
-        stop(event);
+        stopEvent(event);
         let delta = 0;
         if (this.direction === "vertical")
           delta = event.deltaY;
@@ -4474,7 +4558,7 @@ class IOScrollbar extends IOElement
     doc.addEventListener("mouseup", this, true);
     // also prevents selection like a native scrollbar would
     // (this is specially needed for Firefox and Edge)
-    doc.addEventListener("selectstart", stop, true);
+    doc.addEventListener("selectstart", stopEvent, true);
   }
 
   onmousemove(event)
@@ -4502,7 +4586,7 @@ class IOScrollbar extends IOElement
     const {currentTarget: doc, target} = event;
     doc.removeEventListener("mousemove", this, true);
     doc.removeEventListener("mouseup", this, true);
-    doc.removeEventListener("selectstart", stop, true);
+    doc.removeEventListener("selectstart", stopEvent, true);
     // stop dragging if mouseup happens outside this component
     // or within this component slider (the only child)
     // otherwise let the click handler ignore the action
@@ -4565,7 +4649,7 @@ function sizeChange()
 
 // if inside a container with its own wheel or mouse events,
 // avoid possible backfiring through already handled events.
-function stop(event)
+function stopEvent(event)
 {
   event.preventDefault();
   event.stopPropagation();

@@ -40,6 +40,16 @@ const prefs = {
 };
 module.exports.prefs = prefs;
 
+const subscriptions = {
+  getInitIssues: () => send("subscriptions.getInitIssues")
+};
+module.exports.subscriptions = subscriptions;
+
+const stats = {
+  getBlocked: (tab) => send("stats.getBlockedPerPage", {tab})
+};
+module.exports.stats = stats;
+
 // For now we are merely reusing the port for long-lived communications to fix
 // https://gitlab.com/eyeo/adblockplus/abpui/adblockplusui/issues/415
 const port = browser.runtime.connect({name: "ui"});
@@ -100,13 +110,14 @@ function initLinks()
 
 function initWarnings()
 {
-  api.app.get("issues")
+  api.subscriptions.getInitIssues()
     .then((issues) =>
     {
+      const {dataCorrupted, reinitialized} = issues;
       const warnings = [];
 
       // Show warning if we detected some data corruption
-      if (issues.dataCorrupted)
+      if (dataCorrupted)
       {
         warnings.push("dataCorrupted");
         api.doclinks.get("adblock_plus").then((url) =>
@@ -123,7 +134,7 @@ function initWarnings()
         });
       }
       // Show warning if filterlists settings were reinitialized
-      else if (issues.filterlistsReinitialized)
+      else if (reinitialized)
       {
         warnings.push("reinitialized");
         ext.i18n.setElementLinks("warning-reinitialized", openOptions);

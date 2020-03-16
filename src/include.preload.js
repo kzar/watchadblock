@@ -1016,6 +1016,8 @@ window.getURLsFromElement = getURLsFromElement;
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/** @module */
+
 
 
 const {textToRegExp, filterToRegExp, splitSelector,
@@ -1616,7 +1618,7 @@ function shouldObserveCharacterData(patterns)
   return patterns.some(pattern => pattern.dependsOnCharacterData);
 }
 
-class ElemHideEmulation
+exports.ElemHideEmulation = class ElemHideEmulation
 {
   constructor(hideElemsFunc)
   {
@@ -1985,9 +1987,7 @@ class ElemHideEmulation
       this.document.addEventListener("load", this.onLoad.bind(this), true);
     }
   }
-}
-
-exports.ElemHideEmulation = ElemHideEmulation;
+};
 
 
 /***/ }),
@@ -2012,6 +2012,8 @@ exports.ElemHideEmulation = ElemHideEmulation;
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/** @module */
+
 
 
 /**
@@ -2019,12 +2021,10 @@ exports.ElemHideEmulation = ElemHideEmulation;
  * @param {string} text the string to convert
  * @return {string} regular expression representation of the text
  */
-function textToRegExp(text)
+exports.textToRegExp = function textToRegExp(text)
 {
   return text.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
-}
-
-exports.textToRegExp = textToRegExp;
+};
 
 /**
  * Converts filter text into regular expression string
@@ -2034,7 +2034,7 @@ exports.textToRegExp = textToRegExp;
  *   trailing wildcards are stripped out
  * @return {string} regular expression representation of filter text
  */
-function filterToRegExp(text, captureAll = false)
+exports.filterToRegExp = function filterToRegExp(text, captureAll = false)
 {
   // remove multiple wildcards
   text = text.replace(/\*+/g, "*");
@@ -2066,11 +2066,9 @@ function filterToRegExp(text, captureAll = false)
     .replace(/^\\\|/, "^")
     // process anchor at expression end
     .replace(/\\\|$/, "$");
-}
+};
 
-exports.filterToRegExp = filterToRegExp;
-
-function splitSelector(selector)
+let splitSelector = exports.splitSelector = function splitSelector(selector)
 {
   if (!selector.includes(","))
     return [selector];
@@ -2106,9 +2104,7 @@ function splitSelector(selector)
 
   selectors.push(selector.substring(start));
   return selectors;
-}
-
-exports.splitSelector = splitSelector;
+};
 
 function findTargetSelectorIndex(selector)
 {
@@ -2188,7 +2184,7 @@ function findTargetSelectorIndex(selector)
  * @param {string} qualifier The qualifier with which to qualify the selector.
  * @returns {string} The qualified selector.
  */
-function qualifySelector(selector, qualifier)
+exports.qualifySelector = function qualifySelector(selector, qualifier)
 {
   let qualifiedSelector = "";
 
@@ -2224,9 +2220,7 @@ function qualifySelector(selector, qualifier)
 
   // Remove the initial comma and space.
   return qualifiedSelector.substring(2);
-}
-
-exports.qualifySelector = qualifySelector;
+};
 
 
 /***/ }),

@@ -40,6 +40,16 @@ const prefs = {
 };
 module.exports.prefs = prefs;
 
+const subscriptions = {
+  getInitIssues: () => send("subscriptions.getInitIssues")
+};
+module.exports.subscriptions = subscriptions;
+
+const stats = {
+  getBlocked: (tab) => send("stats.getBlockedPerPage", {tab})
+};
+module.exports.stats = stats;
+
 // For now we are merely reusing the port for long-lived communications to fix
 // https://gitlab.com/eyeo/adblockplus/abpui/adblockplusui/issues/415
 const port = browser.runtime.connect({name: "ui"});
@@ -233,8 +243,8 @@ function asIndentedString(element, indentation = 0)
 const {wire, utils} = require("./io-element");
 const {relativeCoordinates} = require("./dom");
 
-// use native rIC where available, fallback to setTimeout otherwise
-const requestIdleCallback = window.requestIdleCallback || setTimeout;
+// use native requestIdleCallback where available, fallback to setTimeout
+const requestIdleCb = window.requestIdleCallback || setTimeout;
 
 // at this point this is just a helper class
 // for op-highlighter component but it could
@@ -322,10 +332,10 @@ module.exports = class DrawingHandler
             notifyColorDepthChanges.call(this, i, length);
             // faster when possible, otherwise less intrusive
             // than a promise based on setTimeout as in legacy code
-            return requestIdleCallback(() =>
+            return requestIdleCb(() =>
             {
               this.draw();
-              requestIdleCallback(() => remap(i + 1));
+              requestIdleCb(() => remap(i + 1));
             });
           }
         }
@@ -386,7 +396,7 @@ module.exports = class DrawingHandler
       return;
 
     // react only if not drawing already
-    stop(event);
+    stopEvent(event);
     this.drawing = true;
     const start = relativeCoordinates(event);
     // set current rect to speed up coordinates updates
@@ -407,7 +417,7 @@ module.exports = class DrawingHandler
       return;
 
     // update the current rect coordinates
-    stop(event);
+    stopEvent(event);
     this.updateRect(event);
     // update the canvas view
     this.draw();
@@ -421,7 +431,7 @@ module.exports = class DrawingHandler
     if (!this.drawing)
       return;
 
-    stop(event);
+    stopEvent(event);
     if (event.currentTarget === this.canvas)
     {
       this.updateRect(event);
@@ -460,7 +470,7 @@ module.exports = class DrawingHandler
             return;
           // when clicked, remove the related rectangle
           // and draw the canvas again
-          stop(evt);
+          stopEvent(evt);
           parent.removeChild(evt.currentTarget);
           this.paths.delete(rect);
           this.draw();
@@ -502,7 +512,7 @@ function getRelativeCoordinates(canvas, start, end)
 
 // prevent events from doing anything
 // in the current node, and every parent too
-function stop(event)
+function stopEvent(event)
 {
   event.preventDefault();
   event.stopPropagation();
@@ -1789,9 +1799,14 @@ function containsPermissions()
 
 document.addEventListener("DOMContentLoaded", () =>
 {
+  const supportEmail = "support@adblockplus.org";
   ext.i18n.setElementLinks(
     "sr-warning",
-    "mailto:support@adblockplus.org"
+    `mailto:${supportEmail}`
+  );
+  ext.i18n.setElementLinks(
+    "other-issues",
+    `mailto:${supportEmail}?subject=${encodeURIComponent("[Issue Reporter]")}`
   );
 
   const cancelButton = $("#cancel");
