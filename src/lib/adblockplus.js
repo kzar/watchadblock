@@ -93,7 +93,7 @@
  * @fileOverview Definition of Filter class and its subclasses.
  */
 
-const {contentTypes, RESOURCE_TYPES} = __webpack_require__(9);
+const {contentTypes, RESOURCE_TYPES} = __webpack_require__(10);
 const {extend} = __webpack_require__(28);
 const {filterToRegExp} = __webpack_require__(29);
 const {parseDomains, normalizeHostname, domainSuffixes} = __webpack_require__(11);
@@ -1459,6 +1459,67 @@ exports.port = new Port();
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+
+
+let platformVersion = null;
+let application = null;
+let applicationVersion;
+
+let regexp = /(\S+)\/(\S+)(?:\s*\(.*?\))?/g;
+let match;
+
+while (match = regexp.exec(navigator.userAgent))
+{
+  let app = match[1];
+  let ver = match[2];
+
+  if (app == "Chrome")
+  {
+    platformVersion = ver;
+  }
+  else if (app != "Mozilla" && app != "AppleWebKit" && app != "Safari")
+  {
+    // For compatibility with legacy websites, Chrome's UA
+    // also includes a Mozilla, AppleWebKit and Safari token.
+    // Any further name/version pair indicates a fork.
+    application = {OPR: "opera", Edg: "edge"}[app] || app.toLowerCase();
+    applicationVersion = ver;
+  }
+}
+
+// not a Chromium-based UA, probably modifed by the user
+if (!platformVersion)
+{
+  application = "unknown";
+  applicationVersion = platformVersion = "0";
+}
+
+// no additional name/version, so this is upstream Chrome
+if (!application)
+{
+  application = "chrome";
+  applicationVersion = platformVersion;
+}
+
+
+exports.addonName = "adblockforchrome";
+exports.addonVersion = "4.9.0";
+
+exports.application = application;
+exports.applicationVersion = applicationVersion;
+
+exports.platform = "chromium";
+exports.platformVersion = platformVersion;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -2245,7 +2306,7 @@ DownloadableSubscription.prototype = extend(RegularSubscription, {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2276,10 +2337,10 @@ DownloadableSubscription.prototype = extend(RegularSubscription, {
  */
 
 const {IO} = __webpack_require__(47);
-const {Prefs} = __webpack_require__(5);
+const {Prefs} = __webpack_require__(6);
 const {Filter, ActiveFilter} = __webpack_require__(0);
 const {Subscription, SpecialSubscription,
-       ExternalSubscription} = __webpack_require__(3);
+       ExternalSubscription} = __webpack_require__(4);
 const {filterNotifier} = __webpack_require__(1);
 const {INIParser} = __webpack_require__(51);
 
@@ -2937,7 +2998,7 @@ exports.filterStorage = new FilterStorage();
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2962,7 +3023,7 @@ exports.filterStorage = new FilterStorage();
 
 
 
-const info = __webpack_require__(6);
+const info = __webpack_require__(3);
 const {EventEmitter} = __webpack_require__(7);
 const {port} = __webpack_require__(2);
 
@@ -3458,67 +3519,6 @@ port.on("prefs.getDocLink", (message, sender) =>
 
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-
-
-
-let platformVersion = null;
-let application = null;
-let applicationVersion;
-
-let regexp = /(\S+)\/(\S+)(?:\s*\(.*?\))?/g;
-let match;
-
-while (match = regexp.exec(navigator.userAgent))
-{
-  let app = match[1];
-  let ver = match[2];
-
-  if (app == "Chrome")
-  {
-    platformVersion = ver;
-  }
-  else if (app != "Mozilla" && app != "AppleWebKit" && app != "Safari")
-  {
-    // For compatibility with legacy websites, Chrome's UA
-    // also includes a Mozilla, AppleWebKit and Safari token.
-    // Any further name/version pair indicates a fork.
-    application = {OPR: "opera", Edg: "edge"}[app] || app.toLowerCase();
-    applicationVersion = ver;
-  }
-}
-
-// not a Chromium-based UA, probably modifed by the user
-if (!platformVersion)
-{
-  application = "unknown";
-  applicationVersion = platformVersion = "0";
-}
-
-// no additional name/version, so this is upstream Chrome
-if (!application)
-{
-  application = "chrome";
-  applicationVersion = platformVersion;
-}
-
-
-exports.addonName = "adblockforchrome";
-exports.addonVersion = "4.8.0";
-
-exports.application = application;
-exports.applicationVersion = applicationVersion;
-
-exports.platform = "chromium";
-exports.platformVersion = platformVersion;
-
-/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3681,16 +3681,64 @@ exports.EventEmitter = class EventEmitter
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/** @module url */
+
+
+
+/**
+ * Gets the IDN-decoded hostname from the URL of a frame.
+ * If the URL don't have host information (like "about:blank"
+ * and "data:" URLs) it falls back to the parent frame.
+ *
+ * @param {?Frame}  frame
+ * @param {URL}    [originUrl]
+ * @return {string}
+ */
+exports.extractHostFromFrame = (frame, originUrl) =>
+{
+  for (; frame; frame = frame.parent)
+  {
+    let {hostname} = frame.url;
+    if (hostname)
+      return hostname;
+  }
+
+  return originUrl ? originUrl.hostname : "";
+};
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 /** @module whitelisting */
 
 
 
 const {defaultMatcher} = __webpack_require__(12);
 const {Filter} = __webpack_require__(0);
-const {contentTypes} = __webpack_require__(9);
+const {contentTypes} = __webpack_require__(10);
 const {filterNotifier} = __webpack_require__(1);
-const {filterStorage} = __webpack_require__(4);
-const {extractHostFromFrame} = __webpack_require__(10);
+const {filterStorage} = __webpack_require__(5);
+const {extractHostFromFrame} = __webpack_require__(8);
 const {port} = __webpack_require__(2);
 const {logWhitelistedDocument} = __webpack_require__(13);
 const {verifySignature} = __webpack_require__(54);
@@ -4017,7 +4065,7 @@ if (typeof browser == "object")
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4157,54 +4205,6 @@ exports.enumerateTypes = function* enumerateTypes(contentType, selection = ~0)
       yield 1 << bitIndex >>> 0;
     }
   }
-};
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-present eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/** @module url */
-
-
-
-/**
- * Gets the IDN-decoded hostname from the URL of a frame.
- * If the URL don't have host information (like "about:blank"
- * and "data:" URLs) it falls back to the parent frame.
- *
- * @param {?Frame}  frame
- * @param {URL}    [originUrl]
- * @return {string}
- */
-exports.extractHostFromFrame = (frame, originUrl) =>
-{
-  for (; frame; frame = frame.parent)
-  {
-    let {hostname} = frame.url;
-    if (hostname)
-      return hostname;
-  }
-
-  return originUrl ? originUrl.hostname : "";
 };
 
 
@@ -4665,7 +4665,7 @@ exports.parseDomains = function parseDomains(source, separator)
  */
 
 const {RESOURCE_TYPES, SPECIAL_TYPES, WHITELISTING_TYPES,
-       enumerateTypes} = __webpack_require__(9);
+       enumerateTypes} = __webpack_require__(10);
 const {WhitelistFilter} = __webpack_require__(0);
 const {filterToRegExp} = __webpack_require__(29);
 const {normalizeHostname, URLRequest} = __webpack_require__(11);
@@ -5679,13 +5679,13 @@ exports.defaultMatcher = new CombinedMatcher();
 
 
 
-const {extractHostFromFrame} = __webpack_require__(10);
+const {extractHostFromFrame} = __webpack_require__(8);
 const {EventEmitter} = __webpack_require__(7);
-const {filterStorage} = __webpack_require__(4);
+const {filterStorage} = __webpack_require__(5);
 const {port} = __webpack_require__(2);
 const {Filter,
        ElemHideFilter} = __webpack_require__(0);
-const {contentTypes} = __webpack_require__(9);
+const {contentTypes} = __webpack_require__(10);
 
 const nonRequestTypes = exports.nonRequestTypes = [
   "DOCUMENT", "ELEMHIDE", "SNIPPET", "GENERICBLOCK", "GENERICHIDE", "CSP"
@@ -6053,16 +6053,16 @@ exports.MILLIS_IN_DAY = 86400000;
  * @fileOverview Manages synchronization of filter subscriptions.
  */
 
-const {Prefs} = __webpack_require__(5);
+const {Prefs} = __webpack_require__(6);
 
 const {MILLIS_IN_SECOND, MILLIS_IN_MINUTE, MILLIS_IN_HOUR,
        MILLIS_IN_DAY} = __webpack_require__(15);
 const {Downloader, Downloadable} = __webpack_require__(25);
 const {Filter} = __webpack_require__(0);
-const {filterStorage} = __webpack_require__(4);
+const {filterStorage} = __webpack_require__(5);
 const {filterNotifier} = __webpack_require__(1);
 const {Subscription,
-       DownloadableSubscription} = __webpack_require__(3);
+       DownloadableSubscription} = __webpack_require__(4);
 const {analytics} = __webpack_require__(27);
 
 const INITIAL_DELAY = 1 * MILLIS_IN_MINUTE;
@@ -6337,7 +6337,7 @@ class Synchronizer
         subscription.errors = 0;
 
         let fallbackURL = Prefs.subscriptions_fallbackurl;
-        const {addonVersion} = __webpack_require__(6);
+        const {addonVersion} = __webpack_require__(3);
         fallbackURL = fallbackURL.replace(/%VERSION%/g,
                                           encodeURIComponent(addonVersion));
         fallbackURL = fallbackURL.replace(/%SUBSCRIPTION%/g,
@@ -7613,7 +7613,7 @@ exports.elemHideEmulation = new ElemHideEmulation();
 
 
 
-const {Prefs} = __webpack_require__(5);
+const {Prefs} = __webpack_require__(6);
 const {BlockingFilter} = __webpack_require__(0);
 const {filterNotifier} = __webpack_require__(1);
 const {port} = __webpack_require__(2);
@@ -7788,7 +7788,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! jQuery v3.4.
  * @fileOverview Handles notifications.
  */
 
-const {Prefs} = __webpack_require__(5);
+const {Prefs} = __webpack_require__(6);
 
 const {MILLIS_IN_MINUTE, MILLIS_IN_HOUR, MILLIS_IN_DAY} = __webpack_require__(15);
 const {Downloader, Downloadable} = __webpack_require__(25);
@@ -8055,7 +8055,7 @@ class Notifications
       return null;
 
     const {addonName, addonVersion, application, applicationVersion,
-           platform, platformVersion} = __webpack_require__(6);
+           platform, platformVersion} = __webpack_require__(3);
 
     let targetChecks = {
       extension: v => v == addonName,
@@ -8506,7 +8506,7 @@ exports.Downloader = class Downloader
   getDownloadUrl(downloadable)
   {
     const {addonName, addonVersion, application, applicationVersion,
-           platform, platformVersion} = __webpack_require__(6);
+           platform, platformVersion} = __webpack_require__(3);
 
     let url = downloadable.redirectURL || downloadable.url;
     if (url.includes("?"))
@@ -8851,7 +8851,7 @@ exports.compareVersions = function compareVersions(v1, v2)
 
 
 
-const {Prefs} = __webpack_require__(5);
+const {Prefs} = __webpack_require__(6);
 
 const {MILLIS_IN_DAY} = __webpack_require__(15);
 
@@ -9997,14 +9997,14 @@ exports.compileScript = function compileScript(script, libraries)
 
 const {Filter, RegExpFilter, BlockingFilter} =
   __webpack_require__(0);
-const {contentTypes} = __webpack_require__(9);
-const {Subscription} = __webpack_require__(3);
+const {contentTypes} = __webpack_require__(10);
+const {Subscription} = __webpack_require__(4);
 const {defaultMatcher} = __webpack_require__(12);
 const {filterNotifier} = __webpack_require__(1);
 const {parseURL} = __webpack_require__(11);
-const {Prefs} = __webpack_require__(5);
-const {checkWhitelisted, getKey} = __webpack_require__(8);
-const {extractHostFromFrame} = __webpack_require__(10);
+const {Prefs} = __webpack_require__(6);
+const {checkWhitelisted, getKey} = __webpack_require__(9);
+const {extractHostFromFrame} = __webpack_require__(8);
 const {port} = __webpack_require__(2);
 const {logRequest: hitLoggerLogRequest} = __webpack_require__(13);
 
@@ -10812,7 +10812,7 @@ process.umask = function() { return 0; };
 /*!
  * The buffer module from node.js, for the browser.
  *
- * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @author   Feross Aboukhadijeh <http://feross.org>
  * @license  MIT
  */
 /* eslint-disable no-proto */
@@ -12995,7 +12995,7 @@ exports.SURVEY = SURVEY;
    replacedCounts, chromeStorageSetHelper, getAllSubscriptionsMinusText,
    checkPingResponseForProtect, License, channels */
 
-const { Prefs } = __webpack_require__(5);
+const { Prefs } = __webpack_require__(6);
 const { LocalCDN } = __webpack_require__(17);
 const { SURVEY } = __webpack_require__(37);
 const { recordGeneralMessage, recordErrorMessage } = __webpack_require__(14).ServerMessages;
@@ -13141,6 +13141,7 @@ const STATS = (function exportStats() {
         l: determineUserLanguage(),
         pc: totalPings,
         dcv2: settingsObj.data_collection_v2 ? '1' : '0',
+        ldc: settingsObj.local_data_collection ? '1' : '0',
         cdn: settingsObj.local_cdn ? '1' : '0',
         cdnr: LocalCDN.getRedirectCount(),
         cdnd: LocalCDN.getDataCount(),
@@ -14709,7 +14710,7 @@ class Recommendation
  */
 function* recommendations()
 {
-  for (let source of __webpack_require__(82))
+  for (let source of __webpack_require__(83))
     yield new Recommendation(source);
 }
 
@@ -14722,14 +14723,14 @@ exports.recommendations = recommendations;
 
 /** @module adblock-betafish/alias/uninstall */
 
-const {filterStorage} = __webpack_require__(4);
+const {filterStorage} = __webpack_require__(5);
 const {STATS} = __webpack_require__(38);
 
 let uninstallInit = exports.uninstallInit = function()
 {
   if (browser.runtime.setUninstallURL)
   {
-    var Prefs = __webpack_require__(5).Prefs;
+    var Prefs = __webpack_require__(6).Prefs;
     STATS.untilLoaded(function(userID)
     {
       var uninstallURL = "https://getadblock.com/uninstall/?u=" + userID;
@@ -14805,7 +14806,7 @@ exports.setUninstallURL = uninstallInit;
 // An 'advance' feature, used on the Customize tab, titled "disabled filters"
 
 const { filterNotifier } = __webpack_require__(1);
-const { filterStorage } = __webpack_require__(4);
+const { filterStorage } = __webpack_require__(5);
 
 const ExcludeFilter = (function excludeFilter() {
   const ABRemoveFilter = function (filter) {
@@ -14977,20 +14978,20 @@ __webpack_require__(77);
 __webpack_require__(78);
 __webpack_require__(79);
 __webpack_require__(80);
-__webpack_require__(84);
 __webpack_require__(85);
+__webpack_require__(86);
 __webpack_require__(43);
 __webpack_require__(44);
-__webpack_require__(89);
 __webpack_require__(90);
 __webpack_require__(91);
 __webpack_require__(92);
 __webpack_require__(93);
 __webpack_require__(94);
-__webpack_require__(39);
 __webpack_require__(95);
+__webpack_require__(39);
 __webpack_require__(96);
-module.exports = __webpack_require__(97);
+__webpack_require__(97);
+module.exports = __webpack_require__(98);
 
 
 /***/ }),
@@ -15023,11 +15024,11 @@ module.exports = __webpack_require__(97);
  * @fileOverview Synchronization between filter storage and filter containers.
  */
 
-const {filterStorage} = __webpack_require__(4);
+const {filterStorage} = __webpack_require__(5);
 const {filterNotifier} = __webpack_require__(1);
 const {filterEngine} = __webpack_require__(52);
 const {Filter, ActiveFilter, SnippetFilter} = __webpack_require__(0);
-const {SpecialSubscription} = __webpack_require__(3);
+const {SpecialSubscription} = __webpack_require__(4);
 
 /**
  * Notifies the filter engine about a new filter if necessary.
@@ -15503,7 +15504,7 @@ module.exports = [{"type":"ads","languages":["id","ms"],"title":"ABPindo+EasyLis
  */
 
 const {Filter} = __webpack_require__(0);
-const {Subscription} = __webpack_require__(3);
+const {Subscription} = __webpack_require__(4);
 
 /**
  * Parses filter data.
@@ -15769,16 +15770,16 @@ const {WhitelistFilter,
        ElemHideFilter,
        ElemHideException} = __webpack_require__(0);
 const {SpecialSubscription} =
-  __webpack_require__(3);
-const {contentTypes} = __webpack_require__(9);
+  __webpack_require__(4);
+const {contentTypes} = __webpack_require__(10);
 const {parseURL} = __webpack_require__(11);
-const {filterStorage} = __webpack_require__(4);
+const {filterStorage} = __webpack_require__(5);
 const {defaultMatcher} = __webpack_require__(12);
 const {filterNotifier} = __webpack_require__(1);
-const {extractHostFromFrame} = __webpack_require__(10);
+const {extractHostFromFrame} = __webpack_require__(8);
 const {port} = __webpack_require__(2);
 const {HitLogger, nonRequestTypes} = __webpack_require__(13);
-const info = __webpack_require__(6);
+const info = __webpack_require__(3);
 const {compareVersions} = __webpack_require__(26);
 
 let panels = new Map();
@@ -17319,10 +17320,10 @@ BigInteger.ONE = nbv(1);
 
 const {defaultMatcher} = __webpack_require__(12);
 const {BlockingFilter} = __webpack_require__(0);
-const {contentTypes} = __webpack_require__(9);
+const {contentTypes} = __webpack_require__(10);
 const {parseURL} = __webpack_require__(11);
-const {extractHostFromFrame} = __webpack_require__(10);
-const {checkWhitelisted} = __webpack_require__(8);
+const {extractHostFromFrame} = __webpack_require__(8);
+const {checkWhitelisted} = __webpack_require__(9);
 const {logRequest} = __webpack_require__(13);
 
 let loadingPopups = new Map();
@@ -17456,10 +17457,10 @@ if ("onCreatedNavigationTarget" in browser.webNavigation)
 
 const {defaultMatcher} = __webpack_require__(12);
 const {WhitelistFilter} = __webpack_require__(0);
-const {contentTypes} = __webpack_require__(9);
+const {contentTypes} = __webpack_require__(10);
 const {parseURL} = __webpack_require__(11);
-const {extractHostFromFrame} = __webpack_require__(10);
-const {checkWhitelisted} = __webpack_require__(8);
+const {extractHostFromFrame} = __webpack_require__(8);
+const {checkWhitelisted} = __webpack_require__(9);
 const {filterNotifier} = __webpack_require__(1);
 const {logRequest} = __webpack_require__(13);
 
@@ -17553,17 +17554,17 @@ browser.webRequest.onHeadersReceived.addListener(details =>
 
 
 
-const {contentTypes} = __webpack_require__(9);
+const {contentTypes} = __webpack_require__(10);
 const {elemHide, createStyleSheet,
        rulesFromStyleSheet} = __webpack_require__(19);
 const {elemHideEmulation} = __webpack_require__(21);
 const {filterNotifier} = __webpack_require__(1);
 const {snippets, compileScript} = __webpack_require__(32);
-const {checkWhitelisted} = __webpack_require__(8);
-const {extractHostFromFrame} = __webpack_require__(10);
+const {checkWhitelisted} = __webpack_require__(9);
+const {extractHostFromFrame} = __webpack_require__(8);
 const {port} = __webpack_require__(2);
 const {HitLogger, logRequest} = __webpack_require__(13);
-const info = __webpack_require__(6);
+const info = __webpack_require__(3);
 
 // Chromium's support for tabs.removeCSS is still a work in progress and the
 // API is likely to be different from Firefox's; for now we just don't use it
@@ -17871,7 +17872,7 @@ fetch(browser.extension.getURL("/snippets.js"), {cache: "no-cache"})
 
 
 const {port} = __webpack_require__(2);
-const info = __webpack_require__(6);
+const info = __webpack_require__(3);
 
 function forward(type, message, sender)
 {
@@ -17990,8 +17991,8 @@ port.on("info.get", (message, sender) => info);
 
 
 const {port} = __webpack_require__(2);
-const {Prefs} = __webpack_require__(5);
-const {filterStorage} = __webpack_require__(4);
+const {Prefs} = __webpack_require__(6);
+const {filterStorage} = __webpack_require__(5);
 const {filterNotifier} = __webpack_require__(1);
 const {isSlowFilter} = __webpack_require__(12);
 const {HitLogger} = __webpack_require__(13);
@@ -18004,10 +18005,10 @@ const {
   DownloadableSubscription,
   SpecialSubscription,
   RegularSubscription
-} = __webpack_require__(3);
+} = __webpack_require__(4);
 const {showOptions} = __webpack_require__(62);
 const {recommendations} = __webpack_require__(30);
-const {whitelistedDomainRegexp} = __webpack_require__(8);
+const {whitelistedDomainRegexp} = __webpack_require__(9);
 
 function convertObject(keys, obj)
 {
@@ -18688,8 +18689,8 @@ browser.runtime.onConnect.addListener(onConnect);
 
 
 
-const {checkWhitelisted} = __webpack_require__(8);
-const info = __webpack_require__(6);
+const {checkWhitelisted} = __webpack_require__(9);
+const info = __webpack_require__(3);
 const {port} = __webpack_require__(2);
 
 const manifest = browser.runtime.getManifest();
@@ -19362,7 +19363,8 @@ function toByteArray (b64) {
     ? validLen - 4
     : validLen
 
-  for (var i = 0; i < len; i += 4) {
+  var i
+  for (i = 0; i < len; i += 4) {
     tmp =
       (revLookup[b64.charCodeAt(i)] << 18) |
       (revLookup[b64.charCodeAt(i + 1)] << 12) |
@@ -20719,23 +20721,24 @@ Object.assign(window, {
 
 const { Filter } = __webpack_require__(0);
 const { WhitelistFilter } = __webpack_require__(0);
-const { checkWhitelisted } = __webpack_require__(8);
-const { Subscription } = __webpack_require__(3);
-const { DownloadableSubscription } = __webpack_require__(3);
-const { SpecialSubscription } = __webpack_require__(3);
-const { filterStorage } = __webpack_require__(4);
+const { checkWhitelisted } = __webpack_require__(9);
+const { Subscription } = __webpack_require__(4);
+const { DownloadableSubscription } = __webpack_require__(4);
+const { SpecialSubscription } = __webpack_require__(4);
+const { filterStorage } = __webpack_require__(5);
 const { filterNotifier } = __webpack_require__(1);
-const { Prefs } = __webpack_require__(5);
+const { Prefs } = __webpack_require__(6);
 const { synchronizer } = __webpack_require__(16);
 const { getBlockedPerPage } = __webpack_require__(22);
 const { RegExpFilter, InvalidFilter } = __webpack_require__(0);
 const { URLRequest } = __webpack_require__(11);
-const info = __webpack_require__(6);
+const info = __webpack_require__(3);
 
 // Object's used on the option, pop up, etc. pages...
 const { STATS } = __webpack_require__(38);
 const { SyncService } = __webpack_require__(39);
 const { DataCollectionV2 } = __webpack_require__(81);
+const { LocalDataCollection } = __webpack_require__(82);
 const { LocalCDN } = __webpack_require__(17);
 const { ServerMessages } = __webpack_require__(14);
 const { recommendations } = __webpack_require__(41);
@@ -20755,7 +20758,7 @@ const {
   getIdFromURL,
   getSubscriptionInfoFromURL,
   isLanguageSpecific,
-} = __webpack_require__(83).SubscriptionAdapter;
+} = __webpack_require__(84).SubscriptionAdapter;
 
 Object.assign(window, {
   filterStorage,
@@ -20773,6 +20776,7 @@ Object.assign(window, {
   STATS,
   SyncService,
   DataCollectionV2,
+  LocalDataCollection,
   LocalCDN,
   ServerMessages,
   recordGeneralMessage,
@@ -21767,64 +21771,66 @@ const getDebugInfo = function (callback) {
   if (settings.twitch_hiding) {
     response.otherInfo.twitchSettings = twitchSettings;
   }
+  LocalDataCollection.getRawStatsSize((rawStatsSize) => {
+    response.otherInfo.rawStatsSize = rawStatsSize;
+    // Get total pings
+    browser.storage.local.get('total_pings').then((storageResponse) => {
+      response.otherInfo.totalPings = storageResponse.totalPings || 0;
 
-  // Get total pings
-  browser.storage.local.get('total_pings').then((storageResponse) => {
-    response.otherInfo.totalPings = storageResponse.totalPings || 0;
-
-    // Now, add exclude filters (if there are any)
-    const excludeFiltersKey = 'exclude_filters';
-    browser.storage.local.get(excludeFiltersKey).then((secondResponse) => {
-      if (secondResponse && secondResponse[excludeFiltersKey]) {
-        response.excludedFilters = secondResponse[excludeFiltersKey];
-      }
-      // Now, add JavaScript exception error (if there is one)
-      const errorKey = 'errorkey';
-      browser.storage.local.get(errorKey).then((errorResponse) => {
-        if (errorResponse && errorResponse[errorKey]) {
-          response.otherInfo[errorKey] = errorResponse[errorKey];
+      // Now, add exclude filters (if there are any)
+      const excludeFiltersKey = 'exclude_filters';
+      browser.storage.local.get(excludeFiltersKey).then((secondResponse) => {
+        if (secondResponse && secondResponse[excludeFiltersKey]) {
+          response.excludedFilters = secondResponse[excludeFiltersKey];
         }
-        // Now, add the migration messages (if there are any)
-        const migrateLogMessageKey = 'migrateLogMessageKey';
-        browser.storage.local.get(migrateLogMessageKey).then((migrateLogMessageResponse) => {
-          if (migrateLogMessageResponse && migrateLogMessageResponse[migrateLogMessageKey]) {
-            const messages = migrateLogMessageResponse[migrateLogMessageKey].split('\n');
-            for (let i = 0; i < messages.length; i++) {
-              const key = `migration_message_${i}`;
-              response.otherInfo[key] = messages[i];
-            }
+        // Now, add JavaScript exception error (if there is one)
+        const errorKey = 'errorkey';
+        browser.storage.local.get(errorKey).then((errorResponse) => {
+          if (errorResponse && errorResponse[errorKey]) {
+            response.otherInfo[errorKey] = errorResponse[errorKey];
           }
-          if (License.isActiveLicense()) {
-            response.otherInfo.licenseInfo = {};
-            response.otherInfo.licenseInfo.extensionGUID = STATS.userId();
-            response.otherInfo.licenseInfo.licenseId = License.get().licenseId;
-            if (getSettings().sync_settings) {
-              response.otherInfo.syncInfo = {};
-              response.otherInfo.syncInfo.SyncCommitVersion = SyncService.getCommitVersion();
-              response.otherInfo.syncInfo.SyncCommitName = SyncService.getCurrentExtensionName();
-              response.otherInfo.syncInfo.SyncCommitLog = SyncService.getSyncLog();
-            }
-            browser.alarms.getAll((alarms) => {
-              if (alarms && alarms.length > 0) {
-                response.otherInfo['Alarm info'] = `length: ${alarms.length}`;
-                for (let i = 0; i < alarms.length; i++) {
-                  const alarm = alarms[i];
-                  response.otherInfo[`${i} Alarm Name`] = alarm.name;
-                  response.otherInfo[`${i} Alarm Scheduled Time`] = new Date(alarm.scheduledTime);
-                }
-              } else {
-                response.otherInfo['No alarm info'] = 'No alarm info';
+          // Now, add the migration messages (if there are any)
+          const migrateLogMessageKey = 'migrateLogMessageKey';
+          browser.storage.local.get(migrateLogMessageKey).then((migrateLogMessageResponse) => {
+            if (migrateLogMessageResponse && migrateLogMessageResponse[migrateLogMessageKey]) {
+              const messages = migrateLogMessageResponse[migrateLogMessageKey].split('\n');
+              for (let i = 0; i < messages.length; i++) {
+                const key = `migration_message_${i}`;
+                response.otherInfo[key] = messages[i];
               }
-              License.getLicenseInstallationDate((installdate) => {
-                response.otherInfo['License Installation Date'] = installdate;
-                if (typeof callback === 'function') {
-                  callback(response);
+            }
+            if (License.isActiveLicense()) {
+              response.otherInfo.licenseInfo = {};
+              response.otherInfo.licenseInfo.extensionGUID = STATS.userId();
+              response.otherInfo.licenseInfo.licenseId = License.get().licenseId;
+              if (getSettings().sync_settings) {
+                response.otherInfo.syncInfo = {};
+                response.otherInfo.syncInfo.SyncCommitVersion = SyncService.getCommitVersion();
+                response.otherInfo.syncInfo.SyncCommitName = SyncService.getCurrentExtensionName();
+                response.otherInfo.syncInfo.SyncCommitLog = SyncService.getSyncLog();
+              }
+              browser.alarms.getAll((alarms) => {
+                if (alarms && alarms.length > 0) {
+                  response.otherInfo['Alarm info'] = `length: ${alarms.length}`;
+                  for (let i = 0; i < alarms.length; i++) {
+                    const alarm = alarms[i];
+                    response.otherInfo[`${i} Alarm Name`] = alarm.name;
+                    response.otherInfo[`${i} Alarm Scheduled Time`] = new Date(alarm.scheduledTime);
+                  }
+                } else {
+                  response.otherInfo['No alarm info'] = 'No alarm info';
                 }
+                License.getLicenseInstallationDate((installdate) => {
+                  response.otherInfo['License Installation Date'] = installdate;
+                  if (typeof callback === 'function') {
+                    callback(response);
+                  }
+                });
               });
-            });
-          } else if (typeof callback === 'function') { // License is not active
-            callback(response);
-          }
+            } else if (typeof callback === 'function') { // License is not active
+              callback(response);
+            }
+          });
         });
       });
     });
@@ -21997,14 +22003,14 @@ Object.assign(window, {
 /* For ESLint: List any global identifiers used in this file below */
 /* global browser, require, ext, exports, chromeStorageSetHelper, getSettings, adblockIsPaused,
    adblockIsDomainPaused, filterStorage, Filter, parseUri, settings, getAllSubscriptionsMinusText,
-   getUserFilters */
+   getUserFilters, setSetting */
 
-const { extractHostFromFrame } = __webpack_require__(10);
+const { extractHostFromFrame } = __webpack_require__(8);
 const { ElemHideFilter } = __webpack_require__(0);
 const { filterNotifier } = __webpack_require__(1);
 const { port } = __webpack_require__(2);
 const { postFilterStatsToLogServer } = __webpack_require__(14).ServerMessages;
-const info = __webpack_require__(6);
+const info = __webpack_require__(3);
 const { idleHandler } = __webpack_require__(40);
 
 const DataCollectionV2 = (function getDataCollectionV2() {
@@ -22238,7 +22244,7 @@ const DataCollectionV2 = (function getDataCollectionV2() {
   });// End of then
 
   const returnObj = {};
-  returnObj.start = function returnObjStart() {
+  returnObj.start = function returnObjStart(callback) {
     dataCollectionCache.filters = {};
     dataCollectionCache.domains = {};
     filterNotifier.on('filter.hitCount', filterListener);
@@ -22248,13 +22254,15 @@ const DataCollectionV2 = (function getDataCollectionV2() {
     });
     browser.tabs.onUpdated.addListener(handleTabUpdated);
     addMessageListener();
+    setSetting('data_collection_v2', true, callback);
   };
-  returnObj.end = function returnObjEnd() {
+  returnObj.end = function returnObjEnd(callback) {
     dataCollectionCache = {};
     filterNotifier.off('filter.hitCount', filterListener);
     browser.webRequest.onBeforeRequest.removeListener(webRequestListener);
     browser.storage.local.remove(TIME_LAST_PUSH_KEY);
     browser.tabs.onUpdated.removeListener(handleTabUpdated);
+    setSetting('data_collection_v2', false, callback);
   };
   returnObj.getCache = function returnObjGetCache() {
     return dataCollectionCache;
@@ -22268,12 +22276,327 @@ exports.DataCollectionV2 = DataCollectionV2;
 
 /***/ }),
 /* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global browser, require, ext, exports, chromeStorageSetHelper, getSettings, adblockIsPaused,
+   adblockIsDomainPaused, filterStorage, Filter, parseUri, settings, getAllSubscriptionsMinusText,
+   getUserFilters, Utils, replacedCounts, setSetting */
+
+const { extractHostFromFrame } = __webpack_require__(8);
+const { ElemHideFilter } = __webpack_require__(0);
+const { filterNotifier } = __webpack_require__(1);
+const { port } = __webpack_require__(2);
+const info = __webpack_require__(3);
+
+const LocalDataCollection = (function getLocalDataCollection() {
+  const easyPrivacyURL = 'https://easylist-downloads.adblockplus.org/easyprivacy.txt';
+  const FIFTEEN_MINS = 1000 * 60 * 15;
+  let intervalFN;
+  const EXT_STATS_KEY = 'ext_stats_key';
+
+  // Setup memory cache
+  let dataCollectionCache = {};
+  dataCollectionCache.domains = {};
+
+  const initializeDomainIfNeeded = function (domain) {
+    if (!(domain in dataCollectionCache.domains)) {
+      dataCollectionCache.domains[domain] = {};
+      dataCollectionCache.domains[domain].ads = 0;
+      dataCollectionCache.domains[domain].trackers = 0;
+      dataCollectionCache.domains[domain].adsReplaced = 0;
+    }
+  };
+
+  const handleTabUpdated = function (tabId, changeInfo, tabInfo) {
+    if (browser.runtime.lastError) {
+      return;
+    }
+    if (!tabInfo || !tabInfo.url || !tabInfo.url.startsWith('http') || tabInfo.incognito) {
+      return;
+    }
+    if (
+      getSettings().local_data_collection
+      && !getSettings().data_collection_v2 // the content script will be injected from that module
+      && !adblockIsPaused()
+      && !adblockIsDomainPaused({ url: tabInfo.url, id: tabId })
+      && changeInfo.status === 'complete'
+    ) {
+      browser.tabs.executeScript(tabId,
+        {
+          file: 'polyfill.js',
+          allFrames: true,
+        }).then(() => {
+        browser.tabs.executeScript(tabId,
+          {
+            file: 'adblock-datacollection-contentscript.js',
+            allFrames: true,
+          });
+      });
+    }
+  };
+
+  const addFilterToCache = function (filter, page) {
+    const validFilterText = filter && filter.text && (typeof filter.text === 'string');
+    const validFilterType = (filter.type === 'blocking'
+                             || filter.type === 'elemhide'
+                             || filter.type === 'elemhideemulation'
+                             || filter.type === 'snippet');
+    if (validFilterType && validFilterText && page && page.url && page.url.hostname) {
+      browser.tabs.get(page.id).then((tab) => {
+        if (tab.incognito) {
+          return;
+        }
+        const domain = page.url.hostname;
+        initializeDomainIfNeeded(domain);
+        const { text } = filter;
+        let isAd = true;
+        for (const sub of filterStorage.subscriptions(text)) {
+          if (!sub.disabled && sub.url && sub.url === easyPrivacyURL) {
+            isAd = false;
+          }
+        }
+        if (isAd) {
+          dataCollectionCache.domains[domain].ads += 1;
+        } else {
+          dataCollectionCache.domains[domain].trackers += 1;
+        }
+      });
+    }
+  };
+
+  const addMessageListener = function () {
+    port.on('datacollection.elementHide', (message, sender) => {
+      const dataCollectionEnabled = getSettings().local_data_collection;
+      const domainInfo = { url: sender.page.url, id: sender.page.id };
+      if (dataCollectionEnabled && !adblockIsPaused() && !adblockIsDomainPaused(domainInfo)) {
+        const { selectors } = message;
+        const docDomain = extractHostFromFrame(sender.frame);
+        for (const subscription of filterStorage.subscriptions()) { // test if we double count hits
+          if (!subscription.disabled) {
+            for (const text of subscription.filterText()) {
+              const filter = Filter.fromText(text);
+              // We only know the exact filter in case of element hiding emulation.
+              // For regular element hiding filters, the content script only knows
+              // the selector, so we have to find a filter that has an identical
+              // selector and is active on the domain the match was reported from.
+              const isActiveElemHideFilter = filter instanceof ElemHideFilter
+                                           && selectors.includes(filter.selector)
+                                           && filter.isActiveOnDomain(docDomain);
+              if (isActiveElemHideFilter) {
+                addFilterToCache(filter, sender.page);
+              }
+            }
+          }
+        }
+      }
+    });
+    port.on('datacollection.exceptionElementHide', (message, sender) => {
+      const domainInfo = { url: sender.page.url, id: sender.page.id };
+      if (
+        getSettings().local_data_collection
+          && !adblockIsPaused()
+          && !adblockIsDomainPaused(domainInfo)) {
+        const selectors = message.exceptions;
+        for (const text of selectors) {
+          const filter = Filter.fromText(text);
+          addFilterToCache(filter, sender.page);
+        }
+      }
+    });
+  };
+
+  const filterListener = function (item, newValue, oldValue, tabIds) {
+    if (getSettings().local_data_collection && !adblockIsPaused()) {
+      for (const tabId of tabIds) {
+        const page = new ext.Page({ id: tabId });
+        if (page && page.url && !adblockIsDomainPaused({ url: page.url.href, id: page.id })) {
+          addFilterToCache(item, page);
+        }
+      }
+    } else if (!getSettings().local_data_collection) {
+      LocalDataCollection.end();
+    }
+  };
+
+  const adReplacedListener = function (tabId, url) {
+    if (getSettings().local_data_collection && !adblockIsPaused()) {
+      const domain = new URL(url).hostname;
+      initializeDomainIfNeeded(domain);
+      dataCollectionCache.domains[domain].adsReplaced += 1;
+    } else if (!getSettings().local_data_collection) {
+      LocalDataCollection.end();
+    }
+  };
+
+  const clearCache = function () {
+    dataCollectionCache = {};
+    dataCollectionCache.domains = {};
+  };
+
+  const saveCacheData = function (callback) {
+    if (getSettings().local_data_collection && !$.isEmptyObject(dataCollectionCache.domains)) {
+      const hourSnapShot = JSON.parse(JSON.stringify({
+        v: '1',
+        doms: dataCollectionCache.domains,
+      }));
+      browser.storage.local.get(EXT_STATS_KEY).then((hourlyResponse) => {
+        const savedData = hourlyResponse[EXT_STATS_KEY] || { };
+        savedData[Date.now().toString()] = hourSnapShot;
+        chromeStorageSetHelper(EXT_STATS_KEY, savedData, callback);
+        clearCache();
+      });
+    } else {
+      if (!getSettings().local_data_collection) {
+        clearInterval(intervalFN);
+      }
+      if (typeof callback === 'function') {
+        callback();
+      }
+    }
+  };
+
+  const startProcessInterval = function () {
+    intervalFN = window.setInterval(() => {
+      saveCacheData();
+    }, FIFTEEN_MINS);
+  };
+
+  // If enabled at startup periodic saving of memory cache &
+  // sending of data to the log server
+  settings.onload().then(() => {
+    if (getSettings().local_data_collection) {
+      startProcessInterval();
+      filterNotifier.on('filter.hitCount', filterListener);
+      replacedCounts.adReplacedNotifier.on('adReplaced', adReplacedListener);
+      browser.tabs.onUpdated.addListener(handleTabUpdated);
+      addMessageListener();
+    }
+  });// End of then
+
+  const returnObj = {};
+  returnObj.EXT_STATS_KEY = EXT_STATS_KEY;
+  returnObj.start = function returnObjStart(callback) {
+    dataCollectionCache.domains = {};
+    filterNotifier.on('filter.hitCount', filterListener);
+    replacedCounts.adReplacedNotifier.on('adReplaced', adReplacedListener);
+    browser.tabs.onUpdated.addListener(handleTabUpdated);
+    addMessageListener();
+    startProcessInterval();
+    setSetting('local_data_collection', true, callback);
+  };
+  returnObj.end = function returnObjEnd(callback) {
+    clearInterval(intervalFN);
+    clearCache();
+    filterNotifier.off('filter.hitCount', filterListener);
+    replacedCounts.adReplacedNotifier.off('adReplaced', adReplacedListener);
+    browser.tabs.onUpdated.removeListener(handleTabUpdated);
+    setSetting('local_data_collection', false, callback);
+  };
+  returnObj.clearCache = clearCache;
+  returnObj.getCache = function returnObjGetCache() {
+    return dataCollectionCache;
+  };
+  returnObj.saveCacheData = saveCacheData;
+  returnObj.easyPrivacyURL = easyPrivacyURL;
+  returnObj.exportRawStats = function returnObjFilterStats(callback) {
+    browser.storage.local.get(EXT_STATS_KEY).then((hourlyResponse) => {
+      const savedData = hourlyResponse[EXT_STATS_KEY] || { };
+      if (typeof callback === 'function') {
+        callback(savedData);
+      }
+    });
+  };
+  returnObj.getRawStatsSize = function returnObjFilterStatsSize(callback) {
+    LocalDataCollection.exportRawStats((rawStats) => {
+      callback(JSON.stringify(rawStats).length);
+    });
+  };
+  // Note: the following function is used for testing purposes
+  // Import filter list statistics which will be converted to the format needed / used
+  // by the 'stats' tab.
+  // Inputs: filterStatsArray: array of stringified JSON filter list statistics data
+  //         from the DataCollection V2 messages.
+  // Returns: a Promise, resolved when complete
+  returnObj.importFilterStats = function returnObjFilterStats(filterStatsArray) {
+    return new Promise((resolve) => {
+      let parsedfilterStats = {};
+      try {
+        parsedfilterStats = JSON.parse(filterStatsArray);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log(e);
+        resolve(`error : ${e.toString()}`);
+        return;
+      }
+      browser.storage.local.get(EXT_STATS_KEY).then((hourlyResponse) => {
+        const savedData = hourlyResponse[EXT_STATS_KEY] || { };
+        for (let inx = 0; inx < parsedfilterStats.length; inx++) {
+          const dupDataCache = parsedfilterStats[inx];
+          // only process new data
+          // don't overwrite existing data
+          if (!savedData[Date.parse(dupDataCache.timeOfLastPush)]) {
+            const hourSnapShot = {};
+            const initializeDomainDataObject = function (domain) {
+              hourSnapShot[domain] = {};
+              hourSnapShot[domain].ads = 0;
+              hourSnapShot[domain].trackers = 0;
+              hourSnapShot[domain].adsReplaced = 0;
+              if (dupDataCache.domains[domain] && typeof dupDataCache.domains[domain].adsReplaced === 'number') {
+                hourSnapShot[domain].adsReplaced = dupDataCache.domains[domain].adsReplaced;
+              }
+            };
+            for (const domain in dupDataCache.domains) {
+              initializeDomainDataObject(domain);
+            }
+            const processDomainByFilterType = function (filter, domains, filterRequestType) {
+              for (const domain in domains) {
+                if (!hourSnapShot[domain]) {
+                  initializeDomainDataObject(domain);
+                }
+                if (dupDataCache.filters[filter].subscriptions
+                    && dupDataCache.filters[filter].subscriptions.length
+                    && dupDataCache.filters[filter].subscriptions.includes(easyPrivacyURL)) {
+                  hourSnapShot[domain].trackers
+                    += dupDataCache.filters[filter][filterRequestType][domain].hits;
+                } else {
+                  hourSnapShot[domain].ads
+                    += dupDataCache.filters[filter][filterRequestType][domain].hits;
+                }
+              }
+            };
+            for (const filter in dupDataCache.filters) {
+              processDomainByFilterType(filter, dupDataCache.filters[filter].firstParty, 'firstParty');
+              processDomainByFilterType(filter, dupDataCache.filters[filter].thirdParty, 'thirdParty');
+            }
+            savedData[Date.parse(dupDataCache.timeOfLastPush)] = JSON.parse(JSON.stringify({
+              v: '1',
+              doms: hourSnapShot,
+            }));
+          }
+        }// end for loop
+        chromeStorageSetHelper(EXT_STATS_KEY, savedData);
+        resolve(' success! ');
+      });
+    });
+  };
+  return returnObj;
+}());
+
+exports.LocalDataCollection = LocalDataCollection;
+
+
+/***/ }),
+/* 83 */
 /***/ (function(module, exports) {
 
 module.exports = [{"url":"https://easylist-downloads.adblockplus.org/exceptionrules.txt","id":"acceptable_ads","homepage":"","languages":[],"type":"","title":"Acceptable Ads"},{"url":"https://easylist-downloads.adblockplus.org/exceptionrules-privacy-friendly.txt","id":"acceptable_ads_privacy","homepage":"","languages":[],"type":"","title":"Acceptable Ads Privacy"},{"url":"https://cdn.adblockcdn.com/filters/adblock_custom.txt","id":"adblock_custom","homepage":"https://getadblock.com/help","languages":[],"type":"ads","title":"AdBlock Custom"},{"url":"https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt","id":"bitcoin_mining_protection","homepage":"","languages":[],"type":"","title":"Acceptable Ads"},{"url":"https://easylist-downloads.adblockplus.org/antiadblockfilters.txt","id":"warning_removal","homepage":"","languages":[],"type":"","title":"Warning Removal"},{"url":"https://www.void.gr/kargig/void-gr-filters.txt","id":"easylist_plus_greek","homepage":"mailto:kargig at void.gr","languages":["el"],"type":"ads","title":"EasyList Greek+EasyList"},{"url":"https://raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt","id":"hungarian","homepage":"mailto:pete at teamlupus.hu","languages":["hu"],"type":"ads","title":"EasyList Hungarian+EasyList"},{"url":"https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt","id":"japanese","homepage":"https://github.com/k2jp/abp-japanese-filters/","languages":["ja"],"type":"ads","title":"Japanese"},{"url":"https://adblock.gardar.net/is.abp.txt","id":"icelandic","homepage":"mailto:adblock at gardar.net","languages":["is"],"type":"ads","title":"Icelandic"},{"url":"https://easylist-downloads.adblockplus.org/malwaredomains_full.txt","id":"malware","homepage":"http://malwaredomains.com/?page_id=2","languages":[],"type":"ads","title":"Malware"},{"url":"https://easylist-downloads.adblockplus.org/abpindo+easylist.txt","id":"easylist_plus_indonesian","homepage":"http://abpindo.blogspot.com/","languages":["id","ms"],"type":"ads","title":"ABPindo+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/abpvn+easylist.txt","id":"easylist_plus_vietnamese","homepage":"http://abpvn.com/","languages":["vi"],"type":"ads","title":"ABPVN List+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/bulgarian_list+easylist.txt","id":"easylist_plus_bulgarian","homepage":"http://stanev.org/abp/","languages":["bg"],"type":"ads","title":"Bulgarian list+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylist.txt","id":"easylist","homepage":"https://easylist.to/","languages":["en"],"type":"ads","title":"EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt","id":"chinese","homepage":"http://abpchina.org/forum/","languages":["zh"],"type":"ads","title":"EasyList China+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistczechslovak+easylist.txt","id":"czech","homepage":"https://adblock.sk/","languages":["cs","sk"],"type":"ads","title":"EasyList Czech and Slovak+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistdutch+easylist.txt","id":"dutch","homepage":"https://easylist.to/","languages":["nl"],"type":"ads","title":"EasyList Dutch+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistgermany+easylist.txt","id":"easylist_plus_german","homepage":"https://easylist.to/","languages":["de"],"type":"ads","title":"EasyList Germany+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/israellist+easylist.txt","id":"israeli","homepage":"https://github.com/easylist/EasyListHebrew","languages":["he"],"type":"ads","title":"EasyList Hebrew+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistitaly+easylist.txt","id":"italian","homepage":"https://easylist.to/","languages":["it"],"type":"ads","title":"EasyList Italy+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistlithuania+easylist.txt","id":"easylist_plus_lithuania","homepage":"http://margevicius.lt/","languages":["lt"],"type":"ads","title":"EasyList Lithuania+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistpolish+easylist.txt","id":"easylist_plus_polish","homepage":"https://easylist.to/","languages":["pl"],"type":"ads","title":"EasyList Polish+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistportuguese+easylist.txt","id":"easylist_plus_portuguese","homepage":"https://easylist.to/","languages":["pt"],"type":"ads","title":"EasyList Portuguese+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistspanish+easylist.txt","id":"easylist_plus_spanish","homepage":"https://easylist.to/","languages":["es"],"type":"ads","title":"EasyList Spanish+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/indianlist+easylist.txt","id":"easylist_plus_indian","homepage":"https://easylist.to/","languages":["bn","gu","hi","pa"],"type":"ads","title":"IndianList+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/koreanlist+easylist.txt","id":"easylist_plun_korean","homepage":"https://easylist.to/","languages":["ko"],"type":"ads","title":"KoreanList+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/latvianlist+easylist.txt","id":"latvian","homepage":"https://notabug.org/latvian-list/adblock-latvian","languages":["lv"],"type":"ads","title":"Latvian List+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/liste_ar+liste_fr+easylist.txt","id":"easylist_plus_arabic_plus_french","homepage":"https://code.google.com/p/liste-ar-adblock/","languages":["ar"],"type":"ads","title":"Liste AR+Liste FR+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/liste_fr+easylist.txt","id":"easylist_plus_french","homepage":"https://forums.lanik.us/viewforum.php?f","languages":["fr"],"type":"ads","title":"Liste FR+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/rolist+easylist.txt","id":"easylist_plus_romanian","homepage":"http://www.zoso.ro/rolist","languages":["ro"],"type":"ads","title":"ROList+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt","id":"russian","homepage":"https://forums.lanik.us/viewforum.php?f","languages":["ru","uk"],"type":"ads","title":"RuAdList+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt","id":"anticircumvent","homepage":"https://github.com/abp-filters/abp-filters-anti-cv","languages":[],"type":"circumvention","title":"ABP filters"},{"url":"https://easylist-downloads.adblockplus.org/easyprivacy.txt","id":"easyprivacy","homepage":"https://easylist.to/","languages":[],"type":"privacy","title":"EasyPrivacy"},{"url":"https://easylist-downloads.adblockplus.org/fanboy-social.txt","id":"antisocial","homepage":"https://easylist.to/","languages":[],"type":"social","title":"Fanboy's Social Blocking List"},{"url":"https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt","id":"annoyances","homepage":"https://easylist.to/","languages":[],"type":"social","title":"Fanboy's Annoyances"},{"url":"https://fanboy.co.nz/fanboy-turkish.txt","id":"turkish","language":true,"hidden":false},{"url":"https://easylist-downloads.adblockplus.org/Liste_AR.txt","id":"easylist_plus_arabic","language":true,"hidden":true},{"url":"https://margevicius.lt/easylistlithuania.txt","id":"easylist_plus_lithuania_old","language":true,"hidden":true},{"url":"https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt","id":"latvian_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/easylistitaly.txt","id":"italian_old","language":true,"hidden":true},{"url":"https://stanev.org/abp/adblock_bg.txt","id":"easylist_plus_bulgarian_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/easylistdutch.txt","id":"dutch_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/liste_fr.txt","id":"easylist_plus_french_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/easylistgermany.txt","id":"easylist_plus_german_old","language":true,"hidden":true},{"url":"https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt","id":"easylist_plus_indonesian_old","language":true,"hidden":true},{"url":"https://www.certyficate.it/adblock/adblock.txt","id":"easylist_plus_polish_old","language":true,"hidden":true},{"url":"https://www.zoso.ro/pages/rolist.txt","id":"easylist_plus_romanian_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/advblock.txt","id":"russian_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/easylistchina.txt","id":"chinese_old","language":true,"hidden":true},{"url":"https://raw.github.com/tomasko126/easylistczechandslovak/master/filters.txt","id":"czech_old","language":true,"hidden":true},{"url":"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFiltersABP.txt","id":"norwegian","language":true,"hidden":false,"languages":["no"]}]
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22283,8 +22606,8 @@ module.exports = [{"url":"https://easylist-downloads.adblockplus.org/exceptionru
 /* global require, exports, recommendations, Subscription
    DownloadableSubscription, browser */
 
-const { filterStorage } = __webpack_require__(4);
-const subClasses = __webpack_require__(3);
+const { filterStorage } = __webpack_require__(5);
+const subClasses = __webpack_require__(4);
 
 if (subClasses) {
   this.Subscription = subClasses.Subscription;
@@ -22445,7 +22768,7 @@ exports.SubscriptionAdapter = SubscriptionAdapter;
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22455,9 +22778,9 @@ exports.SubscriptionAdapter = SubscriptionAdapter;
 /* global browser, require, ext, adblockIsPaused, adblockIsDomainPaused
    recordGeneralMessage, log, License, reloadTab */
 
-const { checkWhitelisted } = __webpack_require__(8);
+const { checkWhitelisted } = __webpack_require__(9);
 const { filterNotifier } = __webpack_require__(1);
-const { Prefs } = __webpack_require__(5);
+const { Prefs } = __webpack_require__(6);
 
 const updateButtonUIAndContextMenus = function () {
   browser.tabs.query({}).then((tabs) => {
@@ -22757,7 +23080,7 @@ Object.assign(window, {
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22768,16 +23091,16 @@ Object.assign(window, {
 const {Subscription,
        DownloadableSubscription,
        SpecialSubscription} =
-  __webpack_require__(3);
-const {filterStorage} = __webpack_require__(4);
+  __webpack_require__(4);
+const {filterStorage} = __webpack_require__(5);
 const {filterNotifier} = __webpack_require__(1);
 const {recommendations} = __webpack_require__(41);
-const info = __webpack_require__(6);
+const info = __webpack_require__(3);
 const {port} = __webpack_require__(2);
-const {Prefs} = __webpack_require__(5);
+const {Prefs} = __webpack_require__(6);
 const {synchronizer} = __webpack_require__(16);
-const {initNotifications} = __webpack_require__(86);
-const {updatesVersion} = __webpack_require__(88);
+const {initNotifications} = __webpack_require__(87);
+const {updatesVersion} = __webpack_require__(89);
 
 let firstRun;
 let subscriptionsCallback = null;
@@ -23065,7 +23388,7 @@ port.on("subscriptions.getInitIssues",
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23076,7 +23399,7 @@ port.on("subscriptions.getInitIssues",
 
 
 
-const {startIconAnimation, stopIconAnimation} = __webpack_require__(87);
+const {startIconAnimation, stopIconAnimation} = __webpack_require__(88);
 
 /**
  * Initializes the notification system.
@@ -23103,7 +23426,7 @@ exports.isOptional = notificationType =>
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23129,7 +23452,7 @@ exports.isOptional = notificationType =>
 
 
 const {filterNotifier} = __webpack_require__(1);
-const info = __webpack_require__(6);
+const info = __webpack_require__(3);
 
 const frameOpacities = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9,
                         1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
@@ -23375,7 +23698,7 @@ if (info.platform == "chromium")
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23409,7 +23732,7 @@ exports.updatesVersion = 1;
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23418,8 +23741,8 @@ exports.updatesVersion = 1;
 /* For ESLint: List any global identifiers used in this file below */
 /* global require, getUrlFromId, getSettings, storageGet, storageSet */
 
-const { Subscription } = __webpack_require__(3);
-const { filterStorage } = __webpack_require__(4);
+const { Subscription } = __webpack_require__(4);
+const { filterStorage } = __webpack_require__(5);
 const { EventEmitter } = __webpack_require__(7);
 const {
   imageSizesMap, WIDE, TALL, SKINNYWIDE, SKINNYTALL,
@@ -23774,7 +24097,7 @@ Object.assign(window, {
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24325,7 +24648,7 @@ Object.assign(window, {
 
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24740,7 +25063,7 @@ Object.assign(window, {
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25084,7 +25407,7 @@ Object.assign(window, {
 
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25116,7 +25439,7 @@ Object.assign(window, {
 
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25129,7 +25452,7 @@ Object.assign(window, {
 
 // Yes, you could hack my code to not check the license.  But please don't.
 // Paying for this extension supports the work on AdBlock.  Thanks very much.
-const { checkWhitelisted } = __webpack_require__(8);
+const { checkWhitelisted } = __webpack_require__(9);
 const { EventEmitter } = __webpack_require__(7);
 const { recordGeneralMessage } = __webpack_require__(14).ServerMessages;
 
@@ -25636,6 +25959,7 @@ const replacedPerPage = new ext.PageMap();
 // Records how many ads have been replaced by AdBlock.  This is used
 // by the AdBlock to display statistics to the user.
 const replacedCounts = (function getReplacedCount() {
+  const adReplacedNotifier = new EventEmitter();
   const key = 'replaced_stats';
   let data = storageGet(key);
   if (!data) {
@@ -25659,6 +25983,7 @@ const replacedCounts = (function getReplacedCount() {
       const myPage = ext.getPage(tabId);
       let replaced = replacedPerPage.get(myPage) || 0;
       replacedPerPage.set(myPage, replaced += 1);
+      adReplacedNotifier.emit('adReplaced', tabId, myPage.url);
     },
     get() {
       return storageGet(key);
@@ -25669,6 +25994,7 @@ const replacedCounts = (function getReplacedCount() {
       }
       return this.get().total;
     },
+    adReplacedNotifier,
   };
 }());
 
@@ -25810,7 +26136,7 @@ Object.assign(window, {
 
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25835,8 +26161,8 @@ const {
 } = __webpack_require__(19);
 const { RegExpFilter } = __webpack_require__(0);
 const { elemHideEmulation } = __webpack_require__(21);
-const { checkWhitelisted } = __webpack_require__(8);
-const { extractHostFromFrame } = __webpack_require__(10);
+const { checkWhitelisted } = __webpack_require__(9);
+const { extractHostFromFrame } = __webpack_require__(8);
 const { port } = __webpack_require__(2);
 
 port.on('getSelectors', (_message, sender) => {
@@ -25868,7 +26194,7 @@ port.on('getSelectors', (_message, sender) => {
 
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26161,7 +26487,7 @@ port.on('getSelectors', (_message, sender) => {
 
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

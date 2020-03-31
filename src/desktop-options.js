@@ -6945,7 +6945,8 @@ Object.defineProperty(exports, '__esModule', {value: true}).default = domdiff;
 
 },{"./utils.js":30}],30:[function(require,module,exports){
 'use strict';
-const {indexOf: iOF} = [];
+const {indexOf: iOF} = require('uarray');
+
 const append = (get, parent, children, start, end, before) => {
   const isSelect = 'selectedIndex' in parent;
   let noSelection = isSelect;
@@ -7332,7 +7333,7 @@ function dropChild() {
     parentNode.removeChild(this);
 }
 
-},{}],31:[function(require,module,exports){
+},{"uarray":44}],31:[function(require,module,exports){
 'use strict';
 /*! (c) Andrea Giammarchi - ISC */
 
@@ -7376,6 +7377,7 @@ const createContent = (m => m.__esModule ? /* istanbul ignore next */ m.default 
 const importNode = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/import-node'));
 const trim = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/trim'));
 const sanitize = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('domsanitizer'));
+const umap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('umap'));
 
 // local
 const {find, parse} = require('./walker.js');
@@ -7383,7 +7385,7 @@ const {find, parse} = require('./walker.js');
 // the domtagger 🎉
 Object.defineProperty(exports, '__esModule', {value: true}).default = domtagger;
 
-var parsed = new WeakMap;
+var parsed = umap(new WeakMap);
 
 function createInfo(options, template) {
   var markup = (options.convert || sanitize)(template);
@@ -7394,7 +7396,7 @@ function createInfo(options, template) {
   cleanContent(content);
   var holes = [];
   parse(content, holes, template.slice(0), []);
-  var info = {
+  return {
     content: content,
     updates: function (content) {
       var updates = [];
@@ -7454,12 +7456,10 @@ function createInfo(options, template) {
       };
     }
   };
-  parsed.set(template, info);
-  return info;
 }
 
 function createDetails(options, template) {
-  var info = parsed.get(template) || createInfo(options, template);
+  var info = parsed.get(template) || parsed.set(template, createInfo(options, template));
   return info.updates(importNode.call(document, info.content, true));
 }
 
@@ -7488,7 +7488,7 @@ function cleanContent(fragment) {
   }
 }
 
-},{"./walker.js":33,"@ungap/create-content":16,"@ungap/import-node":20,"@ungap/trim":24,"@ungap/weakmap":25,"domsanitizer":31}],33:[function(require,module,exports){
+},{"./walker.js":33,"@ungap/create-content":16,"@ungap/import-node":20,"@ungap/trim":24,"@ungap/weakmap":25,"domsanitizer":31,"umap":45}],33:[function(require,module,exports){
 'use strict';
 const trim = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/trim'));
 
@@ -9010,5 +9010,26 @@ const CONNECTED = 'connected';
 exports.CONNECTED = CONNECTED;
 const DISCONNECTED = 'dis' + CONNECTED;
 exports.DISCONNECTED = DISCONNECTED;
+
+},{}],44:[function(require,module,exports){
+'use strict';
+const {isArray} = Array;
+const {indexOf, slice} = [];
+
+exports.isArray = isArray;
+exports.indexOf = indexOf;
+exports.slice = slice;
+
+},{}],45:[function(require,module,exports){
+'use strict';
+module.exports = _ => ({
+  // About: get: _.get.bind(_)
+  // It looks like WebKit/Safari didn't optimize bind at all,
+  // so that using bind slows it down by 60%.
+  // Firefox and Chrome are just fine in both cases,
+  // so let's use the approach that works fast everywhere 👍
+  get: key => _.get(key),
+  set: (key, value) => (_.set(key, value), value)
+});
 
 },{}]},{},[3]);
