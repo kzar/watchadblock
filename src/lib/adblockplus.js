@@ -1507,7 +1507,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "4.10.0";
+exports.addonVersion = "4.11.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -12942,6 +12942,9 @@ const SURVEY = (function getSurvey() {
       if (getSettings().show_survey === false) {
         return;
       }
+      if (getSettings().suppress_surveys) {
+        return;
+      }
 
       const surveyData = surveyDataFrom(responseData);
       if (!surveyData) {
@@ -13151,6 +13154,9 @@ const STATS = (function exportStats() {
         sy: settingsObj.sync_settings ? '1' : '0',
         ir: channels.isAnyEnabled() ? '1' : '0',
         twh: settingsObj.twitch_hiding ? '1' : '0',
+        sup: settingsObj.suppress_update_page ? '1' : '0',
+        ss: settingsObj.suppress_surveys ? '1' : '0',
+        sfrp: settingsObj.suppress_first_run_page ? '1' : '0',
       };
 
       // only on Chrome, Edge, or Firefox
@@ -20524,8 +20530,18 @@ function Settings() {
       if (settings.local_cdn) {
         LocalCDN.start();
       }
-
-      resolve();
+      if ('managed' in browser.storage) {
+        browser.storage.managed.get(null).then((items) => {
+          for (const key in items) {
+            if (key === 'suppress_update_page' || key === 'suppress_surveys' || key === 'suppress_first_run_page') {
+              that.data[key] = items[key];
+            }
+          }
+          resolve();
+        });
+      } else {
+        resolve();
+      }
     });
   })).then(() => {
     log('\n===SETTINGS FINISHED LOADING===\n\n');
@@ -21455,6 +21471,8 @@ if (browser.runtime.id === 'pljaalgmajnlogcgiohkhdmgpomjcihk') {
   });
 }
 
+// Note:  be sure to check the 'suppress_update_page' on the Settings object before showing
+//        the /update page
 const updateStorageKey = 'last_known_version';
 
 // browser.runtime.onInstalled.addListener((details) => {
@@ -23376,6 +23394,39 @@ function getSubscriptions()
   return subscriptions;
 }
 
+function removeSubscriptions() {
+  return new Promise(function(resolve, reject) {
+    if ("managed" in browser.storage)
+    {
+      browser.storage.managed.get(null).then(
+        items =>
+        {
+          for (let key in items)
+          {
+            if (key === "remove_subscriptions" && Array.isArray(items[key]) && items[key].length)
+            {
+              for (let inx = 0; inx < items[key].length; inx++)
+              {
+                let subscription = Subscription.fromURL(items[key][inx]);
+                filterStorage.removeSubscription(subscription);
+              }
+            }
+          }
+          resolve();
+        },
+
+        // Opera doesn't support browser.storage.managed, but instead of simply
+        // removing the API, it gives an asynchronous error which we ignore here.
+        () => {}
+      );
+    }
+    else
+    {
+      resolve();
+    }
+  });
+}
+
 function addSubscriptionsAndNotifyUser(subscriptions)
 {
   if (subscriptionsCallback)
@@ -23424,6 +23475,7 @@ Promise.all([
 ]).then(detectFirstRun)
   .then(getSubscriptions)
   .then(addSubscriptionsAndNotifyUser)
+  .then(removeSubscriptions)
   // We have to require the "uninstall" module on demand,
   // as the "uninstall" module in turn requires this module.
   .then(() => { __webpack_require__(42).setUninstallURL(); })
@@ -25712,6 +25764,24 @@ const License = (function getLicense() {
       }
     });
   };
+  const checkForManagedSettings = function () {
+    return new Promise(((resolve) => {
+      if ('managed' in browser.storage) {
+        browser.storage.managed.get(null).then((items) => {
+          for (const key in items) {
+            if (key === 'suppress_premium_cta') {
+              theLicense = License.get();
+              theLicense[key] = items[key];
+              License.set(theLicense);
+            }
+          }
+          resolve();
+        });
+      } else {
+        resolve();
+      }
+    }));
+  };
 
   return {
     statsInIconKey,
@@ -25756,10 +25826,12 @@ const License = (function getLicense() {
     },
     initialize(callback) {
       loadFromStorage(() => {
-        if (typeof callback === 'function') {
-          callback();
-        }
-        readyComplete();
+        checkForManagedSettings().then(() => {
+          if (typeof callback === 'function') {
+            callback();
+          }
+          readyComplete();
+        });
       });
     },
     getCurrentPopupMenuThemeCTA() {
@@ -25918,9 +25990,17 @@ const License = (function getLicense() {
       return License && License.get() && License.get().myadblock_enrollment === true;
     },
     shouldShowMyAdBlockEnrollment() {
-      return License.isMyAdBlockEnrolled() && !License.isActiveLicense();
+      return License.isMyAdBlockEnrolled()
+             && !License.isActiveLicense()
+             && License.shouldShowPremiumCTA();
+    },
+    shouldShowPremiumCTA() {
+      return !(License && License.get().suppress_premium_cta === true);
     },
     shouldShowBlacklistCTA(newValue) {
+      if (!License.shouldShowPremiumCTA()) {
+        return false;
+      }
       const currentLicense = License.get() || {};
       if (typeof newValue === 'boolean') {
         currentLicense.showBlacklistCTA = newValue;
@@ -25935,6 +26015,9 @@ const License = (function getLicense() {
       return License && License.get() && License.get().showBlacklistCTA === true;
     },
     shouldShowWhitelistCTA(newValue) {
+      if (!License.shouldShowPremiumCTA()) {
+        return false;
+      }
       const currentLicense = License.get() || {};
       if (typeof newValue === 'boolean') {
         currentLicense.showWhitelistCTA = newValue;
@@ -25951,13 +26034,16 @@ const License = (function getLicense() {
     displayPopupMenuNewCTA() {
       const isNotActive = !License.isActiveLicense();
       const variant = License.get() ? License.get().var : undefined;
-      return License && isNotActive && [3, 4].includes(variant);
+      return License && isNotActive && [3, 4].includes(variant) && License.shouldShowPremiumCTA();
     },
     /**
      * Handles the display of the New badge on the toolbar icon.
      * @param {Boolean} [showBadge] true shows the badge, false removes the badge
      */
     showIconBadgeCTA(showBadge) {
+      if (!License.shouldShowPremiumCTA()) {
+        return;
+      }
       if (showBadge) {
         let newBadgeText = translate('new_badge');
         // Text that exceeds 4 characters is truncated on the toolbar badge,
