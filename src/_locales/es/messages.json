@@ -469,6 +469,10 @@
     "message": "Excluir", 
     "description": "Button for excluding a domain in the whitelist wizard"
   }, 
+  "buttonkeep": {
+    "message": "Guardar", 
+    "description": "text on the remove / delete image modal on the image swap tab"
+  }, 
   "buttonlooksgood": {
     "message": "Está bien", 
     "description": "Confirmation button after user chose what to block on the page"
@@ -476,6 +480,10 @@
   "buttonok": {
     "message": "¡Vale!", 
     "description": "OK button"
+  }, 
+  "buttonremove": {
+    "message": "Eliminar", 
+    "description": "text on the remove / delete image modal on the image swap tab"
   }, 
   "buttonsubmit": {
     "message": "Enviar", 
@@ -651,6 +659,50 @@
     "message": "Entrada original: ", 
     "description": "Part three of a message shown to users on the Customize tab of the Options page after invalid custom filters have been migrated"
   }, 
+  "custom_image_description": {
+    "message": "Elige hasta nueve imágenes que quieres que utilice AdBlock para sustituir anuncios.", 
+    "description": "text on the image swap tab"
+  }, 
+  "custom_image_error": {
+    "message": "¡Ups! Algo ha salido mal.", 
+    "description": "header / title text on the error message on the image swap tab"
+  }, 
+  "custom_image_error_msg_partI": {
+    "message": "No hemos podido añadir tu imagen.", 
+    "description": "error message text error message on the image swap tab"
+  }, 
+  "custom_image_error_msg_partII": {
+    "message": "Espera unos instantes y vuelve a intentarlo.", 
+    "description": "error message text error message on the image swap tab"
+  }, 
+  "custom_image_error_msg_partIII": {
+    "message": "También puedes compartir [[los datos de depuración anónimos]] para ayudarnos a descubrir dónde se ha producido el fallo.", 
+    "description": "error message text error message on the image swap tab"
+  }, 
+  "custom_image_supported_file_types": {
+    "message": "*.bmp, *.gif, *.jpeg, *.png, *.svg, *.tiff, *.webp", 
+    "description": "supported file types, shown on the error message dialog box when a user selects a unsupported file type"
+  }, 
+  "custom_image_unsupported_msg_partI": {
+    "message": "¡Ups! Parece que estás intentando añadir un tipo de imagen no válido para el cambio de imagen personalizado.", 
+    "description": "First sentence, on the error message dialog box when a user selects a unsupported file type"
+  }, 
+  "custom_image_unsupported_msg_partII": {
+    "message": "Elige una imagen de los siguientes tipos:", 
+    "description": "second sentence, on the error message dialog box when a user selects a unsupported file type"
+  }, 
+  "custom_image_unsupported_title": {
+    "message": "Tipo de imagen no válido", 
+    "description": "header / title on error message dialog box when a user selects a unsupported file type"
+  }, 
+  "custom_images": {
+    "message": "Imágenes personalizadas", 
+    "description": "text on the image swap tab"
+  }, 
+  "customchannelswitchlabel": {
+    "message": "Personalizado", 
+    "description": "The label text for the Custom Image switch on the MyAdBlock Options page"
+  }, 
   "customfilters": {
     "message": "Listas de filtros personalizadas", 
     "description": "Subtitle on the Filter lists tab: Section for adding your own filter lists."
@@ -698,11 +750,11 @@
     "description": "Text on a delete button"
   }, 
   "delete_all_stats_data": {
-    "message": "Eliminar los datos de bloqueo recopilados actualmente", 
+    "message": "Eliminar mis estadísticas de bloqueo recopiladas actualmente", 
     "description": "text related to the delete all data checkbox on the statistics page of the Options page"
   }, 
   "delete_detail_msg_part_I": {
-    "message": "Aquí puedes eliminar los datos de bloqueo almacenados localmente.", 
+    "message": "Aquí puedes eliminar las estadísticas de bloqueo almacenadas localmente.", 
     "description": "text on the delete overlay on the statistics page of the Options page"
   }, 
   "delete_detail_msg_part_II": {
@@ -710,7 +762,7 @@
     "description": "text on the delete overlay on the statistics page of the Options page"
   }, 
   "delete_detail_msg_part_III": {
-    "message": "Tus datos se almacenan únicamente en tu dispositivo y los datos eliminados no podrán ser recuperados.", 
+    "message": "Tus estadísticas se almacenan únicamente en tu dispositivo y las estadísticas eliminadas no podrán ser recuperadas.", 
     "description": "text on the delete overlay on the statistics page of the Options page"
   }, 
   "delete_detail_page_2_msg_part_I": {
@@ -722,7 +774,7 @@
     "description": "Button to delete error messages when adding custom filters manually"
   }, 
   "delete_panel_title": {
-    "message": "Eliminar datos de bloqueo", 
+    "message": "Eliminar estadísticas de bloqueo", 
     "description": "title text on the delete overlay on the statistics page of the Options page"
   }, 
   "description": {
@@ -919,6 +971,10 @@
     "message": "No activar en esta página", 
     "description": "Menu entry to whitelist the current page"
   }, 
+  "dontsend": {
+    "message": "No enviar", 
+    "description": "button text on the error message on the image swap tab"
+  }, 
   "download_mac_app": {
     "message": "Para conseguir la mejor experiencia AdBlock en tu Mac, ¡descarga nuestra [[aplicación para Mac de AdBlock para Safari!]]", 
     "description": "Link to download our Mac App. [[ and ]] will be replaced with HTML to link to the Mac App Store"
@@ -946,6 +1002,18 @@
   "edit_filter_lists": {
     "message": "Es posible que tengas que [[editar tus listas de filtros]].", 
     "description": "Message for help flow in popup menu."
+  }, 
+  "edit_image": {
+    "message": "Editar imagen", 
+    "description": "header text in the on custom image swap modal dialog"
+  }, 
+  "edit_image_msg_partI": {
+    "message": "A continuación hemos recopilado los tres tamaños de anuncios más frecuentes.", 
+    "description": "Text in the on custom image swap modal dialog"
+  }, 
+  "edit_image_msg_partII": {
+    "message": "Elige el tamaño más aproximado a la imagen, ajústala con el deslizador y haz clic en Guardar cuando hayas terminado.", 
+    "description": "Text in the on custom image swap modal dialog"
   }, 
   "enable_adblock": {
     "message": "Habilitar AdBlock en esta página", 
@@ -1726,7 +1794,7 @@
     "description": "Generic message displayed during processes that take some time"
   }, 
   "loading_in_progress": {
-    "message": "loading in progress", 
+    "message": "carga en progreso", 
     "description": "Text in the aria-label attribute of an icon indicating that page is currently loading"
   }, 
   "local_cdn_option": {
@@ -1982,7 +2050,7 @@
     "description": "Message for help flow in popup menu."
   }, 
   "no_data_msg_part_I": {
-    "message": "Actualmente no existen datos de bloqueo que mostrar.", 
+    "message": "Actualmente no existen estadísticas de bloqueo que mostrar.", 
     "description": "text on warning message when there's no user data to show on the statistics page of the Options page"
   }, 
   "no_data_msg_part_II": {
@@ -1990,7 +2058,7 @@
     "description": "text on warning message when there's no user data to show on the statistics page of the Options page"
   }, 
   "no_data_title": {
-    "message": "Sin datos", 
+    "message": "Sin estadísticas", 
     "description": "title text on warning message when there's no user data to show on the statistics page of the Options page"
   }, 
   "nodefaultfilter1": {
@@ -2032,7 +2100,7 @@
     "description": "Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Opera displays on the Extensions page."
   }, 
   "opt_out_stats_data": {
-    "message": "No recopilar mis datos de bloqueo en el futuro", 
+    "message": "No recopilar mis estadísticas de bloqueo en el futuro", 
     "description": "text related to the opt out data collection checkbox on the statistics page of the Options page"
   }, 
   "options": {
@@ -2251,6 +2319,14 @@
     "message": "Recarga la página.", 
     "description": "Checkbox in the whitelist wizard"
   }, 
+  "remove_image": {
+    "message": "Eliminar imagen", 
+    "description": "text on the remove / delete image modal on the image swap tab"
+  }, 
+  "remove_image_msg": {
+    "message": "¿Seguro que quieres eliminar esta imagen?", 
+    "description": "text on the remove / delete image modal on the image swap tab"
+  }, 
   "removed_url": {
     "message": "¡Vale! Hemos eliminado la URL de tu lista blanca.", 
     "description": "Message for help flow in popup menu."
@@ -2389,6 +2465,10 @@
     "message": "seleccionar idioma", 
     "description": "First option in the language dropdown menu on the Filter lists tab."
   }, 
+  "senddebugdata": {
+    "message": "Enviar datos de depuración", 
+    "description": "button text on the error message on the image swap tab"
+  }, 
   "set_preferences_once": {
     "message": "Crea tus preferencias una única vez y no vuelvas a preocuparte de perder datos o repetir el mismo proceso para varias extensiones.", 
     "description": "Description of Sync on Sync tab"
@@ -2490,7 +2570,7 @@
     "description": "Text on the statistics page of the Options page within the ads blocked panel"
   }, 
   "stats_ads_blocked_aria_label": {
-    "message": "Number of Ads Blocked", 
+    "message": "Número de anuncios bloqueados", 
     "description": "Text in the aria-label attribute of an icon for the Blocks by site column heading"
   }, 
   "stats_already_opted": {
@@ -2502,7 +2582,7 @@
     "description": "button text on page 2 of the delete modal box on the statistics page of the Options page"
   }, 
   "stats_hide_data": {
-    "message": "Ocultar datos", 
+    "message": "Ocultar estadísticas", 
     "description": "text shown on panels during mouse over on the statistics page of the Options page within the ads blocked panel"
   }, 
   "stats_im_sure_text_button": {
@@ -2518,15 +2598,15 @@
     "description": "On page text of the statistics page of the Options page"
   }, 
   "stats_opt_in_local_msg": {
-    "message": "Únete a la recopilación de datos locales para acceder a todas tus estadísticas de AdBlock, tales como las páginas y las herramientas de seguimiento que más has bloqueado, los bloqueos totales y las imágenes cambiadas (para usuarios Premium).", 
+    "message": "Únete a la recopilación de estadísticas locales para acceder a todas tus estadísticas de AdBlock, tales como las páginas y las herramientas de seguimiento que más has bloqueado, los bloqueos totales y las imágenes cambiadas (para usuarios Premium).", 
     "description": "On page text of the statistics page of the Options page"
   }, 
   "stats_opt_in_local_text_button": {
-    "message": "Unirse a la recopilación de datos locales", 
+    "message": "Unirse a la recopilación de estadísticas locales", 
     "description": "Text in the Opt In button on the statistics page of the Options page"
   }, 
   "stats_opt_in_msg": {
-    "message": "Únete a la recopilación de datos locales para ver tus estadísticas de AdBlock, tales como las páginas y las herramientas de seguimiento que más has bloqueado, los bloqueos totales y las imágenes cambiadas (para usuarios Premium).", 
+    "message": "Únete a la recopilación de estadísticas locales para ver tus estadísticas de AdBlock, tales como las páginas y las herramientas de seguimiento que más has bloqueado, los bloqueos totales y las imágenes cambiadas (para usuarios Premium).", 
     "description": "On page text of the statistics page of the Options page"
   }, 
   "stats_opt_in_text_button": {
@@ -2538,11 +2618,11 @@
     "description": "Text on the statistics page of the Options page within the ads blocked panel"
   }, 
   "stats_replaced_blocked_aria_label": {
-    "message": "Number of Images Swapped", 
+    "message": "Número de imágenes cambiadas", 
     "description": "Text in the aria-label attribute of an icon for the Blocks by site column heading"
   }, 
   "stats_show_data": {
-    "message": "Mostrar datos", 
+    "message": "Mostrar estadísticas", 
     "description": "text shown on panels during mouse over on the statistics page of the Options page within the ads blocked panel"
   }, 
   "stats_trackers_blocked": {
@@ -2550,7 +2630,7 @@
     "description": "Text on the statistics page of the Options page within the ads blocked panel"
   }, 
   "stats_trackers_blocked_aria_label": {
-    "message": "Number of Trackers Blocked", 
+    "message": "Número de rastreadores bloqueados", 
     "description": "Text in the aria-label attribute of an icon for the Blocks by site column heading"
   }, 
   "statstitle": {

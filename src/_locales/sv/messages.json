@@ -469,6 +469,10 @@
     "message": "Exkludera", 
     "description": "Button for excluding a domain in the whitelist wizard"
   }, 
+  "buttonkeep": {
+    "message": "Behåll", 
+    "description": "text on the remove / delete image modal on the image swap tab"
+  }, 
   "buttonlooksgood": {
     "message": "Ser bra ut", 
     "description": "Confirmation button after user chose what to block on the page"
@@ -476,6 +480,10 @@
   "buttonok": {
     "message": "OK!", 
     "description": "OK button"
+  }, 
+  "buttonremove": {
+    "message": "Ta bort", 
+    "description": "text on the remove / delete image modal on the image swap tab"
   }, 
   "buttonsubmit": {
     "message": "Skicka in", 
@@ -651,6 +659,50 @@
     "message": "Ursprunglig post: ", 
     "description": "Part three of a message shown to users on the Customize tab of the Options page after invalid custom filters have been migrated"
   }, 
+  "custom_image_description": {
+    "message": "Välj upp till 9 bilder som du bill att AdBlock ska använda för att ersätta annonser", 
+    "description": "text on the image swap tab"
+  }, 
+  "custom_image_error": {
+    "message": "Hoppsan! Något gick fel.", 
+    "description": "header / title text on the error message on the image swap tab"
+  }, 
+  "custom_image_error_msg_partI": {
+    "message": "Vi kunde inte lägga till din bild.", 
+    "description": "error message text error message on the image swap tab"
+  }, 
+  "custom_image_error_msg_partII": {
+    "message": "Vänta ett ögonblick och försök igen.", 
+    "description": "error message text error message on the image swap tab"
+  }, 
+  "custom_image_error_msg_partIII": {
+    "message": "Du kan också dela [[anonym debug-information]] för att hjälpa oss att ta reda på vad som gick fel.", 
+    "description": "error message text error message on the image swap tab"
+  }, 
+  "custom_image_supported_file_types": {
+    "message": "*.bmp, *.gif, *.jpeg, *.png, *.svg, *.tiff, *.webp", 
+    "description": "supported file types, shown on the error message dialog box when a user selects a unsupported file type"
+  }, 
+  "custom_image_unsupported_msg_partI": {
+    "message": "Hoppsan! Det verkar som att du försöker lägga till en bild som inte stöds av Anpassat bildbyte.", 
+    "description": "First sentence, on the error message dialog box when a user selects a unsupported file type"
+  }, 
+  "custom_image_unsupported_msg_partII": {
+    "message": "Välj en av följande bildtyper:", 
+    "description": "second sentence, on the error message dialog box when a user selects a unsupported file type"
+  }, 
+  "custom_image_unsupported_title": {
+    "message": "Bildtypen stöds inte", 
+    "description": "header / title on error message dialog box when a user selects a unsupported file type"
+  }, 
+  "custom_images": {
+    "message": "Anpassade bilder", 
+    "description": "text on the image swap tab"
+  }, 
+  "customchannelswitchlabel": {
+    "message": "Anpassad", 
+    "description": "The label text for the Custom Image switch on the MyAdBlock Options page"
+  }, 
   "customfilters": {
     "message": "Anpassade filterlistor", 
     "description": "Subtitle on the Filter lists tab: Section for adding your own filter lists."
@@ -698,11 +750,11 @@
     "description": "Text on a delete button"
   }, 
   "delete_all_stats_data": {
-    "message": "Radera min lagrade blockeringsdata", 
+    "message": "Radera min lagrade blockeringsstatistik", 
     "description": "text related to the delete all data checkbox on the statistics page of the Options page"
   }, 
   "delete_detail_msg_part_I": {
-    "message": "Du kan radera din lokalt lagrade blockeringsdata här.", 
+    "message": "Du kan radera din lokalt lagrade blockeringsstatistik här.", 
     "description": "text on the delete overlay on the statistics page of the Options page"
   }, 
   "delete_detail_msg_part_II": {
@@ -710,7 +762,7 @@
     "description": "text on the delete overlay on the statistics page of the Options page"
   }, 
   "delete_detail_msg_part_III": {
-    "message": "Din data finns bara lagrad på din enhet, och all data du raderar KAN INTE återställas.", 
+    "message": "Din statistik finns bara lagrad på din enhet, och all statistik du raderar KAN INTE återställas.", 
     "description": "text on the delete overlay on the statistics page of the Options page"
   }, 
   "delete_detail_page_2_msg_part_I": {
@@ -722,7 +774,7 @@
     "description": "Button to delete error messages when adding custom filters manually"
   }, 
   "delete_panel_title": {
-    "message": "Radera blockeringsdata", 
+    "message": "Radera blockeringsstatistik", 
     "description": "title text on the delete overlay on the statistics page of the Options page"
   }, 
   "description": {
@@ -919,6 +971,10 @@
     "message": "Kör inte på den här sidan", 
     "description": "Menu entry to whitelist the current page"
   }, 
+  "dontsend": {
+    "message": "Skicka inte", 
+    "description": "button text on the error message on the image swap tab"
+  }, 
   "download_mac_app": {
     "message": "För att få den bästa AdBlock-upplevelsen på din Mac, ladda ner vår [[AdBlock för Safari Mac-app!]]", 
     "description": "Link to download our Mac App. [[ and ]] will be replaced with HTML to link to the Mac App Store"
@@ -946,6 +1002,18 @@
   "edit_filter_lists": {
     "message": "Du kan behöva [[redigera dina filterlistor]].", 
     "description": "Message for help flow in popup menu."
+  }, 
+  "edit_image": {
+    "message": "Redigera bild", 
+    "description": "header text in the on custom image swap modal dialog"
+  }, 
+  "edit_image_msg_partI": {
+    "message": "Vi har listat de 3 vanligaste storlekarna på annonser nedan.", 
+    "description": "Text in the on custom image swap modal dialog"
+  }, 
+  "edit_image_msg_partII": {
+    "message": "Välj den storlek som är närmast din bild, justera med reglaget och klicka på Spara när du är klar.", 
+    "description": "Text in the on custom image swap modal dialog"
   }, 
   "enable_adblock": {
     "message": "Aktivera AdBlock på den här sidan", 
@@ -1726,7 +1794,7 @@
     "description": "Generic message displayed during processes that take some time"
   }, 
   "loading_in_progress": {
-    "message": "loading in progress", 
+    "message": "laddar", 
     "description": "Text in the aria-label attribute of an icon indicating that page is currently loading"
   }, 
   "local_cdn_option": {
@@ -1982,7 +2050,7 @@
     "description": "Message for help flow in popup menu."
   }, 
   "no_data_msg_part_I": {
-    "message": "Du har ingen blockeringsdata att visa.", 
+    "message": "Du har ingen blockeringsstatistik att visa.", 
     "description": "text on warning message when there's no user data to show on the statistics page of the Options page"
   }, 
   "no_data_msg_part_II": {
@@ -1990,7 +2058,7 @@
     "description": "text on warning message when there's no user data to show on the statistics page of the Options page"
   }, 
   "no_data_title": {
-    "message": "Ingen data", 
+    "message": "Ingen statistik", 
     "description": "title text on warning message when there's no user data to show on the statistics page of the Options page"
   }, 
   "nodefaultfilter1": {
@@ -2032,7 +2100,7 @@
     "description": "Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Opera displays on the Extensions page."
   }, 
   "opt_out_stats_data": {
-    "message": "Lagra inte min blockeringsdata i framtiden", 
+    "message": "Lagra inte min blockeringsstatistik i framtiden", 
     "description": "text related to the opt out data collection checkbox on the statistics page of the Options page"
   }, 
   "options": {
@@ -2251,6 +2319,14 @@
     "message": "Ladda om sidan.", 
     "description": "Checkbox in the whitelist wizard"
   }, 
+  "remove_image": {
+    "message": "Ta bort bild", 
+    "description": "text on the remove / delete image modal on the image swap tab"
+  }, 
+  "remove_image_msg": {
+    "message": "Vill du verkligen ta bort den här bilden?", 
+    "description": "text on the remove / delete image modal on the image swap tab"
+  }, 
   "removed_url": {
     "message": "OK! Vi har tagit bort webbadressen från din vitlista.", 
     "description": "Message for help flow in popup menu."
@@ -2389,6 +2465,10 @@
     "message": "välj språk", 
     "description": "First option in the language dropdown menu on the Filter lists tab."
   }, 
+  "senddebugdata": {
+    "message": "Skicka debug-information", 
+    "description": "button text on the error message on the image swap tab"
+  }, 
   "set_preferences_once": {
     "message": "Gör dina inställningen en gång och slipp sedan oroa dig för att förlora data eller behöva göra samma inställningar på flera enheter.", 
     "description": "Description of Sync on Sync tab"
@@ -2490,7 +2570,7 @@
     "description": "Text on the statistics page of the Options page within the ads blocked panel"
   }, 
   "stats_ads_blocked_aria_label": {
-    "message": "Number of Ads Blocked", 
+    "message": "Antal blockerade annonser", 
     "description": "Text in the aria-label attribute of an icon for the Blocks by site column heading"
   }, 
   "stats_already_opted": {
@@ -2502,7 +2582,7 @@
     "description": "button text on page 2 of the delete modal box on the statistics page of the Options page"
   }, 
   "stats_hide_data": {
-    "message": "Dölj data", 
+    "message": "Dölj statistik", 
     "description": "text shown on panels during mouse over on the statistics page of the Options page within the ads blocked panel"
   }, 
   "stats_im_sure_text_button": {
@@ -2518,15 +2598,15 @@
     "description": "On page text of the statistics page of the Options page"
   }, 
   "stats_opt_in_local_msg": {
-    "message": "Delta också i lokal datainsamling för att se all din AdBlock-statistik, så som vilka webbplatser du blockerar flest annonser och spårare på, totalt antal blockeringar över tid och hur många bilder som har bytts ut för Premiumanvändare.", 
+    "message": "Delta också i lokal statistikinsamling för att se all din AdBlock-statistik, så som vilka webbplatser du blockerar flest annonser och spårare på, totalt antal blockeringar över tid och hur många bilder som har bytts ut för Premiumanvändare.", 
     "description": "On page text of the statistics page of the Options page"
   }, 
   "stats_opt_in_local_text_button": {
-    "message": "Delta i lokal datainsamling", 
+    "message": "Delta i lokal statistikinsamling", 
     "description": "Text in the Opt In button on the statistics page of the Options page"
   }, 
   "stats_opt_in_msg": {
-    "message": "Delta i lokal datainsamling för att se din AdBlock-statistik, så som vilka webbplatser du blockerar flest annonser och spårare på, totalt antal blockeringar över tid och hur många bilder som har bytts ut för Premiumanvändare.", 
+    "message": "Delta i lokal statistikinsamling för att se din AdBlock-statistik, så som vilka webbplatser du blockerar flest annonser och spårare på, totalt antal blockeringar över tid och hur många bilder som har bytts ut för Premiumanvändare.", 
     "description": "On page text of the statistics page of the Options page"
   }, 
   "stats_opt_in_text_button": {
@@ -2538,11 +2618,11 @@
     "description": "Text on the statistics page of the Options page within the ads blocked panel"
   }, 
   "stats_replaced_blocked_aria_label": {
-    "message": "Number of Images Swapped", 
+    "message": "Antal utbytta bilder", 
     "description": "Text in the aria-label attribute of an icon for the Blocks by site column heading"
   }, 
   "stats_show_data": {
-    "message": "Visa data", 
+    "message": "Visa statistik", 
     "description": "text shown on panels during mouse over on the statistics page of the Options page within the ads blocked panel"
   }, 
   "stats_trackers_blocked": {
@@ -2550,7 +2630,7 @@
     "description": "Text on the statistics page of the Options page within the ads blocked panel"
   }, 
   "stats_trackers_blocked_aria_label": {
-    "message": "Number of Trackers Blocked", 
+    "message": "Antal blockerade spårare", 
     "description": "Text in the aria-label attribute of an icon for the Blocks by site column heading"
   }, 
   "statstitle": {

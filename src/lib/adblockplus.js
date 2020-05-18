@@ -1507,7 +1507,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "4.11.0";
+exports.addonVersion = "4.12.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -5928,6 +5928,28 @@ const ServerMessages = (function serverMessages() {
     sendMessageToLogServer(eventWithPayload, callback);
   };
 
+  // Log a error message on GAB log server.
+  // If callback() is specified, call callback() after logging has completed
+  const recordAnonymousErrorMessage = function (msg, callback, additionalParams) {
+    if (!msg) {
+      return;
+    }
+
+    const payload = {
+      f: STATS.flavor,
+      o: STATS.os,
+      l: determineUserLanguage(),
+      t: 'error',
+    };
+    if (typeof additionalParams === 'object') {
+      for (const prop in additionalParams) {
+        payload[prop] = additionalParams[prop];
+      }
+    }
+    const eventWithPayload = { event: msg, payload };
+    sendMessageToLogServer(eventWithPayload, callback);
+  };
+
   const recordErrorMessage = function (msg, callback, additionalParams) {
     recordMessageWithUserID(msg, 'error', callback, additionalParams);
   };
@@ -5958,6 +5980,7 @@ const ServerMessages = (function serverMessages() {
   return {
     recordErrorMessage,
     recordAnonymousMessage,
+    recordAnonymousErrorMessage,
     postFilterStatsToLogServer,
     recordStatusMessage,
     recordGeneralMessage,
@@ -13153,6 +13176,7 @@ const STATS = (function exportStats() {
         tm: themePopupMenu,
         sy: settingsObj.sync_settings ? '1' : '0',
         ir: channels.isAnyEnabled() ? '1' : '0',
+        cir: channels.channelGuide[channels.getIdByName('CustomChannel')].enabled ? '1' : '0',
         twh: settingsObj.twitch_hiding ? '1' : '0',
         sup: settingsObj.suppress_update_page ? '1' : '0',
         ss: settingsObj.suppress_surveys ? '1' : '0',
@@ -13479,7 +13503,7 @@ exports.STATS = STATS;
    getSubscriptionsMinusText, chromeStorageSetHelper, getUserFilters, Prefs, abpPrefPropertyNames,
    Subscription, adblockIsDomainPaused, PubNub, adblockIsPaused, filterStorage, parseFilter,
    synchronizer, pausedFilterText1, pausedFilterText2, getUrlFromId, channelsNotifier,
-   settingsNotifier, filterNotifier, isWhitelistFilter, */
+   settingsNotifier, filterNotifier, isWhitelistFilter, recordGeneralMessage */
 
 const { EventEmitter } = __webpack_require__(7);
 
@@ -14304,6 +14328,9 @@ const SyncService = (function getSyncService() {
             channels: [License.get().licenseId],
           });
         }
+        if (msg.error === true && msg.category && msg.operation) {
+          recordGeneralMessage('pubnub_error', undefined, { licenseId: License.get().licenseId, category: msg.category, operation: msg.operation });
+        }
       },
     });
 
@@ -14994,10 +15021,11 @@ __webpack_require__(92);
 __webpack_require__(93);
 __webpack_require__(94);
 __webpack_require__(95);
-__webpack_require__(39);
 __webpack_require__(96);
+__webpack_require__(39);
 __webpack_require__(97);
-module.exports = __webpack_require__(98);
+__webpack_require__(98);
+module.exports = __webpack_require__(99);
 
 
 /***/ }),
@@ -20418,6 +20446,47 @@ const getStorageCookie = function (name) {
   return undefined;
 };
 
+// the Navigator object is used here because this code is
+// executed in functions.js, which is loaded prior to any other
+// background page JS modules (like 'info').
+// Althought 'webp' is a preferred for Custom Image Swap
+// because it is generally a smaller, more efficient image format,
+// Firefox doesn't like working with 'webp' as much as 'png' in Blobs and Data URLs.
+let customImageSwapMimeType = 'image/webp';
+const firefoxMatch = navigator.userAgent.match(/(?:Firefox)\/([\d.]+)/);
+if (firefoxMatch) {
+  customImageSwapMimeType = 'image/png';
+}
+
+// converts a Base64 encoded string to
+// a Blob.
+// Used in the custom image swap processing
+// Input:
+//   base64Data: a string, base64 string encoded representing an image
+// Returns:
+//   a Blob
+const base64toBlob = function (base64Data) {
+  let updatedBase64Data = base64Data;
+  if (updatedBase64Data.startsWith('data:image/')) {
+    [, updatedBase64Data] = updatedBase64Data.split(',');
+  }
+  const sliceSize = 512;
+  const byteChars = atob(updatedBase64Data);
+  const byteArrays = [];
+  const len = byteChars.length;
+  for (let offset = 0; offset < len; offset += sliceSize) {
+    const chunk = byteChars.slice(offset, offset + sliceSize);
+    const chunkLength = chunk.length;
+    const byteNumbers = new Array(chunkLength);
+    for (let i = 0; i < chunkLength; i++) {
+      byteNumbers[i] = chunk.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    byteArrays.push(byteArray);
+  }
+  return new Blob(byteArrays, { type: customImageSwapMimeType });
+};
+
 Object.assign(window, {
   sessionStorageSet,
   sessionStorageGet,
@@ -20537,6 +20606,11 @@ function Settings() {
               that.data[key] = items[key];
             }
           }
+          resolve();
+        },
+        // Opera and FF doesn't support browser.storage.managed, but instead of simply
+        // removing the API, it gives an asynchronous error which we ignore here.
+        () => {
           resolve();
         });
       } else {
@@ -20733,7 +20807,7 @@ Object.assign(window, {
 /* global browser, require, chromeStorageSetHelper, log, License, translate,
    gabQuestion, ext, getSettings, parseUri, sessionStorageGet, setSetting,
   blockCounts, sessionStorageSet, updateButtonUIAndContextMenus, settings,
-  storageGet, parseFilter, twitchSettings */
+  storageGet, parseFilter, twitchSettings, channels */
 
 const { Filter } = __webpack_require__(0);
 const { WhitelistFilter } = __webpack_require__(0);
@@ -20764,6 +20838,7 @@ const {
   recordGeneralMessage,
   recordErrorMessage,
   recordAdreportMessage,
+  recordAnonymousErrorMessage,
   recordAnonymousMessage,
 } = __webpack_require__(14).ServerMessages;
 const {
@@ -20799,6 +20874,7 @@ Object.assign(window, {
   recordErrorMessage,
   recordAdreportMessage,
   recordAnonymousMessage,
+  recordAnonymousErrorMessage,
   getUrlFromId,
   unsubscribe,
   recommendations,
@@ -20848,7 +20924,11 @@ const countCache = (function countCache() {
     // Get current custom filter count for a particular domain
     // Inputs: host:string - url of the host
     getCustomFilterCount(host) {
-      return cache[host] || 0;
+      let customCount = 0;
+      if (cache) {
+        customCount = cache[host];
+      }
+      return customCount || 0;
     },
 
     // Add 1 to custom filter count for the filters domain.
@@ -21397,7 +21477,7 @@ const getCurrentTabInfo = function (secondTime) {
 
             const result = {
               disabledSite,
-              url: page.url,
+              url: String(page.url || tab.url),
               id: page.id,
               settings: getSettings(),
               paused: adblockIsPaused(),
@@ -21417,7 +21497,8 @@ const getCurrentTabInfo = function (secondTime) {
               result.whitelisted = checkWhitelisted(page);
             }
             if (
-              getSettings().youtube_channel_whitelist
+              getSettings()
+              && getSettings().youtube_channel_whitelist
               && parseUri(tab.url).hostname === 'www.youtube.com'
             ) {
               result.youTubeChannelName = ytChannelNamePages.get(page.id);
@@ -21545,19 +21626,23 @@ if (browser.runtime.id) {
       License.ready().then(checkQueryState);
     }
   };
-  const slashUpdateReleases = ['4.10.0'];
+  const slashUpdateReleases = ['4.10.0', '4.11.0', '4.12.0'];
   // Display updated page after each update
   browser.runtime.onInstalled.addListener((details) => {
     const lastKnownVersion = localStorage.getItem(updateStorageKey);
     const currentVersion = browser.runtime.getManifest().version;
     if (
       details.reason === 'update'
-      && slashUpdateReleases.includes(currentVersion)
-      && !slashUpdateReleases.includes(lastKnownVersion)
-      && browser.runtime.id !== 'pljaalgmajnlogcgiohkhdmgpomjcihk'
+          && slashUpdateReleases.includes(currentVersion)
+          && !slashUpdateReleases.includes(lastKnownVersion)
+          && browser.runtime.id !== 'pljaalgmajnlogcgiohkhdmgpomjcihk'
     ) {
-      STATS.untilLoaded(() => {
-        Prefs.untilLoaded.then(shouldShowUpdate);
+      settings.onload().then(() => {
+        if (!getSettings().suppress_update_page) {
+          STATS.untilLoaded(() => {
+            Prefs.untilLoaded.then(shouldShowUpdate);
+          });
+        }
       });
     }
     localStorage.setItem(updateStorageKey, currentVersion);
@@ -21923,7 +22008,16 @@ const getDebugInfo = function (callback) {
                 }
                 License.getLicenseInstallationDate((installdate) => {
                   response.otherInfo['License Installation Date'] = installdate;
-                  if (typeof callback === 'function') {
+                  const customChannelId = channels.getIdByName('CustomChannel');
+                  if (channels.getGuide()[customChannelId].enabled) {
+                    const customChannel = channels.channelGuide[customChannelId].channel;
+                    customChannel.getTotalBytesInUse().then((result) => {
+                      response.otherInfo['Custom Channel total bytes in use'] = result;
+                      if (typeof callback === 'function') {
+                        callback(response);
+                      }
+                    });
+                  } else if (typeof callback === 'function') {
                     callback(response);
                   }
                 });
@@ -23059,7 +23153,7 @@ const contextMenuItem = (() => ({
     },
 }))();
 
-const updateContextMenuItems = function (page) {
+let updateContextMenuItems = function (page) {
   // Remove the AdBlock context menu items
   browser.contextMenus.removeAll();
 
@@ -23083,6 +23177,21 @@ const updateContextMenuItems = function (page) {
     browser.contextMenus.create(contextMenuItem.pauseAll);
   }
 };
+
+const updateContextMenuItemsNoOp = function () {
+  // Remove the AdBlock context menu items
+  browser.contextMenus.removeAll();
+};
+// startup test to check if the context menu API functions correctly
+// the `create` function is invoked twice, because it's the second
+// and all subsequent calls that fail.
+try {
+  browser.contextMenus.create(contextMenuItem.blockThisAd);
+  browser.contextMenus.create(contextMenuItem.blockThisAd);
+} catch (e) {
+  updateContextMenuItems = updateContextMenuItemsNoOp;
+}
+browser.contextMenus.removeAll();
 
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status) {
@@ -23417,8 +23526,9 @@ function removeSubscriptions() {
 
         // Opera doesn't support browser.storage.managed, but instead of simply
         // removing the API, it gives an asynchronous error which we ignore here.
-        () => {}
-      );
+        () => {
+          resolve();
+        });
     }
     else
     {
@@ -23916,6 +24026,9 @@ function Listing(data) {
   if (data.ratio) {
     this.ratio = data.ratio;
   }
+  if (data.customImage) {
+    this.customImage = data.customImage;
+  }
 }
 
 // Contains and provides access to all the photo channels.
@@ -23992,9 +24105,18 @@ Channels.prototype = {
     return undefined;
   },
 
+  isCustomChannel(id) {
+    return (this.getIdByName('CustomChannel') === id);
+  },
+
+  isCustomChannelEnabled() {
+    return (this.channelGuide[this.getIdByName('CustomChannel')].enabled);
+  },
+
   getListings(id) {
     return this.channelGuide[id].channel.getListings();
   },
+
   setEnabled(id, enabled) {
     const originalValue = this.channelGuide[id].enabled;
     this.channelGuide[id].enabled = enabled;
@@ -24153,10 +24275,22 @@ Channels.prototype = {
         param: undefined,
         enabled: false,
       });
+      this.add({
+        name: 'CustomChannel',
+        param: undefined,
+        enabled: false,
+      });
     } else {
       for (let i = 0; i < entries.length; i++) {
         this.add(entries[i]);
       }
+    }
+    if (!this.getIdByName('CustomChannel')) {
+      this.add({
+        name: 'CustomChannel',
+        param: undefined,
+        enabled: false,
+      });
     }
   },
 
@@ -25549,6 +25683,205 @@ Object.assign(window, {
 
 
 /* For ESLint: List any global identifiers used in this file below */
+/* global Channel, Listing, browser */
+
+// Channel containing user imported images
+// Subclass of Channel.
+
+function CustomChannel() {
+  Channel.call(this); // check if licensed in an init() function
+  const that = this;
+
+  // load the meta data Array from storage
+  browser.storage.local.get(this.CUSTOM_META_KEY).then((customImageMetaData) => {
+    const savedCustomImageMetaData = customImageMetaData;
+    if (!savedCustomImageMetaData[this.CUSTOM_META_KEY]) {
+      savedCustomImageMetaData[this.CUSTOM_META_KEY] = [];
+    }
+    const customMetaData = savedCustomImageMetaData[this.CUSTOM_META_KEY];
+    for (let inx = 0; inx < customMetaData.length; inx++) {
+      const listingData = customMetaData[inx];
+      if (
+        listingData
+          && listingData.url
+          && listingData.width
+          && listingData.height
+          && listingData.title
+      ) {
+        const theNewListing = that.createListing(listingData.width,
+          listingData.height, listingData.url, listingData.title);
+        that.listings.push(theNewListing);
+      }
+    }
+  });
+}
+CustomChannel.prototype = {
+  __proto__: Channel.prototype,
+  createListing: function L(theWidth, theHeight, theURL, theName) {
+    let width = theWidth;
+    let height = theHeight;
+    const url = theURL;
+    const type = this.calculateType(width, height);
+
+    if (typeof width === 'number') {
+      width = `${width}`;
+    }
+    if (typeof height === 'number') {
+      height = `${height}`;
+    }
+    return new Listing({
+      width,
+      height,
+      url,
+      attributionUrl: url,
+      type,
+      ratio: Math.max(width, height) / Math.min(width, height),
+      title: `This is an image from your PC! : ${theName}`,
+      channelName: 'custom_channel_name', // message.json key for channel name
+      customImage: true,
+    });
+  },
+  listings: [],
+  CUSTOM_META_KEY: 'customMetaData',
+  // to run - channels.channelGuide[channels.getIdByName("CustomChannel")].channel.deleteAll()
+  deleteAll() {
+    const customImagesArray = this.listings;
+    for (let inx = 0; inx < customImagesArray.length; inx++) {
+      if (customImagesArray[inx] && customImagesArray[inx].url) {
+        browser.storage.local.remove(customImagesArray[inx].url);
+      }
+    }
+    browser.storage.local.remove(this.CUSTOM_META_KEY).then(() => {
+      this.listings = [];
+    });
+  },
+  getLatestListings(callback) {
+    callback(this.listings);
+  },
+  isMaximumAllowedImages() {
+    return (this.listings.length >= 9);
+  },
+  saveListings() {
+    const that = this;
+    return new Promise((resolve, reject) => {
+      const persistedMetaImageObj = {};
+      persistedMetaImageObj[that.CUSTOM_META_KEY] = that.listings;
+      browser.storage.local.set(persistedMetaImageObj).then(() => {
+        if (browser.runtime.lastError) {
+          reject(browser.runtime.lastError);
+        }
+        resolve(true);
+      });
+    });
+  },
+  removeListingByURL(theURLToRemove) {
+    for (let inx = 0; inx < this.listings.length; inx++) {
+      const theListing = this.listings[inx];
+      if (theListing && theListing.url === theURLToRemove) {
+        this.listings.splice(inx, 1);
+      }
+    }
+    const that = this;
+    return new Promise((resolve, reject) => {
+      that.saveListings().then((response) => {
+        if (response) {
+          browser.storage.local.remove(theURLToRemove).then(() => {
+            if (browser.runtime.lastError) {
+              reject(browser.runtime.lastError);
+            }
+            resolve(true);
+          });
+        } else {
+          resolve(response);
+        }
+      });
+    });
+  },
+  addCustomImage(imageInfo) {
+    const that = this;
+    return new Promise((resolve, reject) => {
+      const randomKey = `file:///${new Date().getTime()}`;
+      const persistedImageObj = {};
+      persistedImageObj[randomKey] = {
+        name: imageInfo.name,
+        width: imageInfo.width,
+        height: imageInfo.height,
+        src: imageInfo.imageAsBase64,
+      };
+      browser.storage.local.set(persistedImageObj).then(() => {
+        if (browser.runtime.lastError) {
+          reject(browser.runtime.lastError);
+        }
+        const theNewListing = this.createListing(imageInfo.width,
+          imageInfo.height, randomKey, imageInfo.name);
+        that.listings.push(theNewListing);
+        that.saveListings()
+          .then((response) => {
+            if (response) {
+              resolve(randomKey);
+            } else {
+              reject(response);
+            }
+          })
+          .catch((response) => {
+            reject(response);
+          });
+      });
+    });
+  },
+  getBytesInUseForEachImage() {
+    if (typeof browser.storage.local.getBytesInUse !== 'function') {
+      return new Promise((resolve) => {
+        resolve([0]);
+      });
+    }
+    const customImagesArray = this.getListings();
+    const promises = [];
+    for (let inx = 0; inx < customImagesArray.length; inx++) {
+      const thePromise = new Promise((resolve) => {
+        if (customImagesArray[inx] && customImagesArray[inx].url) {
+          browser.storage.local.getBytesInUse(customImagesArray[inx].url, (biu) => {
+            resolve(biu);
+          });
+        }
+      });
+      promises.push(thePromise);
+    }
+    return Promise.all(promises);
+  },
+  getTotalBytesInUse() {
+    if (typeof browser.storage.local.getBytesInUse !== 'function') {
+      return new Promise((resolve) => {
+        resolve(0);
+      });
+    }
+    return new Promise((resolve) => {
+      this.getBytesInUseForEachImage().then((results) => {
+        let sum = 0;
+        let numResults = results.length;
+        while (numResults > 0) {
+          numResults -= 1;
+          sum += results[numResults];
+        }
+        resolve(sum);
+      });
+    });
+  },
+};
+
+Object.assign(window, {
+  CustomChannel,
+});
+
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* For ESLint: List any global identifiers used in this file below */
 /* global Channel */
 
 // Empty Channel
@@ -25574,7 +25907,7 @@ Object.assign(window, {
 
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25775,6 +26108,11 @@ const License = (function getLicense() {
               License.set(theLicense);
             }
           }
+          resolve();
+        },
+        // Opera and FF doesn't support browser.storage.managed, but instead of simply
+        // removing the API, it gives an asynchronous error which we ignore here.
+        () => {
           resolve();
         });
       } else {
@@ -26305,7 +26643,7 @@ Object.assign(window, {
 
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26363,7 +26701,7 @@ port.on('getSelectors', (_message, sender) => {
 
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26656,7 +26994,7 @@ port.on('getSelectors', (_message, sender) => {
 
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
